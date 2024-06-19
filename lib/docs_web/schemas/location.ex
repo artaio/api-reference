@@ -4,7 +4,7 @@ defmodule DocsWeb.Schemas.Location do
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "An Arta Location",
+    title: "location",
     type: :object,
     properties: %{
       access_restrictions: %Schema{

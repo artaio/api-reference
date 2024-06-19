@@ -5,7 +5,7 @@ defmodule DocsWeb.Parameters.Authorization do
   @spec parameter() :: Parameter.t()
   def parameter(),
     do: %Parameter{
-      name: "page",
+      name: "Authorization",
       description: "Authorize your API calls with an Arta API token",
       in: :header,
       required: true,

@@ -6,13 +6,15 @@ defmodule DocsWeb.ApiSpec do
     OpenApi,
     Schema,
     Server,
+    MediaType,
     Operation,
     PathItem,
-    SecurityScheme
+    RequestBody
   }
 
-  alias DocsWeb.Schemas.{ApiKey, HostedSession}
+  alias DocsWeb.Schemas.HostedSession
   alias DocsWeb.Parameters.{Authorization, Page, PageSize}
+  alias DocsWeb.Schemas.RequestBody.HostedSessionCreate
   @behaviour OpenApi
 
   @impl OpenApi
@@ -27,9 +29,6 @@ defmodule DocsWeb.ApiSpec do
       info: %Info{
         title: "Arta Public API",
         version: "1.0"
-      },
-      components: %Components{
-        securitySchemes: %{"authorization" => %SecurityScheme{type: "https", scheme: "bearer"}}
       },
       # Populate the paths from a phoenix router
       paths: %{
@@ -52,9 +51,30 @@ defmodule DocsWeb.ApiSpec do
                 )
             }
           },
-          # post: %Operation{
-
-          # }
+          post: %Operation{
+            summary: "Create a Hosted Session",
+            description: "Create a hosted session resource to generate an Arta Booking url.\n\nThis endpoint expects one of two versions of the `hosted_session` schema:\n\n* You may send a `hosted_session` object with a subset of the fields required for generating quote requests via the Arta API. With this schema, you must minimally include valid `objects` and `origin` details in your API call. Additionally, you may provide a `success_url` and a `cancel_url` to determine where Arta will redirect the user after the session is complete\n\n* Alternatively, you may share an existing Quote Request by sending a `hosted_session` object with the corresponding request's `request_id`. This will create an Arta Booking session for the request\n\nUse the private `url` in the successful hosted session response to direct your users to the Arta Booking web page so that they may configure and book their own shipment.",
+            tags: [
+              "hosted_sessions"
+            ],
+            operationId: "hostedSessions/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: HostedSessionCreate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "the created hosted sessions",
+                  "application/json",
+                  HostedSession
+                )
+            }
+          }
         }
       }
     }

@@ -4,7 +4,7 @@ defmodule DocsWeb.Schemas.NullableLocation do
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "An Arta Nullable Location",
+    title: "nullableLocation",
     type: :object,
     properties: %{
       id: %Schema{
