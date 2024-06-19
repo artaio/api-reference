@@ -1,7 +1,16 @@
 defmodule DocsWeb.ApiSpec do
-  alias OpenApiSpex.{Components, Info, OpenApi, Server, Operation, PathItem, Response, SecurityScheme, Reference}
-  alias DocsWeb.{Endpoint, Router}
-  alias DocsWeb.Schemas.ApiKey
+  alias OpenApiSpex.{
+    Components,
+    Info,
+    OpenApi,
+    Schema,
+    Server,
+    Operation,
+    PathItem,
+    SecurityScheme
+  }
+
+  alias DocsWeb.Schemas.{ApiKey, HostedSession}
   @behaviour OpenApi
 
   @impl OpenApi
@@ -22,25 +31,64 @@ defmodule DocsWeb.ApiSpec do
       },
       # Populate the paths from a phoenix router
       paths: %{
-        "/api_keys" => %PathItem{
+        "/hosted_sessions" => %PathItem{
           get: %Operation{
-            description: "Retrieve a paginated collection of API Keys belonging to your Organization",
-            operationId: "apiKeys/list",
+            description:
+              "Retrieve a paginated collection of hosted sessions belonging to your organization",
+            operationId: "hostedSessions/list",
+            summary: "List Hosted Sessions",
             tags: [
-              "api_keys"
+              "hosted_sessions"
             ],
             responses: %{
-              200 => Operation.response(
-                "A paginated collection of API Keys",
-                "application/json",
-                ApiKey
-              )
+              200 =>
+                Operation.response(
+                  "A paginated collection of hosted sessions",
+                  "application/json",
+                  list(HostedSession)
+                )
             }
-          },
-          # post: %Operation{}
+          }
         }
       }
     }
-    |> OpenApiSpex.resolve_schema_modules() # Discover request/response schemas from path specs
+    # Discover request/response schemas from path specs
+    |> OpenApiSpex.resolve_schema_modules()
   end
+
+  defp list(type) do
+    %Schema{
+      type: "object",
+      properties: %{
+        items: %Schema{
+          type: "array",
+          items: type
+        },
+        metadata: %Schema{
+          type: "object",
+          properties: %{
+            page: %Schema{
+              type: "integer",
+              format: "int64",
+              example: 1,
+              readOnly: true
+            },
+            page_size: %Schema{
+              type: "integer",
+              format: "int64",
+              example: 20,
+              readOnly: true
+            },
+            total_count: %Schema{
+              type: "integer",
+              format: "int64",
+              example: 1,
+              readOnly: true
+            }
+          }
+        }
+      }
+    }
+  end
+
 end
