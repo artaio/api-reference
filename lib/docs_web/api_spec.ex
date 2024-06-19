@@ -1,4 +1,5 @@
 defmodule DocsWeb.ApiSpec do
+
   alias OpenApiSpex.{
     Components,
     Info,
@@ -11,6 +12,7 @@ defmodule DocsWeb.ApiSpec do
   }
 
   alias DocsWeb.Schemas.{ApiKey, HostedSession}
+  alias DocsWeb.Parameters.{Authorization, Page, PageSize}
   @behaviour OpenApi
 
   @impl OpenApi
@@ -40,6 +42,7 @@ defmodule DocsWeb.ApiSpec do
             tags: [
               "hosted_sessions"
             ],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -48,7 +51,10 @@ defmodule DocsWeb.ApiSpec do
                   list(HostedSession)
                 )
             }
-          }
+          },
+          # post: %Operation{
+
+          # }
         }
       }
     }
