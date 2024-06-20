@@ -9,6 +9,7 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
     title: "hostedSessionCreateBody",
     oneOf: [
       %Schema{
+        title: "Create Hosted Session",
         type: :object,
         properties: %{
           additional_services: %Schema{
@@ -72,6 +73,7 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
         }
       },
       %Schema{
+        title: "Share Quote Request",
         type: :object,
         properties: %{
           request_id: %Schema{
