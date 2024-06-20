@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+PARENT_PATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)
+
+cd $(dirname $PARENT_PATH)
+
+echo "[ARTA] Generating open api spec file"
+
+mix openapi.spec.json --spec DocsWeb.ApiSpec
+
+echo "[ARTA] Starting scalar server on watch mode"
+
+scalar serve openapi.json --watch

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+PARENT_PATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)
+
+cd $(dirname $PARENT_PATH)
+
+echo "[ARTA] Running a format check for the Elixir files"
+
+mix format --check-formatted
+
+echo "[ARTA] Running a style check for the Elixir files"
+
+mix credo

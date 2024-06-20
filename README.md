@@ -1,18 +1,28 @@
-# Docs
+# Arta API Reference
 
-To start your Phoenix server:
+Welcome to the Arta API Reference repository. This project is designed to generate the Open API Specification (OAS) for the Arta API. It is built using Elixir and leverages the [Open API Spex library](https://github.com/open-api-spex/open_api_spex) to define and document the API specifications.
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Installing / Getting started
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+To run this project, you will need to install the following dependencies on your system:
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+- [Elixir](https://elixir-lang.org/install.html)
+- [Scalar CLI](https://github.com/scalar/scalar?tab=readme-ov-file#cli)
 
-## Learn more
+## Fetch dependencies
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+From the project root, run the following command in your terminal:
+
+```shell
+bin/setup
+```
+
+## Running an interactive shell
+
+From the project root, run the following command in your terminal:
+
+```shell
+bin/server
+```
+
+
