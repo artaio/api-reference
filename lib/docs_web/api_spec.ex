@@ -1,7 +1,6 @@
 defmodule DocsWeb.ApiSpec do
 
   alias OpenApiSpex.{
-    Components,
     Info,
     OpenApi,
     Schema,
