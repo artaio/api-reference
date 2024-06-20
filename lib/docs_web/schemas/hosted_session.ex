@@ -5,7 +5,7 @@ defmodule DocsWeb.Schemas.HostedSession do
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "hostedSession",
+    title: "HostedSession",
     type: :object,
     properties: %{
       additional_services: %Schema{

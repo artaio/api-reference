@@ -6,7 +6,7 @@ defmodule DocsWeb.Schemas.Object do
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "object",
+    title: "Object",
     type: :object,
     properties: %{
       internal_reference: %Schema{

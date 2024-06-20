@@ -6,10 +6,11 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "hostedSessionCreateBody",
+    title: "HostedSessionCreate",
     oneOf: [
       %Schema{
-        title: "hostedSessionCreateBookingSession",
+        title: "BookingSession",
+        description: "Create hosted booking session",
         type: :object,
         properties: %{
           additional_services: %Schema{
@@ -81,8 +82,9 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
         }
       },
       %Schema{
-        title: "hostedSessionCreateShareRequest",
+        title: "ShareRequest",
         type: :object,
+        description: "Create hosted booking session from an existing quote request",
         properties: %{
           request_id: %Schema{
             type: :string,

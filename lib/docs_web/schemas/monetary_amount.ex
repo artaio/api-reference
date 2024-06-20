@@ -4,7 +4,7 @@ alias OpenApiSpex.Schema
   require OpenApiSpex
 
   def schema(), do: %Schema{
-    title: "monetaryAmount",
+    title: "MonetaryAmount",
     type: "string",
     pattern: "^(0|([1-9]+[0-9]*))(\\.[0-9]{1,2})?$",
     example: "2500"

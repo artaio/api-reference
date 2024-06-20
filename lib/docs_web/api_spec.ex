@@ -19,6 +19,7 @@ defmodule DocsWeb.ApiSpec do
   @impl OpenApi
   def spec do
     %OpenApi{
+      openapi: "3.1.0",
       servers: [
         # Populate the Server info from a phoenix endpoint
         %Server{

@@ -4,7 +4,7 @@ defmodule DocsWeb.Schemas.Currency do
 
   def schema(),
     do: %Schema{
-      title: "currency",
+      title: "Currency",
       type: "string",
       default: "USD",
       description:
