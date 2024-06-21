@@ -37,4 +37,6 @@ npm-debug.log
 
 openapi.json
 out.json
+visualization/src/openapi.json
+
 .tool-versions

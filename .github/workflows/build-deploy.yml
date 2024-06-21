@@ -1,0 +1,46 @@
+name: Elixir CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Specify the OTP and Elixir versions to use when building
+      # and running the workflow steps.
+      matrix:
+        otp: ['27.0.0']       # Define the OTP version [required]
+        elixir: ['1.17.0']    # Define the elixir version [required]
+
+    steps:
+
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        otp-version: ${{matrix.otp}}
+        elixir-version: ${{matrix.elixir}}
+    
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: mix deps.get
+
+    - name: Run script
+      run: bash bin/build-static
+
+    - name: Publish
+      uses: cloudflare/pages-action@v1
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        projectName: api-reference
+        directory: ./visualization/dist
+        gitHubToken: ${{ secrets.GITHUB_TOKEN }}

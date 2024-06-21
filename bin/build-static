@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+PARENT_PATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)
+
+cd $(dirname $PARENT_PATH)
+
+echo "[ARTA] Generating open api spec file"
+
+mix openapi.spec.json --spec DocsWeb.ApiSpec
+
+echo "[ARTA] Generating open api spec file done"
+echo "[ARTA] Creating static bundle"
+
+cp openapi.json ./visualization/src/openapi.json
+cd ./visualization
+npm ci
+npm run build
+
+echo "[ARTA] Done creating static assets"
