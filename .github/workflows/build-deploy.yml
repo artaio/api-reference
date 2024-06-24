@@ -36,11 +36,20 @@ jobs:
     - name: Run script
       run: bash bin/build-static
 
-    - name: Publish
+    - name: Publish Preview
       uses: cloudflare/pages-action@v1
+      if: ${{ github.event_name == 'pull_request' }}
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         projectName: api-reference
         directory: ./visualization/dist
         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish Bump
+      uses: bump-sh/github-action@v1
+      if: ${{ github.event_name == 'push' }}
+      with:
+        doc: otaviotest
+        token: ${{ secrets.BUMP_SECRET_API_KEY }}
+        file: openapi.spec.json
