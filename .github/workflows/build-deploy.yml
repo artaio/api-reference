@@ -52,4 +52,4 @@ jobs:
       with:
         doc: otaviotest
         token: ${{ secrets.BUMP_SECRET_API_KEY }}
-        file: openapi.spec.json
+        file: openapi.json
