@@ -9,20 +9,24 @@ defmodule DocsWeb.Schemas.APIKey do
     properties: %{
       id: %Schema{
         type: :integer,
-        format: :int64
+        format: :int64,
+        example: 2
       },
       created_at: %Schema{
-        type: :string
+        type: :string,
+        example: "2021-01-21T17:22:08.818747"
       },
       is_testing: %Schema{
         type: :boolean,
         default: false
       },
       token: %Schema{
-        type: :string
+        type: :string,
+        example: "******************eQ0Rqp"
       },
       updated_at: %Schema{
-        type: :string
+        type: :string,
+        example: "2021-01-21T17:22:08.818747"
       }
     }
   })
