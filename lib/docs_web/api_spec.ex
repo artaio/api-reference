@@ -10,7 +10,7 @@ defmodule DocsWeb.ApiSpec do
     RequestBody
   }
 
-  alias DocsWeb.Schemas.HostedSession
+  alias DocsWeb.Schemas.{APIKey, HostedSession}
   alias DocsWeb.Parameters.{Authorization, Page, PageSize}
   alias DocsWeb.Schemas.RequestBody.HostedSessionCreate
   @behaviour OpenApi
@@ -72,6 +72,25 @@ defmodule DocsWeb.ApiSpec do
                   "the created hosted sessions",
                   "application/json",
                   HostedSession
+                )
+            }
+          }
+        },
+        "/api_keys" => %PathItem{
+          get: %Operation{
+            description: "Retrieve a paginated collection of API Keys belonging to your Organization",
+            operationId: "apiKeys/list",
+            summary: "List API Keys",
+            tags: [
+              "api_keys"
+            ],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A succesful collection of API Keys associated with your organization",
+                  "application/json",
+                  list(APIKey)
                 )
             }
           }
