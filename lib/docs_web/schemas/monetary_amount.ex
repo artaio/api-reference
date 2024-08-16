@@ -8,6 +8,6 @@ defmodule DocsWeb.Schemas.MonetaryAmount do
       title: "MonetaryAmount",
       type: "string",
       pattern: "^(0|([1-9]+[0-9]*))(\\.[0-9]{1,2})?$",
-      example: "2500"
+      example: "2500.00"
     }
 end

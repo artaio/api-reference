@@ -1,6 +1,6 @@
-defmodule DocsWeb.Schemas.HostedSession do
+defmodule DocsWeb.Schemas.Response.HostedSession do
   alias OpenApiSpex.Schema
-  alias DocsWeb.Schemas.{Location, Object, NullableLocation}
+  alias DocsWeb.Schemas.Response
 
   require OpenApiSpex
 
@@ -25,7 +25,7 @@ defmodule DocsWeb.Schemas.HostedSession do
       created_at: %Schema{
         type: :string
       },
-      destination: NullableLocation,
+      destination: Response.NullableLocation,
       id: %Schema{
         type: :integer,
         format: :int64
@@ -44,7 +44,7 @@ defmodule DocsWeb.Schemas.HostedSession do
         maxLength: 255,
         nullable: true
       },
-      origin: Location,
+      origin: Response.Location,
       payment_process: %Schema{
         type: :string,
         description:
@@ -104,7 +104,7 @@ defmodule DocsWeb.Schemas.HostedSession do
       objects: %Schema{
         type: "array",
         description: "A list of objects to be shipped",
-        items: Object
+        items: Response.Object
       }
     },
     example: %{
@@ -129,6 +129,7 @@ defmodule DocsWeb.Schemas.HostedSession do
             "title" => "It's just jazz"
           },
           "height" => "24",
+          "id" => 12345,
           "images" => [],
           "internal_reference" => nil,
           "public_reference" => nil,
