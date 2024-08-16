@@ -92,7 +92,7 @@ defmodule DocsWeb.Schemas.RequestBody.ShipmentCreate do
           shipping_notes: %Schema{
             type: "string",
             description:
-              "This field can be used to proivde Arta any additional context about the shipment",
+              "This field can be used to provide Arta any additional context about the shipment",
             maxLength: 255,
             example: "New customer"
           },
