@@ -122,6 +122,10 @@ defmodule DocsWeb.Schemas.Response.Shipment do
       schedule: %Schema{
         type: :object,
         properties: %{
+          actual_collection_date: %Schema{
+            type: :string,
+            format: :date
+          },
           delivery_end: %Schema{
             type: :string,
             format: :date
