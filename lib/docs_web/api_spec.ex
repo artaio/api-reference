@@ -10,9 +10,9 @@ defmodule DocsWeb.ApiSpec do
     RequestBody
   }
 
-  alias DocsWeb.Schemas.{APIKey, HostedSession}
+  alias DocsWeb.Schemas.{APIKey, Response}
   alias DocsWeb.Parameters.{Authorization, Page, PageSize}
-  alias DocsWeb.Schemas.RequestBody.HostedSessionCreate
+  alias DocsWeb.Schemas.RequestBody.{HostedSessionCreate, ShipmentCreate}
   @behaviour OpenApi
 
   @impl OpenApi
@@ -46,7 +46,7 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A paginated collection of hosted sessions",
                   "application/json",
-                  list(HostedSession)
+                  list(Response.HostedSession)
                 )
             }
           },
@@ -71,14 +71,60 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "the created hosted sessions",
                   "application/json",
-                  HostedSession
+                  Response.HostedSession
+                )
+            }
+          }
+        },
+        "/shipments" => %PathItem{
+          post: %Operation{
+            summary: "Create a Shipment",
+            description:
+              "This endpoint is used for two purposes:\n\n**1. Generating standard Arta shipments**\n\nAll [standard shipments](https://manual.arta.io/guides/logistics/workflow) are actively facilitated by Arta. Working in tandem with our extensive logistics carrier network, Arta fulfills shipments with `Premium`, `Select`, and `Parcel` quote types from scheduling collection, to coordinating packing, through delivery. For shipments with the `Self Ship` quote type, Arta will generate labels on your behalf with commercial carriers such as FedEx, UPS, and DHL.\n\nTo book a standard Arta shipment, you must first create a shipping quote request. You can then use a `quote_id` returned by the quote request endpoint to create the shipment.\n\n**2. Generating Track shipments**\n\n[Track shipments](https://manual.arta.io/guides/solutions/no-code/post-sale/tracking/track) provide a similar customer tracking and notification experience as standard Arta shipments but for shipments you have booked with commercial carriers outside of the Arta platform.\n\nTo create a Track shipment, you provide the `carrier` and `tracking_number` purchased externally and the Arta platform provides status automation, tracking pages, and customer notifications. You may optionally provide additional supplementary information such as origin, destination, and package details for Track shipments.\n\n_Note that Track shipments are a beta feature. Please contact your account manager or hello@arta.io to request access for your organization._",
+            tags: [
+              "shipments"
+            ],
+            operationId: "shipments/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: ShipmentCreate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "The created shipment",
+                  "application/json",
+                  Response.Shipment
+                ),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                ),
+              422 =>
+                Operation.response(
+                  "Unprocessible entity",
+                  "application/json",
+                  Response.Error
                 )
             }
           }
         },
         "/api_keys" => %PathItem{
           get: %Operation{
-            description: "Retrieve a paginated collection of API Keys belonging to your Organization",
+            description:
+              "Retrieve a paginated collection of API Keys belonging to your Organization",
             operationId: "apiKeys/list",
             summary: "List API Keys",
             tags: [

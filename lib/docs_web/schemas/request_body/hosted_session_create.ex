@@ -1,7 +1,6 @@
 defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
-  alias DocsWeb.Schemas.Location
   alias OpenApiSpex.Schema
-  alias DocsWeb.Schemas.{Location, Object}
+  alias DocsWeb.Schemas.Payload.{Location, Object}
 
   require OpenApiSpex
 
@@ -29,7 +28,7 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
               "The URL the user will be redirected to after a Arta Booking session is cancelled",
             example: "http://example.com/cancelled"
           },
-          destination: Location,
+          destination: Location.call(),
           insurance: %Schema{
             type: "string",
             description:
@@ -45,9 +44,9 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
           },
           objects: %Schema{
             type: "array",
-            items: Object
+            items: Object.call()
           },
-          origin: Location,
+          origin: Location.call(),
           preferred_quote_types: %Schema{
             type: "array",
             description:
