@@ -1,4 +1,5 @@
 defmodule DocsWeb.ApiSpec do
+  alias DocsWeb.Parameters.ShipmentID
   alias OpenApiSpex.{
     Info,
     OpenApi,
@@ -77,6 +78,24 @@ defmodule DocsWeb.ApiSpec do
           }
         },
         "/shipments" => %PathItem{
+          get: %Operation{
+            summary: "List Shipment records",
+            description:
+              "Retrieve a paginated collection of Shipment records belonging to your Organization",
+            tags: [
+              "shipments"
+            ],
+            operationId: "shipments/list",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Shipment records",
+                  "application/json",
+                  list(Response.ShipmentList)
+                )
+            }
+          },
           post: %Operation{
             summary: "Create a Shipment",
             description:
@@ -117,6 +136,32 @@ defmodule DocsWeb.ApiSpec do
                   "Unprocessible entity",
                   "application/json",
                   Response.Error
+                )
+            }
+          }
+        },
+        "/shipments/{shipment_id}" => %PathItem{
+          get: %Operation{
+            summary: "Retrieve a Shipment record",
+            description:
+              "Retrieve an existing Shipment record",
+            tags: [
+              "shipments"
+            ],
+            operationId: "shipments/get",
+            parameters: [Authorization.parameter(), ShipmentID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Shipment get response",
+                  "application/json",
+                  Response.Shipment
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
                 )
             }
           }
