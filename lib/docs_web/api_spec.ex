@@ -13,7 +13,14 @@ defmodule DocsWeb.ApiSpec do
   alias DocsWeb.Parameters
   alias DocsWeb.Schemas.{APIKey, Response}
   alias DocsWeb.Parameters.{Authorization, Page, PageSize}
-  alias DocsWeb.Schemas.RequestBody.{AttachmentCreate, HostedSessionCreate, ShipmentCreate}
+
+  alias DocsWeb.Schemas.RequestBody.{
+    AttachmentCreate,
+    HostedSessionCreate,
+    ApiKeyCreate,
+    ShipmentCreate
+  }
+
   @behaviour OpenApi
 
   @impl OpenApi
@@ -55,6 +62,82 @@ defmodule DocsWeb.ApiSpec do
                   "application/json",
                   list(APIKey),
                   headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create an API Key",
+            description:
+              "You can create mulitple API keys for your organization. All API keys operate on either Live or Test modes.",
+            tags: [
+              "api_keys"
+            ],
+            operationId: "apiKeys/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: ApiKeyCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created API Key",
+                  "application/json",
+                  APIKey,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/api_keys/{api_key_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get an API Key",
+            description: "Get an API Key",
+            tags: [
+              "api_keys"
+            ],
+            operationId: "apiKeys/get",
+            parameters: [Authorization.parameter(), Parameters.APIKeyID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful API Key get response",
+                  "application/json",
+                  APIKey,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          delete: %Operation{
+            summary: "Delete an API Key",
+            description: "Delete an API Key belonging to your Organization",
+            tags: [
+              "api_keys"
+            ],
+            operationId: "apiKeys/delete",
+            parameters: [Authorization.parameter(), Parameters.APIKeyID.parameter()],
+            responses: %{
+              204 =>
+                Operation.response(
+                  "API Key deleted",
+                  "application/json",
+                  nil,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
                 )
             }
           }
