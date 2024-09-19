@@ -237,7 +237,8 @@ defmodule DocsWeb.Schemas.Response.Shipment do
       url: %Schema{
         type: :string,
         description: "The track URL for this shipment on the Arta web platform",
-        example: "https://connect.shiparta.com/shipments/6b12c76a-5217-4cd6-82d8-7aa5265egood/5xTRnCvYkdMFdcFFMWUZaCmXz",
+        example:
+          "https://connect.shiparta.com/shipments/6b12c76a-5217-4cd6-82d8-7aa5265egood/5xTRnCvYkdMFdcFFMWUZaCmXz"
       }
     }
   })
