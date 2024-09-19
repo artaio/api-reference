@@ -52,9 +52,10 @@ defmodule DocsWeb.Schemas.Response.Shipment do
         items: ShipmentException
       },
       hosted_session_id: %Schema{
-        type: :string,
+        type: :integer,
         description: "The ID of the HostedSession through which this shipment was created",
-        format: :uuid
+        nullable: true,
+        example: 4215
       },
       id: %Schema{
         type: :string,

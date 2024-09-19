@@ -40,3 +40,6 @@ out.json
 visualization/src/openapi.json
 
 .tool-versions
+
+api.yaml
+arta-openapi-source.json
