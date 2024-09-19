@@ -4,7 +4,7 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
 
   require OpenApiSpex
 
-  OpenApiSpex.schema(%{
+  OpenApiSpex.schema(%Schema{
     title: "HostedSessionCreate",
     oneOf: [
       %Schema{

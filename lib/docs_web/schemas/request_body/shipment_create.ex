@@ -4,7 +4,7 @@ defmodule DocsWeb.Schemas.RequestBody.ShipmentCreate do
 
   require OpenApiSpex
 
-  OpenApiSpex.schema(%{
+  OpenApiSpex.schema(%Schema{
     title: "ShipmentCreate",
     oneOf: [
       %Schema{

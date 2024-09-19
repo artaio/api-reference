@@ -26,7 +26,7 @@ defmodule DocsWeb.Schemas.Response.ShipmentException do
       id: %Schema{
         type: :string,
         description: "The id of the exception in UUID format",
-        format: :uuid
+        format: :uuid,
       },
       package_id: %Schema{
         type: :integer,
