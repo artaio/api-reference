@@ -1,5 +1,4 @@
 defmodule DocsWeb.ApiSpec do
-
   alias OpenApiSpex.{
     Info,
     OpenApi,
@@ -22,16 +21,22 @@ defmodule DocsWeb.ApiSpec do
     %OpenApi{
       openapi: "3.1.0",
       servers: [
-        # Populate the Server info from a phoenix endpoint
         %Server{
           url: "https://api.arta.io"
         }
       ],
       info: %Info{
         title: "Arta Public API",
-        version: "1.0"
+        version: "2021-01-01",
+        description:
+          "The Arta Public API provides quote generation, transport booking, and tracking capabilities. Additionally the API enables Arta partner organizations to configure email and webhook notifications for their accounts.",
+        contact: %{
+          name: "Arta",
+          email: "hello@arta.io",
+          url: "https://manual.arta.io/"
+        },
+        termsOfService: "https://www.arta.io/legal/terms"
       },
-      # Populate the paths from a phoenix router
       paths: %{
         "/api_keys" => %PathItem{
           get: %Operation{
@@ -48,7 +53,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A succesful collection of API Keys associated with your organization",
                   "application/json",
-                  list(APIKey)
+                  list(APIKey),
+                  headers: default_headers()
                 )
             }
           }
@@ -68,7 +74,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of Attachment records",
                   "application/json",
-                  list(Response.Attachment)
+                  list(Response.Attachment),
+                  headers: default_headers()
                 )
             }
           },
@@ -93,7 +100,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "The created attachment",
                   "application/json",
-                  Response.Attachment
+                  Response.Attachment,
+                  headers: default_headers()
                 )
             }
           }
@@ -112,7 +120,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "Successful Attachment get response",
                   "application/json",
-                  Response.Attachment
+                  Response.Attachment,
+                  headers: default_headers()
                 ),
               404 =>
                 Operation.response(
@@ -135,7 +144,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "Attachment deleted",
                   "application/json",
-                  nil
+                  nil,
+                  headers: default_headers()
                 ),
               404 =>
                 Operation.response(
@@ -161,7 +171,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A paginated collection of hosted sessions",
                   "application/json",
-                  list(Response.HostedSession)
+                  list(Response.HostedSession),
+                  headers: default_headers()
                 )
             }
           },
@@ -186,7 +197,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "the created hosted sessions",
                   "application/json",
-                  Response.HostedSession
+                  Response.HostedSession,
+                  headers: default_headers()
                 )
             }
           }
@@ -231,7 +243,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "The created shipment",
                   "application/json",
-                  Response.Shipment
+                  Response.Shipment,
+                  headers: default_headers()
                 ),
               403 =>
                 Operation.response(
@@ -268,7 +281,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "Successful Shipment get response",
                   "application/json",
-                  Response.Shipment
+                  Response.Shipment,
+                  headers: default_headers()
                 ),
               404 =>
                 Operation.response(
@@ -317,6 +331,13 @@ defmodule DocsWeb.ApiSpec do
           }
         }
       }
+    }
+  end
+
+  defp default_headers() do
+    %{
+      "content-type" => DocsWeb.Headers.XArtaRequestID.header(),
+      "x-arta-request-id" => DocsWeb.Headers.ContentTypeAppJson.header()
     }
   end
 end
