@@ -1,4 +1,10 @@
 defmodule DocsWeb.ApiSpec do
+  alias DocsWeb.Schemas.RequestBody.RequestUpdateCustom
+  alias DocsWeb.Schemas.RequestBody.RequestUpdateContacts
+  alias DocsWeb.Schemas.RequestBody.RequestCreate
+  alias DocsWeb.Parameters.ArtaQuoteTimeout
+  alias DocsWeb.Parameters.Search
+
   alias OpenApiSpex.{
     Info,
     OpenApi,
@@ -1125,6 +1131,172 @@ defmodule DocsWeb.ApiSpec do
                   "Successful Payment response",
                   "application/json",
                   Response.Payment,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/requests" => %PathItem{
+          get: %Operation{
+            summary: "List Request records",
+            description:
+              "Retrieve a paginated collection of Quote request records belonging to your Organization",
+            tags: ["requests"],
+            operationId: "requests/list",
+            parameters: [
+              Authorization.parameter(),
+              Page.parameter(),
+              PageSize.parameter(),
+              Search.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Quote Request records",
+                  "application/json",
+                  list(Response.RequestListItem),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Quote Request",
+            description:
+              "The first step to booking a shipment on Arta is to create a quote request. This quote request provides Arta with all the necessary transport details for us to price your eventual shipment. \n\n Arta will return eligible quotes for your shipment across Arta's Premium, Selecct, and Parcel quote types. If any quote types are ineligible given your logistic details, those will be noted in the `disqualifications` response. \n\n You must minimally include `objects`, `origin`, and `destination` details in your API call for Arta to successfully price the transport.",
+            tags: ["requests"],
+            operationId: "requests/create",
+            parameters: [Authorization.parameter(), ArtaQuoteTimeout.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: RequestCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "response",
+                  "application/json",
+                  Response.Request,
+                  headers: default_headers()
+                ),
+              400 =>
+                Operation.response(
+                  "Bad Request",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/requests/{request_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Quote Request",
+            description: "Retrieve an existing Shipment Quote Request record by its ID",
+            tags: ["requests"],
+            operationId: "requests/get",
+            parameters: [Authorization.parameter(), Parameters.RequestID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Request get response",
+                  "application/json",
+                  Response.Request,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/requests/{request_id}/contacts" => %PathItem{
+          patch: %Operation{
+            summary: "Update the contacts for a Quote Request",
+            description:
+              "For quote requests with a current status of `quoted` or `disqualified`, you may update the contacts associated with either or both of the origin and destination locations.\n\nCompleting the missing contact details for a previously unbookable quote request may change the bookable status for the request if all other requirements are met.\n\nThis endpoint payload requires at least one of a destination or an origin object to be present.",
+            tags: ["requests"],
+            operationId: "requests/update/contacts",
+            parameters: [Authorization.parameter(), Parameters.RequestID.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: RequestUpdateContacts
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Request get response",
+                  "application/json",
+                  Response.Request,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/requests/{request_id}/custom" => %PathItem{
+          patch: %Operation{
+            summary: "Request custom quotes",
+            description: "Convert an existing Quote Request into a Custom Quote Request.",
+            tags: ["requests"],
+            operationId: "requests/custom",
+            parameters: [Authorization.parameter(), Parameters.RequestID.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: RequestUpdateCustom
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Request get response",
+                  "application/json",
+                  Response.Request,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/requests/{request_id}/cancel" => %PathItem{
+          patch: %Operation{
+            summary: "Cancel a Quote Request",
+            description:
+              "Cancels an in_progress Quote Request resource. This is useful to indicate to Arta that you no longer require custom quotes for a request.",
+            tags: ["requests"],
+            operationId: "requests/cancel",
+            parameters: [Authorization.parameter(), Parameters.RequestID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Request get response",
+                  "application/json",
+                  Response.Request,
                   headers: default_headers()
                 ),
               404 =>
