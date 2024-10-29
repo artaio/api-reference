@@ -712,6 +712,329 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/metadata/api_versions" => %PathItem{
+          get: %Operation{
+            summary: "API Versions",
+            description: "The list of API versions supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/apiVersions",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of API versions",
+                  "application/json",
+                  Response.Metadata.ApiVersion
+                )
+            }
+          }
+        },
+        "/metadata/currencies" => %PathItem{
+          get: %Operation{
+            summary: "Currencies",
+            description: "The list of currencies supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/currencies",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of currency types",
+                  "application/json",
+                  Response.Metadata.Currency
+                )
+            }
+          }
+        },
+        "/metadata/commercial_carriers" => %PathItem{
+          get: %Operation{
+            summary: "Commercial Carriers",
+            description: "The list of commercial carriers supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/commercialCarriers",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of commercial carriers",
+                  "application/json",
+                  Response.Metadata.CommercialCarrier
+                )
+            }
+          }
+        },
+        "/metadata/email_notifications" => %PathItem{
+          get: %Operation{
+            summary: "Email Notifications",
+            description: "The list of email notification types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/emailNotifications",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of email notification types",
+                  "application/json",
+                  Response.Metadata.EmailNotification
+                )
+            }
+          }
+        },
+        "/metadata/insurances" => %PathItem{
+          get: %Operation{
+            summary: "Insurances",
+            description: "The list of insurance types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/insurances",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of insurance types",
+                  "application/json",
+                  Response.Metadata.Insurance
+                )
+            }
+          }
+        },
+        "/metadata/location_access_restrictions" => %PathItem{
+          get: %Operation{
+            summary: "Location Access Restrictions",
+            description: "The list of location access restriction types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/locationAccessRestrictions",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of location access restriction types",
+                  "application/json",
+                  Response.Metadata.LocationAccessRestriction
+                )
+            }
+          }
+        },
+        "/metadata/object_materials" => %PathItem{
+          get: %Operation{
+            summary: "Object Materials",
+            description: "The list of object material types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/objectMaterials",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of object material types",
+                  "application/json",
+                  Response.Metadata.ObjectMaterial
+                )
+            }
+          }
+        },
+        "/metadata/objects" => %PathItem{
+          get: %Operation{
+            summary: "Objects",
+            description: "The list of object types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/objects",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of object types",
+                  "application/json",
+                  Response.Metadata.Object
+                )
+            }
+          }
+        },
+        "/metadata/package_statuses" => %PathItem{
+          get: %Operation{
+            summary: "Package Statuses",
+            description: "The list of package status types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/packageStatuses",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of package status types",
+                  "application/json",
+                  Response.Metadata.PackageStatus
+                )
+            }
+          }
+        },
+        "/metadata/packings" => %PathItem{
+          get: %Operation{
+            summary: "Packings",
+            description: "The list of packing types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/packings",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of packing types",
+                  "application/json",
+                  Response.Metadata.Packing
+                )
+            }
+          }
+        },
+        "/metadata/parcel_transport_services" => %PathItem{
+          get: %Operation{
+            summary: "Parcel Transport Services",
+            description: "The list of parcel transport service types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/parcelTransportServices",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of parcel transport service types",
+                  "application/json",
+                  Response.Metadata.ParcelTransportService
+                )
+            }
+          }
+        },
+        "/metadata/payment_process_types" => %PathItem{
+          get: %Operation{
+            summary: "Payment Process Types",
+            description: "The list of payment process types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/paymentProcessTypes",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of shipment Payment Process types",
+                  "application/json",
+                  Response.Metadata.PaymentProcessType
+                )
+            }
+          }
+        },
+        "/metadata/quotes" => %PathItem{
+          get: %Operation{
+            summary: "Quote Types",
+            description: "The list of Quote types provided by Arta.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/quotes",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of quote types",
+                  "application/json",
+                  Response.Metadata.Quote
+                )
+            }
+          }
+        },
+        "/metadata/request_statuses" => %PathItem{
+          get: %Operation{
+            summary: "Quote Request Statuses",
+            description: "The list of statuses for a quote request resources.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/requestStatuses",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of quote request statuses",
+                  "application/json",
+                  Response.Metadata.RequestStatus
+                )
+            }
+          }
+        },
+        "/metadata/services" => %PathItem{
+          get: %Operation{
+            summary: "Services",
+            description: "The list of shipment services supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/services",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of service types",
+                  "application/json",
+                  Response.Metadata.Service
+                )
+            }
+          }
+        },
+        "/metadata/shipment_exception_types" => %PathItem{
+          get: %Operation{
+            summary: "Shipment Exception Types",
+            description: "Retrieve the list of shipment exception types",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/shipmentExceptionTypes",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of shipment exception types",
+                  "application/json",
+                  Response.Metadata.ShipmentExceptionType
+                )
+            }
+          }
+        },
+        "/metadata/shipment_statuses" => %PathItem{
+          get: %Operation{
+            summary: "Shipment Statuses",
+            description: "The list of statuses for a shipment on Arta.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/shipmentStatuses",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of shipment statuses",
+                  "application/json",
+                  Response.Metadata.ShipmentStatus
+                )
+            }
+          }
+        },
         "/shipments" => %PathItem{
           get: %Operation{
             summary: "List Shipment records",
