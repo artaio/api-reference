@@ -185,7 +185,8 @@ defmodule DocsWeb.ApiSpec do
                   "application/json",
                   Response.Attachment,
                   headers: default_headers()
-                )
+                ),
+              400 => Response.BadRequest.build()
             }
           }
         },
@@ -228,6 +229,125 @@ defmodule DocsWeb.ApiSpec do
                   "Attachment deleted",
                   "application/json",
                   nil,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/email_rules" => %PathItem{
+          get: %Operation{
+            summary: "List Email Rules",
+            description:
+              "Retrieve a paginated collection of Email Rules belonging to your Organization",
+            tags: ["email_rules"],
+            operationId: "emailRules/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Email Rules",
+                  "application/json",
+                  list(Response.EmailRule),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create an Email Rule",
+            description:
+              "Create an email rule to configure email notifications for your organization.",
+            tags: ["email_rules"],
+            operationId: "emailRules/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: DocsWeb.Schemas.RequestBody.EmailRuleCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created email rule",
+                  "application/json",
+                  Response.EmailRule,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build()
+            }
+          }
+        },
+        "/email_rules/{email_rule_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get an Email Rule",
+            description: "Retrieve an existing Email Rule request",
+            tags: ["email_rules"],
+            operationId: "emailRules/get",
+            parameters: [Authorization.parameter(), Parameters.EmailRuleID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Email Rule get response",
+                  "application/json",
+                  Response.EmailRule,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          delete: %Operation{
+            summary: "Delete an Email Rule",
+            description: "Delete an Email Rule",
+            tags: ["email_rules"],
+            operationId: "emailRules/delete",
+            parameters: [Authorization.parameter(), Parameters.EmailRuleID.parameter()],
+            responses: %{
+              204 =>
+                Operation.response(
+                  "Email Rule deleted",
+                  "application/json",
+                  nil,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          patch: %Operation{
+            summary: "Update an Email Rule",
+            description: "Update an Email Rule request",
+            tags: ["email_rules"],
+            operationId: "emailRules/update",
+            parameters: [Authorization.parameter(), Parameters.EmailRuleID.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: DocsWeb.Schemas.RequestBody.EmailRuleUpdate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "The updated email rule",
+                  "application/json",
+                  Response.EmailRule,
                   headers: default_headers()
                 ),
               404 =>
