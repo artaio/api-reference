@@ -18,7 +18,8 @@ defmodule DocsWeb.ApiSpec do
     AttachmentCreate,
     HostedSessionCreate,
     ApiKeyCreate,
-    ShipmentCreate
+    ShipmentCreate,
+    OrganizationUpdate
   }
 
   @behaviour OpenApi
@@ -1031,6 +1032,61 @@ defmodule DocsWeb.ApiSpec do
                   "A collection of shipment statuses",
                   "application/json",
                   Response.Metadata.ShipmentStatus
+                )
+            }
+          }
+        },
+        "/organization" => %PathItem{
+          get: %Operation{
+            summary: "Get an Organization",
+            description:
+              "Retrieve the Organization associated with the API Key in the Authorization header",
+            tags: ["organization"],
+            operationId: "organization-get",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Organization response",
+                  "application/json",
+                  Response.Organization,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          patch: %Operation{
+            summary: "Update an Organization",
+            description:
+              "Update the Organization associated with the API Key in the Authorization header",
+            tags: ["organization"],
+            operationId: "organization-patch",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: OrganizationUpdate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Organization update response",
+                  "application/json",
+                  Response.Organization,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
                 )
             }
           }
