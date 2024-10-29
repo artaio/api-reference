@@ -576,6 +576,52 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/invoice_payments" => %PathItem{
+          get: %Operation{
+            summary: "List Invoice Payment records",
+            description:
+              "Retrieve a paginated collection of Invoice Payments belonging to your Organization",
+            tags: [
+              "invoice_payments"
+            ],
+            operationId: "invoicePayments/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Invoice Payment records",
+                  "application/json",
+                  list(Response.InvoicePayment),
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/invoice_payments/{invoice_payment_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get an Invoice Payment record",
+            description: "Retrieve an existing Invoice Payment record",
+            tags: ["invoice_payments"],
+            operationId: "invoicePayments/get",
+            parameters: [Authorization.parameter(), Parameters.InvoicePaymentID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Invoice Payment response",
+                  "application/json",
+                  Response.InvoicePayment,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+
         "/shipments" => %PathItem{
           get: %Operation{
             summary: "List Shipment records",
