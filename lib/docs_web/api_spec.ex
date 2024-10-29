@@ -528,6 +528,54 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/hosted_sessions/{hosted_session_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Hosted Session",
+            description: "Retrieve an existing hosted session resource",
+            tags: ["hosted_sessions"],
+            operationId: "hostedSessions/get",
+            parameters: [Authorization.parameter(), Parameters.HostedSessionID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Hosted Session response",
+                  "application/json",
+                  Response.HostedSession,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/hosted_sessions/{hosted_session_id}/cancel" => %PathItem{
+          patch: %Operation{
+            summary: "Cancel a Hosted Session",
+            description: "Cancel an existing hosted session resource",
+            tags: ["hosted_sessions"],
+            operationId: "hostedSessions/cancel",
+            parameters: [Authorization.parameter(), Parameters.HostedSessionID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successfully cancelled Hosted Session response",
+                  "application/json",
+                  Response.HostedSession,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
         "/shipments" => %PathItem{
           get: %Operation{
             summary: "List Shipment records",
