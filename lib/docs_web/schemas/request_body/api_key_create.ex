@@ -18,6 +18,8 @@ defmodule DocsWeb.Schemas.RequestBody.ApiKeyCreate do
           }
         }
       }
-    }
+    },
+    required: ["api_key"],
+    additionalProperties: false
   })
 end

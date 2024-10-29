@@ -31,6 +31,7 @@ defmodule DocsWeb.Schemas.RequestBody.AttachmentCreate do
       }
     },
     required: ["attachment"],
+    additionalProperties: false,
     example: %{
       attachment: %{
         upload_id: 4791,

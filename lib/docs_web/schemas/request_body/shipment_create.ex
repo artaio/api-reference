@@ -40,7 +40,8 @@ defmodule DocsWeb.Schemas.RequestBody.ShipmentCreate do
             example: "New customer"
           }
         },
-        required: ["quote_id"]
+        required: ["quote_id"],
+        additionalProperties: false
       },
       %Schema{
         title: "TrackShipmentPayload",
@@ -111,7 +112,8 @@ defmodule DocsWeb.Schemas.RequestBody.ShipmentCreate do
               "The shipments packages are formatted as a list, however, Track shipments only support a single package. You can provide details about the package being shipped, including the object details within the package"
           }
         },
-        required: ["tracking"]
+        required: ["tracking"],
+        additionalProperties: false
       }
     ]
   })

@@ -78,7 +78,8 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
               "The URL the user will be redirected to after a Arta Booking session is completed",
             example: "http://example.com/success"
           }
-        }
+        },
+        additionalProperties: false
       },
       %Schema{
         title: "ShareRequest",
@@ -89,7 +90,8 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
             type: :string,
             description: "The ID of an existing Request to be shared."
           }
-        }
+        },
+        additionalProperties: false
       }
     ]
   })
