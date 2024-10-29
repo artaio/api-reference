@@ -100,7 +100,7 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
                 description: "The ID of an existing Request to be shared."
               }
             }
-          },
+          }
         },
         required: ["hosted_session"],
         additionalProperties: false
