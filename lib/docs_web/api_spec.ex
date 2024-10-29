@@ -381,7 +381,8 @@ defmodule DocsWeb.ApiSpec do
           },
           post: %Operation{
             summary: "Create an Email Subscription",
-            description: "Create an email subscription to configure email notifications for your organization.",
+            description:
+              "Create an email subscription to configure email notifications for your organization.",
             tags: [
               "email_subscriptions"
             ],
@@ -655,6 +656,51 @@ defmodule DocsWeb.ApiSpec do
                   "Successful Invoice response",
                   "application/json",
                   Response.Invoice,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/logs" => %PathItem{
+          get: %Operation{
+            summary: "List Log records",
+            description:
+              "Retrieve a paginated collection of Log records belonging to your Organization",
+            tags: [
+              "logs"
+            ],
+            operationId: "logs/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Log records",
+                  "application/json",
+                  list(Response.Log),
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/logs/{log_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Log record",
+            description: "Retrieve an existing Log record",
+            tags: ["logs"],
+            operationId: "logs/get",
+            parameters: [Authorization.parameter(), Parameters.LogID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Log response",
+                  "application/json",
+                  Response.Log,
                   headers: default_headers()
                 ),
               404 =>
