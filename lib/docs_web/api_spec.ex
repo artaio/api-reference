@@ -359,6 +359,128 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/email_subscriptions" => %PathItem{
+          get: %Operation{
+            description:
+              "Retrieve a paginated collection of Email Subscriptions belonging to your Organization",
+            operationId: "emailSubscriptions/list",
+            summary: "List Email Subscriptions",
+            tags: [
+              "email_subscriptions"
+            ],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Email Subscriptions",
+                  "application/json",
+                  list(Response.EmailSubscription),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create an Email Subscription",
+            description: "Create an email subscription to configure email notifications for your organization.",
+            tags: [
+              "email_subscriptions"
+            ],
+            operationId: "emailSubscriptions/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: DocsWeb.Schemas.RequestBody.EmailSubscriptionCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created email subscription",
+                  "application/json",
+                  Response.EmailSubscription,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build()
+            }
+          }
+        },
+        "/email_subscriptions/{email_subscription_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get an Email Subscription",
+            description: "Retrieve an existing Email Subscription request",
+            tags: ["email_subscriptions"],
+            operationId: "emailSubscriptions/get",
+            parameters: [Authorization.parameter(), Parameters.EmailSubscriptionID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Email Subscription response",
+                  "application/json",
+                  Response.EmailSubscription,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          delete: %Operation{
+            summary: "Delete an Email Subscription",
+            description: "Delete an Email Subscription",
+            tags: ["email_subscriptions"],
+            operationId: "emailSubscriptions/delete",
+            parameters: [Authorization.parameter(), Parameters.EmailSubscriptionID.parameter()],
+            responses: %{
+              204 =>
+                Operation.response(
+                  "Email Subscription deleted",
+                  "application/json",
+                  nil,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          patch: %Operation{
+            summary: "Update an Email Subscription",
+            description: "Update an existing Email Subscription request",
+            tags: ["email_subscriptions"],
+            operationId: "emailSubscriptions/update",
+            parameters: [Authorization.parameter(), Parameters.EmailSubscriptionID.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: DocsWeb.Schemas.RequestBody.EmailSubscriptionUpdate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "The updated email subscription",
+                  "application/json",
+                  Response.EmailSubscription,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
         "/hosted_sessions" => %PathItem{
           get: %Operation{
             description:

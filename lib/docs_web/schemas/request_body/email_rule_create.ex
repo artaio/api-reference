@@ -28,5 +28,6 @@ defmodule DocsWeb.Schemas.RequestBody.EmailRuleCreate do
       }
     },
     required: ["email_rule"],
+    additionalProperties: false
   })
 end
