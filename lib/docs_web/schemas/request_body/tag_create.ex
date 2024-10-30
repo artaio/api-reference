@@ -9,6 +9,7 @@ defmodule DocsWeb.Schemas.RequestBody.TagCreate do
     properties: %{
       tag: %Schema{
         type: :object,
+        required: ["color", "name"],
         properties: %{
           color: %Schema{
             type: :string,

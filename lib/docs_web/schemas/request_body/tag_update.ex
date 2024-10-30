@@ -4,7 +4,7 @@ defmodule DocsWeb.Schemas.RequestBody.TagUpdate do
   require OpenApiSpex
 
   OpenApiSpex.schema(%Schema{
-    title: "TagCreate",
+    title: "TagUpdate",
     type: :object,
     properties: %{
       tag: %Schema{
