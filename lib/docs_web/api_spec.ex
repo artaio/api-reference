@@ -1,4 +1,6 @@
 defmodule DocsWeb.ApiSpec do
+  alias DocsWeb.Schemas.RequestBody.ShipmentExceptionUpdate
+  alias DocsWeb.Schemas.RequestBody.ShipmentExceptionCreate
   alias DocsWeb.Schemas.RequestBody.RequestUpdateCustom
   alias DocsWeb.Schemas.RequestBody.RequestUpdateContacts
   alias DocsWeb.Schemas.RequestBody.RequestCreate
@@ -1329,6 +1331,102 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/shipment_exceptions" => %PathItem{
+          get: %Operation{
+            summary: "List Shipment Exceptions",
+            description: "Retrieve a paginated collection of Shipment Exceptions belonging to your Organization",
+            tags: ["shipment_exceptions"],
+            operationId: "shipmentExceptions/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A paginated collection of Shipment Exceptions",
+                  "application/json",
+                  list(Response.ShipmentException),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create Shipment Exception",
+            description:
+              "Create a Shipment Exception for a Shipment\n\n* Clients can create shipment exceptions of a single type currently:`requested_hold_to_collect` \n\n* A shipment must have a `pending` or `confirmed` status to create a `requested_hold_to_collect` shipment exception. \n\n* `hold_until` date cannot be greater than 30 days from the associated shipment's `created_at` timestamp.",
+            tags: ["shipment_exceptions"],
+            operationId: "shipmentExceptions/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: ShipmentExceptionCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "Successful response",
+                  "application/json",
+                  Response.ShipmentException,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/shipment_exceptions/{shipment_exception_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Shipment Exception",
+            description: "Retrieve an existing Shipment Exception",
+            tags: ["shipment_exceptions"],
+            operationId: "shipmentExceptions/get",
+            parameters: [Authorization.parameter(), Parameters.ShipmentExceptionID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Shipment Exception response",
+                  "application/json",
+                  Response.ShipmentException,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          patch: %Operation{
+            summary: "Update a Shipment Exception",
+            description: "Update an existing Shipment Exception",
+            tags: ["shipment_exceptions"],
+            operationId: "shipmentExceptions/update",
+            parameters: [Authorization.parameter(), Parameters.ShipmentExceptionID.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: ShipmentExceptionUpdate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Shipment Exception response",
+                  "application/json",
+                  Response.ShipmentException,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+
         "/shipments" => %PathItem{
           get: %Operation{
             summary: "List Shipment records",
