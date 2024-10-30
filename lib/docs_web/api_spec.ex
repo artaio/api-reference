@@ -1,4 +1,6 @@
 defmodule DocsWeb.ApiSpec do
+  alias DocsWeb.Schemas.RequestBody.TagCreate
+  alias DocsWeb.Schemas.RequestBody.TagUpdate
   alias DocsWeb.Schemas.RequestBody.ShipmentExceptionUpdate
   alias DocsWeb.Schemas.RequestBody.ShipmentExceptionCreate
   alias DocsWeb.Schemas.RequestBody.RequestUpdateCustom
@@ -1334,7 +1336,8 @@ defmodule DocsWeb.ApiSpec do
         "/shipment_exceptions" => %PathItem{
           get: %Operation{
             summary: "List Shipment Exceptions",
-            description: "Retrieve a paginated collection of Shipment Exceptions belonging to your Organization",
+            description:
+              "Retrieve a paginated collection of Shipment Exceptions belonging to your Organization",
             tags: ["shipment_exceptions"],
             operationId: "shipmentExceptions/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -1426,7 +1429,6 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
-
         "/shipments" => %PathItem{
           get: %Operation{
             summary: "List Shipment records",
@@ -1514,6 +1516,102 @@ defmodule DocsWeb.ApiSpec do
                   "application/json",
                   nil
                 )
+            }
+          }
+        },
+        "/tags" => %PathItem{
+          get: %Operation{
+            summary: "List tags",
+            description:
+              "Retrieve a paginated collection of tags belonging to your organization.\n\nTags allow you to categorize and organize Shipments, Requests, and other resources for easier tracking and filtering. They can be created, updated, and archived by setting is_active to false. Archived tags remain linked to existing records but cannot be associated with new ones. If needed, tags can be reactivated later.\n\nTags are global for an organization and shared across both Live and Test modes.",
+            tags: ["tags"],
+            operationId: "tags/list",
+            parameters: [
+              Authorization.parameter(),
+              Page.parameter(),
+              PageSize.parameter(),
+              Search.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A paginated list of tag resources",
+                  "application/json",
+                  list(Response.Tag),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Tag",
+            description: "Create a new tag for your organization.",
+            tags: ["tags"],
+            operationId: "tags/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: TagCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "A successfully created tag",
+                  "application/json",
+                  Response.Tag,
+                  headers: default_headers()
+                ),
+              400 =>
+                Operation.response(
+                  "Bad Request",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/tags/{tag_name}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Tag",
+            description:
+              "Retrieve an existing tag for your organization by the value of its `name` field.",
+            operationId: "tags/get",
+            tags: ["tags"],
+            parameters: [Authorization.parameter(), Parameters.TagName.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A tag resource",
+                  "application/json",
+                  Response.Tag,
+                  headers: default_headers()
+                )
+            }
+          },
+          patch: %Operation{
+            summary: "Update a Tag",
+            description:
+              "Update an existing tag resource.\n\nYou may archive a tag by setting the value of `is_active` to `false`. Archived tags remain linked to existing records but cannot be associated with new ones. If needed, archived tags can be reactivated by setting the value of `is_active` to `true`.",
+            operationId: "tags/update",
+            parameters: [Authorization.parameter(), Parameters.TagName.parameter()],
+            tags: ["tags"],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A succesfully updated tag",
+                  "application/json",
+                  Response.Tag,
+                  headers: default_headers()
+                )
+            },
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: TagUpdate
+                }
+              }
             }
           }
         }
