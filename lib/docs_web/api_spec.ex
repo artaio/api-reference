@@ -26,8 +26,10 @@ defmodule DocsWeb.ApiSpec do
     AttachmentCreate,
     HostedSessionCreate,
     ApiKeyCreate,
+    OrganizationUpdate,
     ShipmentCreate,
-    OrganizationUpdate
+    TagCreate,
+    TagUpdate
   }
 
   @behaviour OpenApi
@@ -440,7 +442,7 @@ defmodule DocsWeb.ApiSpec do
         "/email_subscriptions/{email_subscription_id}" => %PathItem{
           get: %Operation{
             summary: "Get an Email Subscription",
-            description: "Retrieve an existing Email Subscription request",
+            description: "Retrieve an existing Email Subscription resource",
             tags: ["email_subscriptions"],
             operationId: "emailSubscriptions/get",
             parameters: [Authorization.parameter(), Parameters.EmailSubscriptionID.parameter()],
@@ -484,7 +486,7 @@ defmodule DocsWeb.ApiSpec do
           },
           patch: %Operation{
             summary: "Update an Email Subscription",
-            description: "Update an existing Email Subscription request",
+            description: "Update an existing Email Subscription resource",
             tags: ["email_subscriptions"],
             operationId: "emailSubscriptions/update",
             parameters: [Authorization.parameter(), Parameters.EmailSubscriptionID.parameter()],
@@ -609,7 +611,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/invoice_payments" => %PathItem{
           get: %Operation{
-            summary: "List Invoice Payment records",
+            summary: "List Invoice Payment",
             description:
               "Retrieve a paginated collection of Invoice Payments belonging to your Organization",
             tags: [
@@ -630,7 +632,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/invoice_payments/{invoice_payment_id}" => %PathItem{
           get: %Operation{
-            summary: "Get an Invoice Payment record",
+            summary: "Get an Invoice Payment",
             description: "Retrieve an existing Invoice Payment record",
             tags: ["invoice_payments"],
             operationId: "invoicePayments/get",
@@ -654,7 +656,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/invoices" => %PathItem{
           get: %Operation{
-            summary: "List Invoice records",
+            summary: "List Invoices",
             description:
               "Retrieve a paginated collection of Invoices belonging to your Organization",
             tags: [
@@ -675,7 +677,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/invoices/{invoice_id}" => %PathItem{
           get: %Operation{
-            summary: "Get an Invoice record",
+            summary: "Get an Invoice",
             description: "Retrieve an existing Invoice record",
             tags: ["invoices"],
             operationId: "invoices/get",
@@ -699,7 +701,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/logs" => %PathItem{
           get: %Operation{
-            summary: "List Log records",
+            summary: "List Logs",
             description:
               "Retrieve a paginated collection of Log records belonging to your Organization",
             tags: [
@@ -720,7 +722,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/logs/{log_id}" => %PathItem{
           get: %Operation{
-            summary: "Get a Log record",
+            summary: "Get a Log",
             description: "Retrieve an existing Log record",
             tags: ["logs"],
             operationId: "logs/get",
@@ -1122,7 +1124,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/payments" => %PathItem{
           get: %Operation{
-            summary: "List Payment records",
+            summary: "List Payments",
             description:
               "Retrieve a paginated collection of Payments belonging to your Organization",
             tags: [
@@ -1143,7 +1145,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/payments/{payment_id}" => %PathItem{
           get: %Operation{
-            summary: "Get a Payment record",
+            summary: "Get a Payment",
             description: "Retrieve an existing Payment record",
             tags: ["payments"],
             operationId: "payments/get",
@@ -1167,9 +1169,9 @@ defmodule DocsWeb.ApiSpec do
         },
         "/requests" => %PathItem{
           get: %Operation{
-            summary: "List Request records",
+            summary: "List Quote Requests",
             description:
-              "Retrieve a paginated collection of Quote request records belonging to your Organization",
+              "Retrieve a paginated collection of Quote Request records belonging to your Organization",
             tags: ["requests"],
             operationId: "requests/list",
             parameters: [
@@ -1191,7 +1193,7 @@ defmodule DocsWeb.ApiSpec do
           post: %Operation{
             summary: "Create a Quote Request",
             description:
-              "The first step to booking a shipment on Arta is to create a quote request. This quote request provides Arta with all the necessary transport details for us to price your eventual shipment. \n\n Arta will return eligible quotes for your shipment across Arta's Premium, Selecct, and Parcel quote types. If any quote types are ineligible given your logistic details, those will be noted in the `disqualifications` response. \n\n You must minimally include `objects`, `origin`, and `destination` details in your API call for Arta to successfully price the transport.",
+              "The first step to booking a shipment on Arta is to create a Quote Request. This quote request provides Arta with all the necessary transport details for us to price your eventual shipment. \n\n Arta will return eligible quotes for your shipment across Arta's Premium, Selecct, and Parcel quote types. If any quote types are ineligible given your logistic details, those will be noted in the `disqualifications` response. \n\n You must minimally include `objects`, `origin`, and `destination` details in your API call for Arta to successfully price the transport.",
             tags: ["requests"],
             operationId: "requests/create",
             parameters: [Authorization.parameter(), ArtaQuoteTimeout.parameter()],
@@ -1222,7 +1224,7 @@ defmodule DocsWeb.ApiSpec do
         "/requests/{request_id}" => %PathItem{
           get: %Operation{
             summary: "Get a Quote Request",
-            description: "Retrieve an existing Shipment Quote Request record by its ID",
+            description: "Retrieve an existing Quote Request record by its ID",
             tags: ["requests"],
             operationId: "requests/get",
             parameters: [Authorization.parameter(), Parameters.RequestID.parameter()],
@@ -1429,14 +1431,19 @@ defmodule DocsWeb.ApiSpec do
 
         "/shipments" => %PathItem{
           get: %Operation{
-            summary: "List Shipment records",
+            summary: "List Shipments",
             description:
               "Retrieve a paginated collection of Shipment records belonging to your Organization",
             tags: [
               "shipments"
             ],
             operationId: "shipments/list",
-            parameters: [Authorization.parameter()],
+            parameters: [
+              Authorization.parameter(),
+              Page.parameter(),
+              PageSize.parameter(),
+              Search.parameter()
+            ],
             responses: %{
               200 =>
                 Operation.response(
@@ -1493,7 +1500,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/shipments/{shipment_id}" => %PathItem{
           get: %Operation{
-            summary: "Retrieve a Shipment record",
+            summary: "Retrieve a Shipment",
             description: "Retrieve an existing Shipment record",
             tags: [
               "shipments"
@@ -1506,6 +1513,121 @@ defmodule DocsWeb.ApiSpec do
                   "Successful Shipment get response",
                   "application/json",
                   Response.Shipment,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/tags" => %PathItem{
+          get: %Operation{
+            summary: "List Tags",
+            description:
+              "Retrieve a paginated collection of tags belonging to your organization\n\nTags allow you to categorize and organize Shipments, Requests, and other resources for easier tracking and filtering. They can be created, updated, and archived by setting is_active to false. Archived tags remain linked to existing records but cannot be associated with new ones. If needed, tags can be reactivated later.\n\nTags are global for an organization and shared across both Live and Test modes.",
+            tags: [
+              "tags"
+            ],
+            operationId: "tags/list",
+            parameters: [
+              Authorization.parameter(),
+              Page.parameter(),
+              PageSize.parameter(),
+              Search.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Tag records",
+                  "application/json",
+                  list(Response.Tag)
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Tag",
+            description: "Create a new tag for your organization.",
+            tags: [
+              "tags"
+            ],
+            operationId: "tags/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: TagCreate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "The created tag",
+                  "application/json",
+                  Response.Tag,
+                  headers: default_headers()
+                ),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              422 =>
+                Operation.response(
+                  "Unprocessible entity",
+                  "application/json",
+                  Response.Error
+                )
+            }
+          }
+        },
+        "/tags/{tag_name}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Tag",
+            description: "Retrieve an existing Tag resource by name",
+            tags: ["tags"],
+            operationId: "tags/get",
+            parameters: [Authorization.parameter(), Parameters.TagName.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Tag response",
+                  "application/json",
+                  Response.EmailSubscription,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          patch: %Operation{
+            summary: "Update a Tag",
+            description: "Update an existing Tag resource",
+            tags: ["tags"],
+            operationId: "tags/update",
+            parameters: [Authorization.parameter(), Parameters.TagName.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: TagUpdate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "The updated tag",
+                  "application/json",
+                  Response.Tag,
                   headers: default_headers()
                 ),
               404 =>

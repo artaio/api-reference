@@ -36,7 +36,7 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
             example: "USD"
           },
           destination: %Schema{
-            description: "The destination location for the shipment quote request",
+            description: "The destination location for the quote request",
             type: :object,
             required: ["postal_code", "country"],
             properties: %{
@@ -273,7 +273,7 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
             }
           },
           origin: %Schema{
-            description: "The originating location for the shipment quote request",
+            description: "The originating location for the quote request",
             type: :object,
             required: ["postal_code", "country"],
             properties: %{

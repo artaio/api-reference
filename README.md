@@ -9,15 +9,15 @@ To run this project, you will need to install the following dependencies on your
 - [Elixir](https://elixir-lang.org/install.html)
 - [Scalar CLI](https://github.com/scalar/scalar?tab=readme-ov-file#cli)
 
-## Fetch dependencies
+## Generate the API specification
 
 From the project root, run the following command in your terminal:
 
 ```shell
-bin/setup
+bin/run
 ```
 
-## Running an interactive shell
+## Running a development preview server
 
 From the project root, run the following command in your terminal:
 
@@ -25,4 +25,4 @@ From the project root, run the following command in your terminal:
 bin/server
 ```
 
-
+This will generate the API specification and start a [Scalar API Client](https://github.com/scalar/scalar/blob/main/packages/api-client/README.md) server to preview the generated documentation.
