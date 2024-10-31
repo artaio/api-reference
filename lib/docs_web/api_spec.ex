@@ -1851,7 +1851,7 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
-        "/webhoks/{webhook_id}" => %PathItem{
+        "/webhooks/{webhook_id}" => %PathItem{
           get: %Operation{
             summary: "Get a Webhook",
             description: "Retrieve an existing Webhook request",
@@ -1973,64 +1973,6 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
-        # "/webhooks/{webhook_id}/secret_token/reset": {
-        #   "patch": {
-        #     "summary": "Reset a Webhook Secret Token",
-        #     "description": "Regenerate the secret token associated with a webhook endpoint resource",
-        #     "tags": ["webhooks"],
-        #     "operationId": "webhooks-secret-token-reset-patch",
-        #     "parameters": [
-        #       {
-        #         "$ref": "#/components/parameters/authorization"
-        #       },
-        #       {
-        #         "$ref": "#/components/parameters/webhook_id"
-        #       }
-        #     ],
-        #     "security": [
-        #       {
-        #         "apiKeyAuth": []
-        #       }
-        #     ],
-        #     "responses": {
-        #       "200": {
-        #         "description": "Successful Webhook response",
-        #         "headers": {
-        #           "content-type": {
-        #             "$ref": "#/components/headers/content-type"
-        #           },
-        #           "x-arta-request-id": {
-        #             "$ref": "#/components/headers/x-arta-request-id"
-        #           }
-        #         },
-        #         "content": {
-        #           "application/json": {
-        #             "schema": {
-        #               "type": "object",
-        #               "properties": {
-        #                 "secret_token": {
-        #                   "type": "string",
-        #                   "example": "zASePCHfe2FYKjXl1YhFukNY5T7hCqgX0RRBUVi_289ubnhBvN9U03uOqG8oB2Oz",
-        #                   "description": "The new secret token associated with the webhook endpoint"
-        #                 }
-        #               }
-        #             },
-        #             "examples": {
-        #               "example": {
-        #                 "value": {
-        #                   "secret_token": "zASePCHfe2FYKjXl1YhFukNY5T7hCqgX0RRBUVi_289ubnhBvN9U03uOqG8oB2Oz"
-        #                 }
-        #               }
-        #             }
-        #           }
-        #         }
-        #       },
-        #       "404": {
-        #         "$ref": "#/components/responses/not_found"
-        #       }
-        #     }
-        #   }
-        # }
         "/webhooks/{webhook_id}/secret_token/reset" => %PathItem{
           patch: %Operation{
             summary: "Reset a Web Hook Secret Token",
