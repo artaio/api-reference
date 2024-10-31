@@ -1,4 +1,5 @@
 defmodule DocsWeb.ApiSpec do
+  alias DocsWeb.Schemas.RequestBody.UploadCreate
   alias DocsWeb.Schemas.RequestBody.ShipmentExceptionUpdate
   alias DocsWeb.Schemas.RequestBody.ShipmentExceptionCreate
   alias DocsWeb.Schemas.RequestBody.RequestUpdateCustom
@@ -1336,7 +1337,8 @@ defmodule DocsWeb.ApiSpec do
         "/shipment_exceptions" => %PathItem{
           get: %Operation{
             summary: "List Shipment Exceptions",
-            description: "Retrieve a paginated collection of Shipment Exceptions belonging to your Organization",
+            description:
+              "Retrieve a paginated collection of Shipment Exceptions belonging to your Organization",
             tags: ["shipment_exceptions"],
             operationId: "shipmentExceptions/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -1428,7 +1430,6 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
-
         "/shipments" => %PathItem{
           get: %Operation{
             summary: "List Shipments",
@@ -1661,6 +1662,100 @@ defmodule DocsWeb.ApiSpec do
                   nil
                 )
             }
+          }
+        },
+        "/uploads" => %PathItem{
+          get: %Operation{
+            summary: "List Uploads",
+            description:
+              "Retrieve a paginated collection of Uploads belonging to your Organization",
+            tags: ["uploads"],
+            operationId: "uploads/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Upload records",
+                  "application/json",
+                  list(Response.Upload),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create an Upload",
+            description:
+              "Uploading a file to Arta via API is a two step process.\n\nThe first step is to make an authenticated HTTP request to the `POST /uploads` endpoint described here. Successful requests to this endpoint will create an upload resource with a \"pending\" `status` as well as a `presigned_url` attribute. \n\nThe second step is to create a `PUT` HTTP request to the URL defined in the `presigned_url` field of the successful create response. This second request must include the raw data of the file as the request `body` and a `content-type` header. The `content-type` header must match the `mime_type` provided in your initial request. The size of the raw data must match the `size` param provided in your initial request.\n\nFor example, if you provided a `mime_type` of `text/csv` and a `size` of `13` bytes in the initial request to create the resource and if it successfully responded with a `presigned_url` value of `https://cdn.arta.io/uploads/my-file.csv`, your second request will look something like the following:\n\n```\ncurl --location --request PUT 'https://cdn.arta.io/uploads/my-file.csv' \\\n--header 'Content-Type: text/csv' \\\n--data-raw 'hello,world,\n'\n```",
+            tags: ["uploads"],
+            operationId: "uploads/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: UploadCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "response",
+                  "application/json",
+                  Response.UploadWithPresignedURL,
+                  headers: default_headers()
+                ),
+              400 =>
+                Operation.response(
+                  "Bad Request",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        "/uploads/{upload_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get an Upload",
+            description: "Retrieve an existing Upload",
+            tags: ["uploads"],
+            operationId: "uploads-get",
+            parameters: [Authorization.parameter(), Parameters.UploadID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Upload response",
+                  "application/json",
+                  Response.Upload,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          delete: %Operation{
+            summary: "Delete an Upload",
+            description: "Delete an Upload",
+            operationId: "uploads/delete",
+            parameters: [Authorization.parameter(), Parameters.UploadID.parameter()],
+            responses: %{
+              204 =>
+                Operation.response(
+                  "No content",
+                  "application/json",
+                  nil
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            },
+            tags: ["uploads"]
           }
         }
       }
