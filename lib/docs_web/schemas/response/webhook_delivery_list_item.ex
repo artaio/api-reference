@@ -13,7 +13,8 @@ defmodule DocsWeb.Schemas.Response.WebhookDeliveryListItem do
       },
       next_retry: %Schema{
         type: :string,
-        description: "The UTC timestamp describing when a follow up webhook delivery event will be attempted if this one has failed",
+        description:
+          "The UTC timestamp describing when a follow up webhook delivery event will be attempted if this one has failed",
         example: nil,
         nullable: true,
         readOnly: true
@@ -73,14 +74,15 @@ defmodule DocsWeb.Schemas.Response.WebhookDeliveryListItem do
       },
       webhook_id: %Schema{
         type: :integer,
-        example: 432672,
+        example: 432_672,
         description: "The ID belonging to your webhook endpoint in Arta's system",
         readOnly: true
       },
       webhook_url: %Schema{
         type: :string,
         example: "https://hooks.mydomain.xyz/arta",
-        description: "The URL belonging to your webhook endpoint in Arta's system at the time Arta attempted delivery of the webhook event",
+        description:
+          "The URL belonging to your webhook endpoint in Arta's system at the time Arta attempted delivery of the webhook event",
         readOnly: true
       }
     }
