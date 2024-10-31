@@ -7,3 +7,25 @@ cd $(dirname $PARENT_PATH)
 echo "[ARTA] Generating open api spec file"
 
 mix openapi.spec.json --spec DocsWeb.ApiSpec
+
+jq . openapi.json > out.json
+
+jq '.
+  | .paths = (.paths
+      | to_entries
+      | sort_by(.key | gsub("\\{.*\\}"; "zzz"))   # Sort paths alphabetically with parameters last
+      | map({
+          key,
+          value: (
+            .value
+            | {
+                get: .get,
+                post: .post,
+                patch: .patch,
+                delete: .delete
+              }
+            | with_entries(select(.value != null))  # Remove null entries
+          )
+        })
+      | from_entries
+    )' out.json > openapi.json
