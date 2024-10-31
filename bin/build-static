@@ -6,7 +6,7 @@ cd $(dirname $PARENT_PATH)
 
 echo "[ARTA] Generating open api spec file"
 
-mix openapi.spec.json --spec DocsWeb.ApiSpec
+bin/run
 
 echo "[ARTA] Generating open api spec file done"
 echo "[ARTA] Creating static bundle"
