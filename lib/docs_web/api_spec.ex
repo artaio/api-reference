@@ -1638,6 +1638,30 @@ defmodule DocsWeb.ApiSpec do
                 )
             }
           }
+        },
+        "/trackings/{tracking_number}" => %PathItem{
+          get: %Operation{
+            summary: "Get Tracking Details",
+            description: "Retrieve Tracking details for a parcel shipment by tracking number",
+            tags: ["trackings"],
+            operationId: "trackings/get",
+            parameters: [Authorization.parameter(), Parameters.TrackingNumber.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Tracking response",
+                  "application/json",
+                  Response.Tracking,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
         }
       }
     }
