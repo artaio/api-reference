@@ -1,4 +1,6 @@
 defmodule DocsWeb.ApiSpec do
+  alias DocsWeb.Schemas.RequestBody.WebhookUpdate
+  alias DocsWeb.Schemas.RequestBody.WebhookCreate
   alias DocsWeb.Schemas.RequestBody.UploadCreate
   alias DocsWeb.Schemas.RequestBody.ShipmentExceptionUpdate
   alias DocsWeb.Schemas.RequestBody.ShipmentExceptionCreate
@@ -1756,6 +1758,679 @@ defmodule DocsWeb.ApiSpec do
                 )
             },
             tags: ["uploads"]
+          }
+        },
+        "/webhook_deliveries" => %PathItem{
+          get: %Operation{
+            summary: "List Webhook Deliveries",
+            description:
+              "Retrieve a paginated collection of Webhook Deliveries belonging to your Organization",
+            tags: ["webhook_deliveries"],
+            operationId: "webhookDeliveries/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Webhook Deliveries",
+                  "application/json",
+                  list(Response.WebhookDeliveryListItem),
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/webhook_deliveries/{webhook_delivery_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Webhook Delivery",
+            description: "Retrieve an existing Webhook Delivery",
+            tags: ["webhook_deliveries"],
+            operationId: "webhookDeliveries-get",
+            parameters: [Authorization.parameter(), Parameters.WebhookDeliveryID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Webhook Delivery response",
+                  "application/json",
+                  Response.WebhookDelivery,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        # "/webhooks": {
+        #   "get": {
+        #     "description": "Retrieve a paginated collection of Webhooks belonging to your Organization",
+        #     "operationId": "webhooks/list",
+        #     "summary": "List Webhooks",
+        #     "tags": ["webhooks"],
+        #     "parameters": [
+        #       {
+        #         "$ref": "#/components/parameters/authorization"
+        #       },
+        #       {
+        #         "$ref": "#/components/parameters/page_size"
+        #       },
+        #       {
+        #         "$ref": "#/components/parameters/page"
+        #       }
+        #     ],
+        #     "security": [
+        #       {
+        #         "apiKeyAuth": []
+        #       }
+        #     ],
+        #     "responses": {
+        #       "200": {
+        #         "description": "A collection of Webhooks",
+        #         "headers": {
+        #           "content-type": {
+        #             "$ref": "#/components/headers/content-type"
+        #           },
+        #           "x-arta-request-id": {
+        #             "$ref": "#/components/headers/x-arta-request-id"
+        #           }
+        #         },
+        #         "content": {
+        #           "application/json": {
+        #             "schema": {
+        #               "$ref": "#/components/schemas/webhookList"
+        #             },
+        #             "examples": {
+        #               "default": {
+        #                 "$ref": "#/components/examples/webhookList"
+        #               }
+        #             }
+        #           }
+        #         }
+        #       }
+        #     }
+        #   },
+        #   "post": {
+        #     "summary": "Create a Webhook",
+        #     "description": "response",
+        #     "tags": ["webhooks"],
+        #     "operationId": "webhooks/create",
+        #     "parameters": [
+        #       {
+        #         "$ref": "#/components/parameters/authorization"
+        #       }
+        #     ],
+        #     "security": [
+        #       {
+        #         "apiKeyAuth": []
+        #       }
+        #     ],
+        #     "requestBody": {
+        #       "content": {
+        #         "application/json": {
+        #           "schema": {
+        #             "properties": {
+        #               "webhook": {
+        #                 "type": "object",
+        #                 "properties": {
+        #                   "name": {
+        #                     "description": "The name for this Webhook.",
+        #                     "type": "string",
+        #                     "example": "Production webhooks endpoint"
+        #                   },
+        #                   "url": {
+        #                     "description": "The URL for this Webhook.",
+        #                     "type": "string",
+        #                     "example": "https://notifications.example.com/"
+        #                   }
+        #                 }
+        #               }
+        #             },
+        #             "type": "object"
+        #           }
+        #         }
+        #       }
+        #     },
+        #     "responses": {
+        #       "201": {
+        #         "description": "response",
+        #         "headers": {
+        #           "content-type": {
+        #             "$ref": "#/components/headers/content-type"
+        #           },
+        #           "x-arta-request-id": {
+        #             "$ref": "#/components/headers/x-arta-request-id"
+        #           }
+        #         },
+        #         "content": {
+        #           "application/json": {
+        #             "schema": {
+        #               "$ref": "#/components/schemas/webhook"
+        #             },
+        #             "examples": {
+        #               "default": {
+        #                 "$ref": "#/components/examples/webhook"
+        #               }
+        #             }
+        #           }
+        #         }
+        #       },
+        #       "400": {
+        #         "$ref": "#/components/responses/bad_request"
+        #       }
+        #     }
+        #   }
+        # },
+        "/webhooks" => %PathItem{
+          get: %Operation{
+            summary: "List Webhooks",
+            description:
+              "Retrieve a paginated collection of Webhooks belonging to your Organization",
+            tags: ["webhooks"],
+            operationId: "webhooks/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Webhooks",
+                  "application/json",
+                  list(Response.Webhook),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Webhook",
+            description: "Create a new webhook for your organization.",
+            tags: ["webhooks"],
+            operationId: "webhooks/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: WebhookCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created webhook",
+                  "application/json",
+                  Response.Webhook,
+                  headers: default_headers()
+                ),
+              400 =>
+                Operation.response(
+                  "Bad Request",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        # "/webhooks/{webhook_id}": {
+        #   "get": {
+        #     "summary": "Get a Webhook",
+        #     "description": "Retrieve an existing Webhook request",
+        #     "tags": ["webhooks"],
+        #     "operationId": "webhooks-get",
+        #     "parameters": [
+        #       {
+        #         "$ref": "#/components/parameters/authorization"
+        #       },
+        #       {
+        #         "$ref": "#/components/parameters/webhook_id"
+        #       }
+        #     ],
+        #     "security": [
+        #       {
+        #         "apiKeyAuth": []
+        #       }
+        #     ],
+        #     "responses": {
+        #       "200": {
+        #         "description": "Successful Webhook response",
+        #         "headers": {
+        #           "content-type": {
+        #             "$ref": "#/components/headers/content-type"
+        #           },
+        #           "x-arta-request-id": {
+        #             "$ref": "#/components/headers/x-arta-request-id"
+        #           }
+        #         },
+        #         "content": {
+        #           "application/json": {
+        #             "schema": {
+        #               "$ref": "#/components/schemas/webhook"
+        #             },
+        #             "examples": {
+        #               "default": {
+        #                 "$ref": "#/components/examples/webhook"
+        #               }
+        #             }
+        #           }
+        #         }
+        #       },
+        #       "404": {
+        #         "$ref": "#/components/responses/not_found"
+        #       }
+        #     }
+        #   },
+        #   "delete": {
+        #     "summary": "Delete a Webhook",
+        #     "description": "Delete a Webhook",
+        #     "tags": ["webhooks"],
+        #     "operationId": "webhooks/delete",
+        #     "parameters": [
+        #       {
+        #         "$ref": "#/components/parameters/authorization"
+        #       },
+        #       {
+        #         "$ref": "#/components/parameters/webhook_id"
+        #       }
+        #     ],
+        #     "security": [
+        #       {
+        #         "apiKeyAuth": []
+        #       }
+        #     ],
+        #     "responses": {
+        #       "204": {
+        #         "$ref": "#/components/responses/204"
+        #       },
+        #       "404": {
+        #         "$ref": "#/components/responses/not_found"
+        #       }
+        #     }
+        #   },
+        #   "patch": {
+        #     "summary": "Update a Webhook",
+        #     "description": "Update an existing Webhook request",
+        #     "tags": ["webhooks"],
+        #     "operationId": "webhooks/patch",
+        #     "parameters": [
+        #       {
+        #         "$ref": "#/components/parameters/authorization"
+        #       },
+        #       {
+        #         "$ref": "#/components/parameters/webhook_id"
+        #       }
+        #     ],
+        #     "security": [
+        #       {
+        #         "apiKeyAuth": []
+        #       }
+        #     ],
+        #     "responses": {
+        #       "200": {
+        #         "description": "Successful Webhook response",
+        #         "headers": {
+        #           "content-type": {
+        #             "$ref": "#/components/headers/content-type"
+        #           },
+        #           "x-arta-request-id": {
+        #             "$ref": "#/components/headers/x-arta-request-id"
+        #           }
+        #         },
+        #         "content": {
+        #           "application/json": {
+        #             "schema": {
+        #               "$ref": "#/components/schemas/webhook"
+        #             },
+        #             "examples": {
+        #               "default": {
+        #                 "$ref": "#/components/examples/webhook"
+        #               }
+        #             }
+        #           }
+        #         }
+        #       },
+        #       "404": {
+        #         "$ref": "#/components/responses/not_found"
+        #       }
+        #     },
+        #     "requestBody": {
+        #       "content": {
+        #         "application/json": {
+        #           "schema": {
+        #             "properties": {
+        #               "webhook": {
+        #                 "type": "object",
+        #                 "properties": {
+        #                   "name": {
+        #                     "description": "The name for this Webhook.",
+        #                     "type": "string",
+        #                     "example": "hello@shiparta.com"
+        #                   },
+        #                   "url": {
+        #                     "description": "The URL for this Webhook.",
+        #                     "type": "string",
+        #                     "example": "Arta"
+        #                   }
+        #                 }
+        #               }
+        #             },
+        #             "type": "object"
+        #           }
+        #         }
+        #       }
+        #     }
+        #   }
+        # },
+        "/webbhoks/{webhook_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Webhook",
+            description: "Retrieve an existing Webhook request",
+            tags: ["webhooks"],
+            operationId: "webhooks-get",
+            parameters: [Authorization.parameter(), Parameters.WebhookID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Webhook response",
+                  "application/json",
+                  Response.Webhook,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          delete: %Operation{
+            summary: "Delete a Webhook",
+            description: "Delete a Webhook",
+            tags: ["webhooks"],
+            operationId: "webhooks/delete",
+            parameters: [Authorization.parameter(), Parameters.WebhookID.parameter()],
+            responses: %{
+              204 =>
+                Operation.response(
+                  "No content",
+                  "application/json",
+                  nil
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          },
+          patch: %Operation{
+            summary: "Update a Webhook",
+            description: "Update an existing Webhook request",
+            tags: ["webhooks"],
+            operationId: "webhooks/patch",
+            parameters: [Authorization.parameter(), Parameters.WebhookID.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: WebhookUpdate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Webhook response",
+                  "application/json",
+                  Response.Webhook,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+
+        # "/webhooks/{webhook_id}/ping": {
+        #   "post": {
+        #     "summary": "Ping a Webhook",
+        #     "description": "Trigger Arta to deliver a test message to an existing Webhook endpoint",
+        #     "tags": ["webhooks"],
+        #     "operationId": "webhooks-post",
+        #     "parameters": [
+        #       {
+        #         "$ref": "#/components/parameters/authorization"
+        #       },
+        #       {
+        #         "$ref": "#/components/parameters/webhook_id"
+        #       }
+        #     ],
+        #     "security": [
+        #       {
+        #         "apiKeyAuth": []
+        #       }
+        #     ],
+        #     "responses": {
+        #       "200": {
+        #         "description": "Successful Webhook response",
+        #         "headers": {
+        #           "content-type": {
+        #             "$ref": "#/components/headers/content-type"
+        #           },
+        #           "x-arta-request-id": {
+        #             "$ref": "#/components/headers/x-arta-request-id"
+        #           }
+        #         },
+        #         "content": {
+        #           "application/json": {
+        #             "schema": {
+        #               "$ref": "#/components/schemas/webhook"
+        #             },
+        #             "examples": {
+        #               "default": {
+        #                 "$ref": "#/components/examples/webhook"
+        #               }
+        #             }
+        #           }
+        #         }
+        #       },
+        #       "404": {
+        #         "$ref": "#/components/responses/not_found"
+        #       }
+        #     }
+        #   }
+        # },
+        "/webhooks/{webhook_id}/ping" => %PathItem{
+          post: %Operation{
+            summary: "Ping a Webhook",
+            description: "Trigger Arta to deliver a test message to an existing Webhook endpoint",
+            tags: ["webhooks"],
+            operationId: "webhooks-post",
+            parameters: [Authorization.parameter(), Parameters.WebhookID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Webhook response",
+                  "application/json",
+                  Response.Webhook,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+
+        # "/webhooks/{webhook_id}/secret_token": {
+        #   "get": {
+        #     "summary": "Get a Webhook Secret Token",
+        #     "description": "Retrieve the secret token associated with a webhook endpoint resource",
+        #     "tags": ["webhooks"],
+        #     "operationId": "webhooks-secret-token-get",
+        #     "parameters": [
+        #       {
+        #         "$ref": "#/components/parameters/authorization"
+        #       },
+        #       {
+        #         "$ref": "#/components/parameters/webhook_id"
+        #       }
+        #     ],
+        #     "security": [
+        #       {
+        #         "apiKeyAuth": []
+        #       }
+        #     ],
+        #     "responses": {
+        #       "200": {
+        #         "description": "Successful Webhook response",
+        #         "headers": {
+        #           "content-type": {
+        #             "$ref": "#/components/headers/content-type"
+        #           },
+        #           "x-arta-request-id": {
+        #             "$ref": "#/components/headers/x-arta-request-id"
+        #           }
+        #         },
+        #         "content": {
+        #           "application/json": {
+        #             "schema": {
+        #               "type": "object",
+        #               "properties": {
+        #                 "secret_token": {
+        #                   "type": "string",
+        #                   "example": "zASePCHfe2FYKjXl1YhFukNY5T7hCqgX0RRBUVi_289ubnhBvN9U03uOqG8oB2Oz",
+        #                   "description": "The secret token associated with the webhook endpoint"
+        #                 }
+        #               }
+        #             },
+        #             "examples": {
+        #               "example": {
+        #                 "value": {
+        #                   "secret_token": "zASePCHfe2FYKjXl1YhFukNY5T7hCqgX0RRBUVi_289ubnhBvN9U03uOqG8oB2Oz"
+        #                 }
+        #               }
+        #             }
+        #           }
+        #         }
+        #       },
+        #       "404": {
+        #         "$ref": "#/components/responses/not_found"
+        #       }
+        #     }
+        #   }
+        # },
+        "/webhooks/{webhook_id}/secret_token" => %PathItem{
+          get: %Operation{
+            summary: "Get a Web Hook Secret Token",
+            description: "Retrieve the secret token associated with a webhook endpoint resource",
+            tags: ["webhooks"],
+            operationId: "webhooks-secret-token-get",
+            parameters: [Authorization.parameter(), Parameters.WebhookID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Webhook response",
+                  "application/json",
+                  Response.WebhookSecretToken,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
+          }
+        },
+        # "/webhooks/{webhook_id}/secret_token/reset": {
+        #   "patch": {
+        #     "summary": "Reset a Webhook Secret Token",
+        #     "description": "Regenerate the secret token associated with a webhook endpoint resource",
+        #     "tags": ["webhooks"],
+        #     "operationId": "webhooks-secret-token-reset-patch",
+        #     "parameters": [
+        #       {
+        #         "$ref": "#/components/parameters/authorization"
+        #       },
+        #       {
+        #         "$ref": "#/components/parameters/webhook_id"
+        #       }
+        #     ],
+        #     "security": [
+        #       {
+        #         "apiKeyAuth": []
+        #       }
+        #     ],
+        #     "responses": {
+        #       "200": {
+        #         "description": "Successful Webhook response",
+        #         "headers": {
+        #           "content-type": {
+        #             "$ref": "#/components/headers/content-type"
+        #           },
+        #           "x-arta-request-id": {
+        #             "$ref": "#/components/headers/x-arta-request-id"
+        #           }
+        #         },
+        #         "content": {
+        #           "application/json": {
+        #             "schema": {
+        #               "type": "object",
+        #               "properties": {
+        #                 "secret_token": {
+        #                   "type": "string",
+        #                   "example": "zASePCHfe2FYKjXl1YhFukNY5T7hCqgX0RRBUVi_289ubnhBvN9U03uOqG8oB2Oz",
+        #                   "description": "The new secret token associated with the webhook endpoint"
+        #                 }
+        #               }
+        #             },
+        #             "examples": {
+        #               "example": {
+        #                 "value": {
+        #                   "secret_token": "zASePCHfe2FYKjXl1YhFukNY5T7hCqgX0RRBUVi_289ubnhBvN9U03uOqG8oB2Oz"
+        #                 }
+        #               }
+        #             }
+        #           }
+        #         }
+        #       },
+        #       "404": {
+        #         "$ref": "#/components/responses/not_found"
+        #       }
+        #     }
+        #   }
+        # }
+        "/webhooks/{webhook_id}/secret_token/reset" => %PathItem{
+          patch: %Operation{
+            summary: "Reset a Web Hook Secret Token",
+            description:
+              "Regenerate the secret token associated with a webhook endpoint resource",
+            tags: ["webhooks"],
+            operationId: "webhooks-secret-token-reset-patch",
+            parameters: [Authorization.parameter(), Parameters.WebhookID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Webhook response",
+                  "application/json",
+                  Response.WebhookSecretToken,
+                  headers: default_headers()
+                ),
+              404 =>
+                Operation.response(
+                  "Object not found",
+                  "application/json",
+                  nil
+                )
+            }
           }
         }
       }
