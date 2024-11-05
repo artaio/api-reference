@@ -2041,8 +2041,8 @@ defmodule DocsWeb.ApiSpec do
 
   defp default_headers() do
     %{
-      "content-type" => DocsWeb.Headers.XArtaRequestID.header(),
-      "x-arta-request-id" => DocsWeb.Headers.ContentTypeAppJson.header()
+      "content-type" => DocsWeb.Headers.ContentTypeAppJson.header(),
+      "x-arta-request-id" => DocsWeb.Headers.XArtaRequestID.header()
     }
   end
 end
