@@ -90,6 +90,33 @@ defmodule DocsWeb.Schemas.Response.ShipmentList do
           "A NaiveDatetime-formatted timestamp describing when the resource was last updated with microsecond precision",
         example: "2024-08-13T22:44:39.593704"
       }
+    },
+    example: %{
+      "created_at" => "2021-01-21T21:00:58.403150",
+      "destination" => %{
+        "city" => "Los Angeles",
+        "country" => "US",
+        "postal_code" => "90024",
+        "region" => "CA"
+      },
+      "hosted_session_id" => nil,
+      "id" => "748dd2cd-f299-446d-8e6e-19b33aa72a83",
+      "internal_reference" => "cart #425123; user #871",
+      "object_count" => 1,
+      "origin" => %{
+        "city" => "Brooklyn",
+        "country" => "US",
+        "postal_code" => "11211",
+        "region" => "NY"
+      },
+      "package_count" => 1,
+      "public_reference" => nil,
+      "quote_type" => "parcel",
+      "shortcode" => "DEMO-572652",
+      "status" => "pending",
+      "total" => "405.53",
+      "total_currency" => "USD",
+      "updated_at" => "2021-01-21T21:00:58.403150"
     }
   })
 end

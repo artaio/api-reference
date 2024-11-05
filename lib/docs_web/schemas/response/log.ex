@@ -52,6 +52,22 @@ defmodule DocsWeb.Schemas.Response.Log do
       updated_at: %Schema{
         type: :string
       }
+    },
+    example: %{
+      "api_key_id" => 1,
+      "arta_version" => "2020-10-22",
+      "end_at" => "2020-10-23T20:34:28.816433",
+      "id" => 320,
+      "created_at" => "2020-10-23T20:34:29.066599",
+      "method" => "POST",
+      "path" => "/requests",
+      "query_params" => "{}",
+      "request_body" => "",
+      "request_id" => "FkC5WHWtbZuuUtcAArFx",
+      "response_body" => "",
+      "start_at" => "2020-10-23T20:34:16.928374",
+      "status" => 200,
+      "updated_at" => "2020-10-23T20:34:29.066599"
     }
   })
 end
