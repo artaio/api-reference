@@ -64,6 +64,17 @@ defmodule DocsWeb.Schemas.Response.Tag do
         description: "The user ID associated with the last user to edit the tag when applicable.",
         nullable: true
       }
+    },
+    example: %{
+      "color" => "008000",
+      "created_at" => "2024-09-25T19:17:54.871490",
+      "created_by" => nil,
+      "description" => nil,
+      "id" => "f7e4b35b-5131-47c2-9a88-238bd6e62e2d",
+      "is_active" => false,
+      "name" => "ct-warehouse",
+      "updated_at" => "2024-09-25T19:19:01.648283",
+      "updated_by" => nil
     }
   })
 end

@@ -761,7 +761,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of API versions",
                   "application/json",
-                  Response.Metadata.ApiVersion
+                  Response.Metadata.ApiVersion,
+                  headers: default_headers()
                 )
             }
           }
@@ -780,7 +781,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of currency types",
                   "application/json",
-                  Response.Metadata.Currency
+                  Response.Metadata.Currency,
+                  headers: default_headers()
                 )
             }
           }
@@ -799,7 +801,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of commercial carriers",
                   "application/json",
-                  Response.Metadata.CommercialCarrier
+                  Response.Metadata.CommercialCarrier,
+                  headers: default_headers()
                 )
             }
           }
@@ -818,7 +821,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of email notification types",
                   "application/json",
-                  Response.Metadata.EmailNotification
+                  Response.Metadata.EmailNotification,
+                  headers: default_headers()
                 )
             }
           }
@@ -837,7 +841,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of insurance types",
                   "application/json",
-                  Response.Metadata.Insurance
+                  Response.Metadata.Insurance,
+                  headers: default_headers()
                 )
             }
           }
@@ -856,7 +861,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of location access restriction types",
                   "application/json",
-                  Response.Metadata.LocationAccessRestriction
+                  Response.Metadata.LocationAccessRestriction,
+                  headers: default_headers()
                 )
             }
           }
@@ -875,7 +881,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of object material types",
                   "application/json",
-                  Response.Metadata.ObjectMaterial
+                  Response.Metadata.ObjectMaterial,
+                  headers: default_headers()
                 )
             }
           }
@@ -894,7 +901,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of object types",
                   "application/json",
-                  Response.Metadata.Object
+                  Response.Metadata.Object,
+                  headers: default_headers()
                 )
             }
           }
@@ -913,7 +921,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of package status types",
                   "application/json",
-                  Response.Metadata.PackageStatus
+                  Response.Metadata.PackageStatus,
+                  headers: default_headers()
                 )
             }
           }
@@ -932,7 +941,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of packing types",
                   "application/json",
-                  Response.Metadata.Packing
+                  Response.Metadata.Packing,
+                  headers: default_headers()
                 )
             }
           }
@@ -951,7 +961,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of parcel transport service types",
                   "application/json",
-                  Response.Metadata.ParcelTransportService
+                  Response.Metadata.ParcelTransportService,
+                  headers: default_headers()
                 )
             }
           }
@@ -970,7 +981,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of shipment Payment Process types",
                   "application/json",
-                  Response.Metadata.PaymentProcessType
+                  Response.Metadata.PaymentProcessType,
+                  headers: default_headers()
                 )
             }
           }
@@ -989,7 +1001,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of quote types",
                   "application/json",
-                  Response.Metadata.Quote
+                  Response.Metadata.Quote,
+                  headers: default_headers()
                 )
             }
           }
@@ -1008,7 +1021,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of quote request statuses",
                   "application/json",
-                  Response.Metadata.RequestStatus
+                  Response.Metadata.RequestStatus,
+                  headers: default_headers()
                 )
             }
           }
@@ -1027,7 +1041,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of service types",
                   "application/json",
-                  Response.Metadata.Service
+                  Response.Metadata.Service,
+                  headers: default_headers()
                 )
             }
           }
@@ -1046,7 +1061,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of shipment exception types",
                   "application/json",
-                  Response.Metadata.ShipmentExceptionType
+                  Response.Metadata.ShipmentExceptionType,
+                  headers: default_headers()
                 )
             }
           }
@@ -1065,7 +1081,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of shipment statuses",
                   "application/json",
-                  Response.Metadata.ShipmentStatus
+                  Response.Metadata.ShipmentStatus,
+                  headers: default_headers()
                 )
             }
           }
@@ -1452,7 +1469,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of Shipment records",
                   "application/json",
-                  list(Response.ShipmentList)
+                  list(Response.ShipmentList),
+                  headers: default_headers()
                 )
             }
           },
@@ -1547,7 +1565,8 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A collection of Tag records",
                   "application/json",
-                  list(Response.Tag)
+                  list(Response.Tag),
+                  headers: default_headers()
                 )
             }
           },

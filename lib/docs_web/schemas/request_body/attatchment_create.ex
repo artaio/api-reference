@@ -25,7 +25,8 @@ defmodule DocsWeb.Schemas.RequestBody.AttachmentCreate do
           shipment_id: %Schema{
             type: :string,
             description:
-              "The string ID of the shipment resource being associated to an upload. Do not include a shipment_id in the attachment parameters if you are associating a shipment"
+              "The string ID of the shipment resource being associated to an upload. Do not include a shipment_id in the attachment parameters if you are associating a shipment",
+            example: nil
           }
         }
       }

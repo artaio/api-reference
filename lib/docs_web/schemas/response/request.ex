@@ -397,6 +397,486 @@ defmodule DocsWeb.Schemas.Response.Request do
           }
         }
       }
+    },
+    example: %{
+      "additional_services" => [],
+      "bookable" => %{
+        "missing" => [],
+        "ready" => true
+      },
+      "created_at" => "2021-01-21T17:22:08.818747",
+      "currency" => "USD",
+      "destination" => %{
+        "access_restrictions" => [],
+        "address_line_1" => "87 Richardson St",
+        "address_line_2" => nil,
+        "address_line_3" => nil,
+        "city" => "New York",
+        "contacts" => [
+          %{
+            "email_address" => "al@example.com",
+            "name" => "Alfred Barr",
+            "phone_number" => "(222) 222-2222"
+          }
+        ],
+        "country" => "US",
+        "postal_code" => "11249",
+        "region" => "NY",
+        "title" => "Home"
+      },
+      "disqualifications" => [],
+      "hosted_session_id" => 723,
+      "id" => "9d8892bc-f4c6-4b45-88e2-0ccd28eb73cc",
+      "insurance" => nil,
+      "internal_reference" => nil,
+      "log_request_id" => "FpL53jSpPbCUXRAAKPRS",
+      "object_count" => 1,
+      "objects" => [
+        %{
+          "current_packing" => [],
+          "depth" => "2",
+          "details" => %{
+            "creation_date" => nil,
+            "creator" => "Robert Irwin",
+            "is_cites" => false,
+            "is_fragile" => false,
+            "materials" => [],
+            "title" => "All That Jazz"
+          },
+          "height" => "10.5",
+          "id" => 1644,
+          "images" => [],
+          "internal_reference" => nil,
+          "public_reference" => nil,
+          "subtype" => "painting_unframed",
+          "type" => "art",
+          "unit_of_measurement" => "in",
+          "value" => "15000",
+          "value_currency" => "USD",
+          "weight" => "3.5",
+          "weight_unit" => "lb",
+          "width" => "10"
+        }
+      ],
+      "origin" => %{
+        "access_restrictions" => [],
+        "address_line_1" => "11 W 53rd St",
+        "address_line_2" => nil,
+        "address_line_3" => nil,
+        "city" => "New York",
+        "contacts" => [
+          %{
+            "email_address" => "mary@example.com",
+            "name" => "Mary Quinn Sullivan",
+            "phone_number" => "(333) 333-3333"
+          }
+        ],
+        "country" => "US",
+        "postal_code" => "10019",
+        "region" => "NY",
+        "title" => "Warehouse"
+      },
+      "payment_process" => "invoicing",
+      "preferred_quote_types" => [],
+      "public_reference" => nil,
+      "quote_types" => ["premium", "select", "parcel"],
+      "quotes" => [
+        %{
+          "id" => 61,
+          "included_services" => [
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Specialized Shuttle",
+              "sub_subtype" => "specialized_shuttle",
+              "subtype" => "specialized",
+              "type" => "transport"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Shadowbox",
+              "sub_subtype" => "shadow_box",
+              "subtype" => "packing_materials",
+              "type" => "packing"
+            }
+          ],
+          "included_insurance_policy" => nil,
+          "optional_services" => [
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [
+                %{
+                  "name" => "Soft Packed Disposal",
+                  "sub_subtype" => "soft_packed_disposal",
+                  "subtype" => "debris_disposal",
+                  "type" => "handling"
+                }
+              ],
+              "name" => "Debris Disposal",
+              "sub_subtype" => "debris_disposal",
+              "subtype" => "debris_disposal",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "name" => "Assembly",
+              "sub_subtype" => "assembly",
+              "subtype" => "installation",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "name" => "Placement",
+              "sub_subtype" => "placement",
+              "subtype" => "installation",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "name" => "Installation",
+              "sub_subtype" => "installation",
+              "subtype" => "installation",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "name" => "Condition Check (destination)",
+              "sub_subtype" => "destination_condition_check",
+              "subtype" => "condition",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "name" => "Condition Check (origin)",
+              "sub_subtype" => "origin_condition_check",
+              "subtype" => "condition",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "name" => "Condition Report (destination)",
+              "sub_subtype" => "destination_full_condition_report",
+              "subtype" => "condition",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "name" => "Condition Report (origin)",
+              "sub_subtype" => "origin_full_condition_report",
+              "subtype" => "condition",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [
+                %{
+                  "name" => "Unpacking Soft Materials (destination)",
+                  "sub_subtype" => "destination_unpacking_soft",
+                  "subtype" => "unpacking",
+                  "type" => "handling"
+                }
+              ],
+              "name" => "Unpacking (destination)",
+              "sub_subtype" => "destination_unpacking",
+              "subtype" => "unpacking",
+              "type" => "handling"
+            }
+          ],
+          "quote_type" => "premium",
+          "status" => "published",
+          "total" => "2",
+          "total_currency" => "USD"
+        },
+        %{
+          "id" => 62,
+          "included_services" => [
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [
+                %{
+                  "name" => "Soft Packed Disposal",
+                  "sub_subtype" => "soft_packed_disposal",
+                  "subtype" => "debris_disposal",
+                  "type" => "handling"
+                }
+              ],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Debris Disposal",
+              "sub_subtype" => "debris_disposal",
+              "subtype" => "debris_disposal",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Fuel Surcharge",
+              "sub_subtype" => "fuel_surcharge",
+              "subtype" => "fees",
+              "type" => "taxes_duties_fees"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Strongbox",
+              "sub_subtype" => "strongbox",
+              "subtype" => "packing_materials",
+              "type" => "packing"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Consolidated Trucking",
+              "sub_subtype" => "road_groupage",
+              "subtype" => "consolidated",
+              "type" => "transport"
+            }
+          ],
+          "included_insurance_policy" => nil,
+          "optional_services" => [
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [
+                %{
+                  "name" => "Unpacking Soft Materials (destination)",
+                  "sub_subtype" => "destination_unpacking_soft",
+                  "subtype" => "unpacking",
+                  "type" => "handling"
+                }
+              ],
+              "name" => "Unpacking (destination)",
+              "sub_subtype" => "destination_unpacking",
+              "subtype" => "unpacking",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "name" => "Condition Check (destination)",
+              "sub_subtype" => "destination_condition_check",
+              "subtype" => "condition",
+              "type" => "handling"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "name" => "Condition Check (origin)",
+              "sub_subtype" => "origin_condition_check",
+              "subtype" => "condition",
+              "type" => "handling"
+            }
+          ],
+          "quote_type" => "select",
+          "status" => "published",
+          "total" => "4",
+          "total_currency" => "USD"
+        },
+        %{
+          "id" => 63,
+          "included_services" => [
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Fuel Surcharge",
+              "sub_subtype" => "fuel_surcharge",
+              "subtype" => "fees",
+              "type" => "taxes_duties_fees"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Collection",
+              "sub_subtype" => "collection",
+              "subtype" => "collection",
+              "type" => "location"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Ply Box",
+              "sub_subtype" => "ply_box",
+              "subtype" => "packing_materials",
+              "type" => "packing"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "UPS Ground",
+              "sub_subtype" => "parcel",
+              "subtype" => "parcel",
+              "type" => "transport"
+            }
+          ],
+          "included_insurance_policy" => nil,
+          "optional_services" => [],
+          "quote_type" => "parcel",
+          "status" => "published",
+          "total" => "4",
+          "total_currency" => "USD"
+        },
+        %{
+          "id" => 64,
+          "included_services" => [
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Fuel Surcharge",
+              "sub_subtype" => "fuel_surcharge",
+              "subtype" => "fees",
+              "type" => "taxes_duties_fees"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Collection",
+              "sub_subtype" => "collection",
+              "subtype" => "collection",
+              "type" => "location"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Ply Box",
+              "sub_subtype" => "ply_box",
+              "subtype" => "packing_materials",
+              "type" => "packing"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "UPS Second Day Air",
+              "sub_subtype" => "parcel",
+              "subtype" => "parcel",
+              "type" => "transport"
+            }
+          ],
+          "included_insurance_policy" => nil,
+          "optional_services" => [],
+          "quote_type" => "parcel",
+          "status" => "published",
+          "total" => "4",
+          "total_currency" => "USD"
+        },
+        %{
+          "id" => 65,
+          "included_services" => [
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Fuel Surcharge",
+              "sub_subtype" => "fuel_surcharge",
+              "subtype" => "fees",
+              "type" => "taxes_duties_fees"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Collection",
+              "sub_subtype" => "collection",
+              "subtype" => "collection",
+              "type" => "location"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "Ply Box",
+              "sub_subtype" => "ply_box",
+              "subtype" => "packing_materials",
+              "type" => "packing"
+            },
+            %{
+              "amount" => "1",
+              "amount_currency" => "USD",
+              "included_services" => [],
+              "is_requested" => false,
+              "is_required" => true,
+              "name" => "UPS Next Day Air",
+              "sub_subtype" => "parcel",
+              "subtype" => "parcel",
+              "type" => "transport"
+            }
+          ],
+          "included_insurance_policy" => nil,
+          "optional_services" => [],
+          "quote_type" => "parcel",
+          "status" => "published",
+          "total" => "4",
+          "total_currency" => "USD"
+        }
+      ],
+      "shipping_notes" => nil,
+      "shortcode" => "DEMO-R29NAW",
+      "status" => "quoted",
+      "updated_at" => "2021-01-21T17:22:10.129653"
     }
   })
 end
