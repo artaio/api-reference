@@ -43,6 +43,14 @@ defmodule DocsWeb.Schemas.Response.Attachment do
         readOnly: true
       }
     },
-    required: ["upload_id"]
+    required: ["upload_id"],
+    example: %{
+      "created_at" => "2021-10-27T16:48:38.657228",
+      "request_id" => "506d79b6-1e5e-4e8c-a266-74658fdaf4ee",
+      "shipment_id" => nil,
+      "id" => 1942,
+      "upload_id" => 4791,
+      "updated_at" => "2021-10-27T16:48:38.657228"
+    }
   })
 end
