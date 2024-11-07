@@ -50,6 +50,6 @@ jobs:
       uses: bump-sh/github-action@v1
       if: ${{ github.event_name == 'push' }}
       with:
-        doc: arta-api
+        doc: arta
         token: ${{ secrets.BUMP_SECRET_API_KEY }}
         file: openapi.json
