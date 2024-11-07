@@ -80,6 +80,15 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
                 description:
                   "The URL the user will be redirected to after a Arta Booking session is completed",
                 example: "http://example.com/success"
+              },
+              tags: %Schema{
+                type: :array,
+                description: "A list of tags to associate with this hosted session",
+                items: %Schema{
+                  type: :string,
+                  description: "The name of an active tag belonging to your organization.",
+                  example: "spring-jewelry-sale"
+                }
               }
             }
           }

@@ -196,6 +196,7 @@ defmodule DocsWeb.Schemas.Response.RequestListItem do
       "quote_types" => ["parcel", "select", "premium"],
       "shortcode" => "DEMO-R29NAW",
       "status" => "closed",
+      "tags" => [],
       "updated_at" => "2021-01-21T21:00:58.484566"
     }
   })
