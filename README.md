@@ -2,6 +2,10 @@
 
 Welcome to the Arta API Reference repository. This project is designed to generate the Open API Specification (OAS) for the Arta API. It is built using Elixir and leverages the [Open API Spex library](https://github.com/open-api-spex/open_api_spex) to define and document the API specifications.
 
+## Deployments
+
+On merges to the `master` branch, the `build-deploy` GitHub Actions workflow generates an OpenAPI JSON spec which is then pushed to [api-reference.arta.io](https://api-reference.arta.io/) via [bump.sh](https://bump.sh/).
+
 ## Installing / Getting started
 
 To run this project, you will need to install the following dependencies on your system:
