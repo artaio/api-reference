@@ -16,12 +16,14 @@ defmodule DocsWeb.Schemas.Response.ShipmentException do
       },
       exception_type_label: %Schema{
         type: :string,
-        description: "An additional label providing context about the exception type (optional)"
+        description: "An additional label providing context about the exception type (optional)",
+        nullable: true
       },
       hold_until: %Schema{
         type: :string,
         description: "The date the shipment will be held until",
-        format: "date"
+        format: "date",
+        nullable: true
       },
       id: %Schema{
         type: :string,
@@ -32,12 +34,14 @@ defmodule DocsWeb.Schemas.Response.ShipmentException do
         type: :integer,
         format: :int64,
         description: "The package associated with this exception (optional)",
-        example: "12345"
+        example: "12345",
+        nullable: true
       },
       resolution: %Schema{
         type: :string,
         description: "A brief description of the method by which this exception was resolved",
-        example: "Balance Cleared"
+        example: "Balance Cleared",
+        nullable: true
       },
       shipment_id: %Schema{
         type: :string,

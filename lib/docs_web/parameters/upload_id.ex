@@ -10,7 +10,7 @@ defmodule DocsWeb.Parameters.UploadID do
       in: :path,
       required: true,
       schema: %Schema{
-        type: "string"
+        type: "integer"
       }
     }
 end
