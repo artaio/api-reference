@@ -381,6 +381,15 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
             description:
               "This field can be used to pass through any notes to Arta that a customer might want to provide about the request",
             example: "New customer"
+          },
+          tags: %Schema{
+            type: :array,
+            description: "A list of tags to associate with this request",
+            items: %Schema{
+              type: :string,
+              description: "The name of an active tag belonging to your organization.",
+              example: "ny-warehouse"
+            }
           }
         }
       }

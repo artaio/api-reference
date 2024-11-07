@@ -4,7 +4,8 @@ defmodule DocsWeb.Schemas.Response.Shipment do
   alias DocsWeb.Schemas.Response.{
     Package,
     Service,
-    ShipmentException
+    ShipmentException,
+    Tag
   }
 
   alias DocsWeb.Schemas.{Currency, MonetaryAmount, Response}
@@ -179,9 +180,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
       tags: %Schema{
         type: :array,
         description: "A list of tags associated with the shipment",
-        items: %Schema{
-          type: :string
-        }
+        items: Tag
       },
       total: MonetaryAmount,
       total_currency: Currency,
@@ -389,6 +388,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
       "status" => "pending",
       "total" => "4",
       "total_currency" => "USD",
+      "tags" => [],
       "tracking" => [],
       "updated_at" => "2021-01-21T21:00:58.579870",
       "url" =>

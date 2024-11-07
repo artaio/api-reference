@@ -392,6 +392,11 @@ defmodule DocsWeb.Schemas.Response.Request do
               type: "string",
               example: "published"
             },
+            tags: %Schema{
+              type: :array,
+              description: "A list of tags associated with this request",
+              items: DocsWeb.Schemas.Response.Tag
+            },
             total: MonetaryAmount.schema(),
             total_currency: Currency.schema()
           }
@@ -876,6 +881,7 @@ defmodule DocsWeb.Schemas.Response.Request do
       "shipping_notes" => nil,
       "shortcode" => "DEMO-R29NAW",
       "status" => "quoted",
+      "tags" => [],
       "updated_at" => "2021-01-21T17:22:10.129653"
     }
   })

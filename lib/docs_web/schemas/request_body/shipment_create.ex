@@ -41,6 +41,16 @@ defmodule DocsWeb.Schemas.RequestBody.ShipmentCreate do
                   "This field can be used to pass through any notes to Arta that a customer might want to provide about the request",
                 maxLength: 255,
                 example: "New customer"
+              },
+              tags: %Schema{
+                type: :array,
+                description:
+                  "A list of tags to associate with this shipment. Tags present on the request will also be set on the shipment",
+                items: %Schema{
+                  type: :string,
+                  description: "The name of an active tag belonging to your organization.",
+                  example: "vip"
+                }
               }
             },
             required: ["quote_id"]
@@ -119,6 +129,15 @@ defmodule DocsWeb.Schemas.RequestBody.ShipmentCreate do
                 items: Payload.Package.call(:track),
                 description:
                   "The shipments packages are formatted as a list, however, Track shipments only support a single package. You can provide details about the package being shipped, including the object details within the package"
+              },
+              tags: %Schema{
+                type: :array,
+                description: "A list of tags to associate with this shipment",
+                items: %Schema{
+                  type: :string,
+                  description: "The name of an active tag belonging to your organization.",
+                  example: "vip"
+                }
               }
             },
             required: ["tracking"]

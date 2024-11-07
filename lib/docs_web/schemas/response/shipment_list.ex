@@ -114,6 +114,7 @@ defmodule DocsWeb.Schemas.Response.ShipmentList do
       "quote_type" => "parcel",
       "shortcode" => "DEMO-572652",
       "status" => "pending",
+      "tags" => [],
       "total" => "405.53",
       "total_currency" => "USD",
       "updated_at" => "2021-01-21T21:00:58.403150"

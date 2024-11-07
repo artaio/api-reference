@@ -44,6 +44,11 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         maxLength: 255,
         nullable: true
       },
+      objects: %Schema{
+        type: "array",
+        description: "A list of objects to be shipped",
+        items: Response.Object
+      },
       origin: Response.Location,
       payment_process: %Schema{
         type: :string,
@@ -52,6 +57,14 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         example: "checkout",
         enum: ["checkout", "invoicing"],
         readOnly: true
+      },
+      preferred_quote_types: %Schema{
+        type: :array,
+        description:
+          "An optional field presenting the list of quote types the caller instructed Arta to return as part of the hosted session",
+        items: %Schema{
+          type: :string
+        }
       },
       private_token: %Schema{
         type: :string,
@@ -85,6 +98,11 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         description:
           "The URL the user will be redirected to after an Arta Booking session is completed"
       },
+      tags: %Schema{
+        type: :array,
+        description: "A list of tags associated with this hosted session",
+        items: DocsWeb.Schemas.Response.Tag
+      },
       updated_at: %Schema{
         type: :string
       },
@@ -92,19 +110,6 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         type: :string,
         description: "The Arta Booking web URL for this Hosted Session",
         nullable: true
-      },
-      preferred_quote_types: %Schema{
-        type: :array,
-        description:
-          "An optional field presenting the list of quote types the caller instructed Arta to return as part of the hosted session",
-        items: %Schema{
-          type: :string
-        }
-      },
-      objects: %Schema{
-        type: "array",
-        description: "A list of objects to be shipped",
-        items: Response.Object
       }
     },
     example: %{
@@ -169,6 +174,7 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       "shortcode" => "DEMO-B49SVZ",
       "status" => "new",
       "success_url" => "http://example.com/success",
+      "tags" => [],
       "updated_at" => "2021-01-21T17:22:10.129653",
       "url" => "https://book.arta.io/b/42/6f76b6e1-ce25-43a9-b4ea-2ceaac24ec7e"
     }
