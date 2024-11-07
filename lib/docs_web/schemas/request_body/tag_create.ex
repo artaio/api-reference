@@ -28,7 +28,8 @@ defmodule DocsWeb.Schemas.RequestBody.TagCreate do
           is_active: %Schema{
             type: "boolean",
             description:
-              "Indicates whether or not the tag is active. Inactive tags may not be associated to new resources"
+              "Indicates whether or not the tag is active. Inactive tags may not be associated to new resources",
+            nullable: true
           },
           name: %Schema{
             type: :string,

@@ -10,7 +10,7 @@ defmodule DocsWeb.Parameters.InvoicePaymentID do
       in: :path,
       required: true,
       schema: %Schema{
-        type: "string"
+        type: "integer"
       }
     }
 end

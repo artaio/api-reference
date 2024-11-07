@@ -384,6 +384,7 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
           }
         }
       }
-    }
+    },
+    required: ["request"],
   })
 end

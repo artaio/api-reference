@@ -123,7 +123,8 @@ defmodule DocsWeb.ApiSpec do
                   "application/json",
                   APIKey,
                   headers: default_headers()
-                )
+                ),
+              400 => Response.BadRequest.build()
             }
           }
         },
@@ -144,12 +145,7 @@ defmodule DocsWeb.ApiSpec do
                   APIKey,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           delete: %Operation{
@@ -168,12 +164,7 @@ defmodule DocsWeb.ApiSpec do
                   nil,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -214,7 +205,7 @@ defmodule DocsWeb.ApiSpec do
               }
             },
             responses: %{
-              200 =>
+              201 =>
                 Operation.response(
                   "The created attachment",
                   "application/json",
@@ -242,12 +233,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Attachment,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           delete: %Operation{
@@ -266,12 +252,7 @@ defmodule DocsWeb.ApiSpec do
                   nil,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -334,12 +315,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.EmailRule,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           delete: %Operation{
@@ -356,12 +332,7 @@ defmodule DocsWeb.ApiSpec do
                   nil,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           patch: %Operation{
@@ -385,12 +356,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.EmailRule,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -457,12 +423,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.EmailSubscription,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           delete: %Operation{
@@ -479,12 +440,7 @@ defmodule DocsWeb.ApiSpec do
                   nil,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           patch: %Operation{
@@ -508,12 +464,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.EmailSubscription,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -554,13 +505,14 @@ defmodule DocsWeb.ApiSpec do
               }
             },
             responses: %{
-              200 =>
+              201 =>
                 Operation.response(
                   "the created hosted sessions",
                   "application/json",
                   Response.HostedSession,
                   headers: default_headers()
-                )
+                ),
+              400 => Response.BadRequest.build()
             }
           }
         },
@@ -579,12 +531,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.HostedSession,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -603,12 +550,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.HostedSession,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -648,12 +590,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.InvoicePayment,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -693,12 +630,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Invoice,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -738,12 +670,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Log,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -870,6 +797,7 @@ defmodule DocsWeb.ApiSpec do
         "/metadata/object_materials" => %PathItem{
           get: %Operation{
             summary: "Object Materials",
+            deprecated: true,
             description: "The list of object material types supported by Arta's API.",
             tags: [
               "metadata"
@@ -1103,12 +1031,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Organization,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           patch: %Operation{
@@ -1133,12 +1056,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Organization,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1178,12 +1096,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Payment,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1232,12 +1145,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Request,
                   headers: default_headers()
                 ),
-              400 =>
-                Operation.response(
-                  "Bad Request",
-                  "application/json",
-                  nil
-                )
+              400 => Response.BadRequest.build()
             }
           }
         },
@@ -1256,12 +1164,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Request,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1288,12 +1191,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Request,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1319,12 +1217,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Request,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1344,12 +1237,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Request,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1411,12 +1299,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.ShipmentException,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           patch: %Operation{
@@ -1440,12 +1323,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.ShipmentException,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1491,7 +1369,7 @@ defmodule DocsWeb.ApiSpec do
               }
             },
             responses: %{
-              200 =>
+              201 =>
                 Operation.response(
                   "The created shipment",
                   "application/json",
@@ -1504,12 +1382,8 @@ defmodule DocsWeb.ApiSpec do
                   "application/json",
                   nil
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                ),
+              400 => Response.BadRequest.build(),
+              404 => Response.NotFound.build(),
               422 =>
                 Operation.response(
                   "Unprocessible entity",
@@ -1536,12 +1410,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Shipment,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1586,13 +1455,14 @@ defmodule DocsWeb.ApiSpec do
               }
             },
             responses: %{
-              200 =>
+              201 =>
                 Operation.response(
                   "The created tag",
                   "application/json",
                   Response.Tag,
                   headers: default_headers()
                 ),
+              400 => Response.BadRequest.build(),
               403 =>
                 Operation.response(
                   "Forbidden",
@@ -1620,15 +1490,10 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "Successful Tag response",
                   "application/json",
-                  Response.EmailSubscription,
+                  Response.Tag,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           patch: %Operation{
@@ -1652,12 +1517,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Tag,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1676,12 +1536,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Tracking,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1725,12 +1580,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.UploadWithPresignedURL,
                   headers: default_headers()
                 ),
-              400 =>
-                Operation.response(
-                  "Bad Request",
-                  "application/json",
-                  nil
-                )
+              400 => Response.BadRequest.build()
             }
           }
         },
@@ -1749,12 +1599,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Upload,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           delete: %Operation{
@@ -1769,12 +1614,7 @@ defmodule DocsWeb.ApiSpec do
                   "application/json",
                   nil
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             },
             tags: ["uploads"]
           }
@@ -1813,12 +1653,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.WebhookDelivery,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1885,12 +1720,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Webhook,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           delete: %Operation{
@@ -1906,12 +1736,7 @@ defmodule DocsWeb.ApiSpec do
                   "application/json",
                   nil
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           },
           patch: %Operation{
@@ -1935,12 +1760,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Webhook,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1959,12 +1779,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.Webhook,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -1983,12 +1798,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.WebhookSecretToken,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         },
@@ -2008,12 +1818,7 @@ defmodule DocsWeb.ApiSpec do
                   Response.WebhookSecretToken,
                   headers: default_headers()
                 ),
-              404 =>
-                Operation.response(
-                  "Object not found",
-                  "application/json",
-                  nil
-                )
+              404 => Response.NotFound.build()
             }
           }
         }
@@ -2058,7 +1863,7 @@ defmodule DocsWeb.ApiSpec do
     }
   end
 
-  defp default_headers() do
+  def default_headers() do
     %{
       "content-type" => DocsWeb.Headers.ContentTypeAppJson.header(),
       "x-arta-request-id" => DocsWeb.Headers.XArtaRequestID.header()

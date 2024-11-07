@@ -1,5 +1,5 @@
 defmodule DocsWeb.Schemas.Response.Request do
-  alias DocsWeb.Schemas.Payload.Location
+  alias DocsWeb.Schemas.Response.Location
   alias DocsWeb.Schemas.Currency
   alias DocsWeb.Schemas.MonetaryAmount
   alias OpenApiSpex.Schema
@@ -42,7 +42,7 @@ defmodule DocsWeb.Schemas.Response.Request do
         example: "2021-01-21T21:00:58.403150"
       },
       currency: Currency.schema(),
-      destination: Location.call(),
+      destination: Location.schema(),
       disqualifications: %Schema{
         type: "array",
         description: "The list of reasons for which particular quote types were disqulified",
@@ -221,7 +221,7 @@ defmodule DocsWeb.Schemas.Response.Request do
           }
         }
       },
-      origin: Location.call(),
+      origin: Location.schema(),
       payment_process: %Schema{
         type: "string",
         description:
@@ -393,9 +393,39 @@ defmodule DocsWeb.Schemas.Response.Request do
               example: "published"
             },
             total: MonetaryAmount.schema(),
-            total_currency: Currency.schema()
+            total_currency: Currency.schema(),
           }
         }
+      },
+      shipping_notes: %Schema{
+        type: "string",
+        description:
+          "This field can be used to pass through any notes to Arta that a customer might want to provide about the request",
+        nullable: true
+      },
+      shortcode: %Schema{
+        type: "string",
+        description: "A brief and unique string identifier for the request resource",
+        example: "DEMO-B8FIRV"
+      },
+      status: %Schema{
+        type: "string",
+        example: "quoted",
+        enum: [
+          "quoted",
+          "in_progress",
+          "cancelled",
+          "closed",
+          "disqualified",
+          "expired",
+          "pending"
+        ]
+      },
+      updated_at: %Schema{
+        type: "string",
+        example: "2021-01-21T21:00:58.403150",
+        description:
+          "A NaiveDatetime-formatted timestamp describing when the resource was last updated with microsecond precision"
       }
     },
     example: %{

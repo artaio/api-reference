@@ -10,7 +10,7 @@ defmodule DocsWeb.Parameters.LogID do
       in: :path,
       required: true,
       schema: %Schema{
-        type: "string"
+        type: "integer"
       }
     }
 end

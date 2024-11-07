@@ -208,10 +208,16 @@ defmodule DocsWeb.Schemas.Fields do
   def package_fields_for_response() do
     package_fields()
     |> Map.merge(%{
+      id: %Schema{
+        type: :integer,
+        format: :int64,
+        description: "The id of the package"
+      },
       eta: %Schema{
         type: "string",
         description: "The expected delivery date for this package in the `MM/DD/YYYY` format",
-        example: "01/01/2021"
+        example: "01/01/2021",
+        nullable: true
       },
       handle_with_care: %Schema{
         type: "boolean",
@@ -229,7 +235,8 @@ defmodule DocsWeb.Schemas.Fields do
       status: %Schema{
         type: "string",
         description: "The status of the package",
-        example: "pending"
+        example: "pending",
+        nullable: true
       }
     })
   end

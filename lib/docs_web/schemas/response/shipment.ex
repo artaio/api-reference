@@ -11,6 +11,340 @@ defmodule DocsWeb.Schemas.Response.Shipment do
 
   require OpenApiSpex
 
+  # {
+  #   "created_at": {
+  #     "description": "A NaiveDatetime-formatted timestamp describing when the resource was created with microsecond precision",
+  #     "example": "2024-08-13T22:44:39.593704",
+  #     "format": "date-time",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "destination": {
+  #     "$ref": "#/components/schemas/Location"
+  #   },
+  #   "eei_form_status": {
+  #     "description": "The status of an associated electronic export information document required for customs clearance. Returns null if the shipment does not have an associated EEI Form",
+  #     "enum": [
+  #       "not_required",
+  #       "required",
+  #       "submitted",
+  #       "approved",
+  #       "rejected"
+  #     ],
+  #     "example": "not_required",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "eei_form_url": {
+  #     "description": "The URL for an associated electronic export information form required for customs clearance. Returns null if the shipment does not have an associated EEI Form",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "emissions": {
+  #     "description": "The estimated CO2 emissions for the shipment",
+  #     "example": "0.5",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "emissions_unit": {
+  #     "description": "The unit of measurement for emissions for this shipment. Typically measured in \"kg_co2e\" or \"kilograms of carbon dioxide equivalent\"",
+  #     "example": "kg_co2e",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "exceptions": {
+  #     "description": "Shipment exceptions provide context about holds, delays, and other circumstances that may interrupt a shipment's fulfillment",
+  #     "items": {
+  #       "$ref": "#/components/schemas/ShipmentException"
+  #     },
+  #     "type": "array",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "hosted_session_id": {
+  #     "description": "The ID of the HostedSession through which this shipment was created",
+  #     "example": 4215,
+  #     "nullable": true,
+  #     "type": "integer",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "id": {
+  #     "description": "The id of the shipment in UUID format",
+  #     "format": "uuid",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "insurance_policy": {
+  #     "properties": {
+  #       "amount": {
+  #         "$ref": "#/components/schemas/MonetaryAmount"
+  #       },
+  #       "amount_currency": {
+  #         "$ref": "#/components/schemas/Currency"
+  #       },
+  #       "id": {
+  #         "example": "arta_transit_insurance",
+  #         "type": "string",
+  #         "x-struct": null,
+  #         "x-validate": null
+  #       },
+  #       "insured_value": {
+  #         "$ref": "#/components/schemas/MonetaryAmount"
+  #       },
+  #       "insured_value_currency": {
+  #         "$ref": "#/components/schemas/Currency"
+  #       }
+  #     },
+  #     "type": "object",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "internal_reference": {
+  #     "description": "This field can be used to pass through any character data that you may want returned unaltered for your own later usage",
+  #     "maxLength": 255,
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "log_request_id": {
+  #     "description": "A string identifying the API request that created the shipment. This `log_request_id` may be used to find the Log associated with the source API request",
+  #     "example": "F-uX-m3bUWEb2vwAECSB",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "object_count": {
+  #     "description": "The count of objects included in the shipment",
+  #     "example": 1,
+  #     "format": "int64",
+  #     "type": "integer",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "origin": {
+  #     "$ref": "#/components/schemas/Location"
+  #   },
+  #   "package_count": {
+  #     "description": "The count of packages included in the shipment",
+  #     "example": 1,
+  #     "format": "int64",
+  #     "type": "integer",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "packages": {
+  #     "items": {
+  #       "$ref": "#/components/schemas/Package"
+  #     },
+  #     "type": "array",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "payment_process": {
+  #     "description": "The primary method by which payment to Arta will be handled for any shipment booked through this hosted session",
+  #     "enum": [
+  #       "checkout",
+  #       "invoicing"
+  #     ],
+  #     "example": "checkout",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "public_reference": {
+  #     "description": "A client defined name for the resource. The value provided for the public_reference field may appear in notification emails and public web pages",
+  #     "maxLength": 255,
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "quote_type": {
+  #     "description": "The ID of the quote type associated with this shipment",
+  #     "enum": [
+  #       "premium",
+  #       "select",
+  #       "parcel",
+  #       "self_ship"
+  #     ],
+  #     "example": "premium",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "schedule": {
+  #     "description": "The schedule for the shipment",
+  #     "properties": {
+  #       "delivery_end": {
+  #         "format": "date",
+  #         "type": "string",
+  #         "x-struct": null,
+  #         "x-validate": null
+  #       },
+  #       "delivery_start": {
+  #         "format": "date",
+  #         "type": "string",
+  #         "x-struct": null,
+  #         "x-validate": null
+  #       },
+  #       "delivery_window_modifier": {
+  #         "description": "A qualifying word indicating how delivery_start and delivery_end together shape the delivery window. When present, values may be \"after\", \"by\", \"on\", or \"between\"",
+  #         "example": "on",
+  #         "type": "string",
+  #         "x-struct": null,
+  #         "x-validate": null
+  #       },
+  #       "pickup_end": {
+  #         "format": "date",
+  #         "type": "string",
+  #         "x-struct": null,
+  #         "x-validate": null
+  #       },
+  #       "pickup_start": {
+  #         "format": "date",
+  #         "type": "string",
+  #         "x-struct": null,
+  #         "x-validate": null
+  #       },
+  #       "pickup_window_modifier": {
+  #         "description": "A qualifying word indicating how delivery_start and delivery_end together shape the delivery window. When present, values may be \"after\", \"by\", \"on\", or \"between\"",
+  #         "example": "on",
+  #         "type": "string",
+  #         "x-struct": null,
+  #         "x-validate": null
+  #       }
+  #     },
+  #     "type": "object",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "services": {
+  #     "description": "A list of services included in the shipment",
+  #     "items": {
+  #       "$ref": "#/components/schemas/Service"
+  #     },
+  #     "type": "array",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "shipping_notes": {
+  #     "description": "Any additional unstructured notes to Arta about the shipment",
+  #     "maxLength": 255,
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "shortcode": {
+  #     "description": "A brief identifier for this shipment",
+  #     "example": "DEMO-B8FIRV",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "status": {
+  #     "description": "The status for this shipment",
+  #     "enum": [
+  #       "pending",
+  #       "confirmed",
+  #       "collected",
+  #       "in_transit",
+  #       "completed",
+  #       "cancelled"
+  #     ],
+  #     "example": "pending",
+  #     "maxLength": 255,
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "tags": {
+  #     "description": "A list of tags associated with the shipment",
+  #     "items": {
+  #       "type": "string",
+  #       "x-struct": null,
+  #       "x-validate": null
+  #     },
+  #     "type": "array",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "total": {
+  #     "$ref": "#/components/schemas/MonetaryAmount"
+  #   },
+  #   "total_currency": {
+  #     "$ref": "#/components/schemas/Currency"
+  #   },
+  #   "tracking": {
+  #     "description": "A list of tracking details for the packages in a shipment",
+  #     "items": {
+  #       "properties": {
+  #         "carrier_name": {
+  #           "description": "The name of the carrier providing transport services for a specific package",
+  #           "example": "UPS",
+  #           "type": "string",
+  #           "x-struct": null,
+  #           "x-validate": null
+  #         },
+  #         "label_url": {
+  #           "description": "A URL at which parcel package shipping labels may be downladed and printed",
+  #           "type": "string",
+  #           "x-struct": null,
+  #           "x-validate": null
+  #         },
+  #         "package_id": {
+  #           "description": "The ID associated with the tracking detail's corresponding package",
+  #           "example": "12345",
+  #           "format": "int64",
+  #           "type": "integer",
+  #           "x-struct": null,
+  #           "x-validate": null
+  #         },
+  #         "tracking_number": {
+  #           "description": "The carrier-providing tracking number for this package",
+  #           "example": "1ZXXXXXXXXXXXXXXXX",
+  #           "type": "string",
+  #           "x-struct": null,
+  #           "x-validate": null
+  #         },
+  #         "url": {
+  #           "description": "A carrier-provided URL for fetching delivery events related to this package's transport",
+  #           "example": "https://www.ups.com/track?loc=en_us&tracknum=1ZXXXXXXXXXXXXXXXX&Requester=NS/",
+  #           "type": "string",
+  #           "x-struct": null,
+  #           "x-validate": null
+  #         }
+  #       },
+  #       "type": "object",
+  #       "x-struct": null,
+  #       "x-validate": null
+  #     },
+  #     "type": "array",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "updated_at": {
+  #     "description": "A NaiveDatetime-formatted timestamp describing when the resource was last updated with microsecond precision",
+  #     "example": "2024-08-13T22:44:39.593704",
+  #     "format": "date-time",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   },
+  #   "url": {
+  #     "description": "The track URL for this shipment on the Arta web platform",
+  #     "example": "https://connect.shiparta.com/shipments/6b12c76a-5217-4cd6-82d8-7aa5265egood/5xTRnCvYkdMFdcFFMWUZaCmXz",
+  #     "type": "string",
+  #     "x-struct": null,
+  #     "x-validate": null
+  #   }
+  # }
+
   OpenApiSpex.schema(%{
     type: :object,
     properties: %{
@@ -27,23 +361,27 @@ defmodule DocsWeb.Schemas.Response.Shipment do
         description:
           "The status of an associated electronic export information document required for customs clearance. Returns null if the shipment does not have an associated EEI Form",
         example: "not_required",
-        enum: ["not_required", "required", "submitted", "approved", "rejected"]
+        enum: ["not_required", "required", "submitted", "approved", "rejected"],
+        nullable: true
       },
       eei_form_url: %Schema{
         type: :string,
+        nullable: true,
         description:
           "The URL for an associated electronic export information form required for customs clearance. Returns null if the shipment does not have an associated EEI Form"
       },
       emissions: %Schema{
         type: :string,
         description: "The estimated CO2 emissions for the shipment",
-        example: "0.5"
+        example: "0.5",
+        nullable: true,
       },
       emissions_unit: %Schema{
         type: :string,
         description:
           "The unit of measurement for emissions for this shipment. Typically measured in \"kg_co2e\" or \"kilograms of carbon dioxide equivalent\"",
-        example: "kg_co2e"
+        example: "kg_co2e",
+        nullable: true,
       },
       exceptions: %Schema{
         type: :array,
@@ -70,19 +408,22 @@ defmodule DocsWeb.Schemas.Response.Shipment do
           id: %Schema{type: :string, example: "arta_transit_insurance"},
           insured_value: MonetaryAmount,
           insured_value_currency: Currency
-        }
+        },
+        nullable: true
       },
       internal_reference: %Schema{
         type: :string,
         description:
           "This field can be used to pass through any character data that you may want returned unaltered for your own later usage",
-        maxLength: 255
+        maxLength: 255,
+        nullable: true
       },
       log_request_id: %Schema{
         type: :string,
         description:
           "A string identifying the API request that created the shipment. This `log_request_id` may be used to find the Log associated with the source API request",
-        example: "F-uX-m3bUWEb2vwAECSB"
+        example: "F-uX-m3bUWEb2vwAECSB",
+        nullable: true
       },
       object_count: %Schema{
         type: :integer,
@@ -112,7 +453,8 @@ defmodule DocsWeb.Schemas.Response.Shipment do
         type: :string,
         description:
           "A client defined name for the resource. The value provided for the public_reference field may appear in notification emails and public web pages",
-        maxLength: 255
+        maxLength: 255,
+        nullable: true
       },
       quote_type: %Schema{
         type: :string,
@@ -125,11 +467,13 @@ defmodule DocsWeb.Schemas.Response.Shipment do
         properties: %{
           delivery_end: %Schema{
             type: :string,
-            format: :date
+            format: :date,
+            nullable: true
           },
           delivery_start: %Schema{
             type: :string,
-            format: :date
+            format: :date,
+            nullable: true
           },
           delivery_window_modifier: %Schema{
             type: :string,
@@ -139,11 +483,13 @@ defmodule DocsWeb.Schemas.Response.Shipment do
           },
           pickup_end: %Schema{
             type: :string,
-            format: :date
+            format: :date,
+            nullable: true
           },
           pickup_start: %Schema{
             type: :string,
-            format: :date
+            format: :date,
+            nullable: true
           },
           pickup_window_modifier: %Schema{
             type: :string,
@@ -162,7 +508,8 @@ defmodule DocsWeb.Schemas.Response.Shipment do
       shipping_notes: %Schema{
         type: :string,
         description: "Any additional unstructured notes to Arta about the shipment",
-        maxLength: 255
+        maxLength: 255,
+        nullable: true
       },
       shortcode: %Schema{
         type: :string,
@@ -200,7 +547,8 @@ defmodule DocsWeb.Schemas.Response.Shipment do
             label_url: %Schema{
               type: :string,
               description:
-                "A URL at which parcel package shipping labels may be downladed and printed"
+                "A URL at which parcel package shipping labels may be downladed and printed",
+              nullable: true
             },
             package_id: %Schema{
               type: :integer,

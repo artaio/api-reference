@@ -1,13 +1,13 @@
-defmodule DocsWeb.Schemas.Response.BadRequest do
+defmodule DocsWeb.Schemas.Response.NotFound do
   alias OpenApiSpex.{Schema, Operation}
 
   def build(),
     do:
       Operation.response(
-        "Bad Request",
+        "Not Found",
         "application/json",
         %Schema{
-          title: "BadRequest",
+          title: "NotFound",
           type: :object,
           properties: %{
             errors: %Schema{
