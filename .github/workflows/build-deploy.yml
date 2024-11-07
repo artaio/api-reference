@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - release
   pull_request:
     branches:
       - master
@@ -52,4 +53,5 @@ jobs:
       with:
         doc: arta-api
         token: ${{ secrets.BUMP_SECRET_API_KEY }}
+        branch: ${{ github.ref_name == 'master' && 'staging' || 'release' }}
         file: openapi.json
