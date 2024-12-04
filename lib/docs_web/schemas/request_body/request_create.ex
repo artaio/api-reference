@@ -42,6 +42,7 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
             properties: %{
               access_restrictions: %Schema{
                 type: :array,
+                deprecated: true,
                 description:
                   "A list of access restricition IDs describing physical properties for the location. Options are defined in the Location Access Restrictions metadata endpoint",
                 items: %Schema{
@@ -279,6 +280,7 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
             properties: %{
               access_restrictions: %Schema{
                 type: :array,
+                deprecated: true,
                 description:
                   "A list of access restricition ids describing physical properties of the location. Options are defined in the Location Access Restrictions metadata endpoint ",
                 items: %Schema{
@@ -394,6 +396,6 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
         }
       }
     },
-    required: ["request"],
+    required: ["request"]
   })
 end
