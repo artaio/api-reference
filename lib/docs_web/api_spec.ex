@@ -777,6 +777,7 @@ defmodule DocsWeb.ApiSpec do
         "/metadata/location_access_restrictions" => %PathItem{
           get: %Operation{
             summary: "Location Access Restrictions",
+            deprecated: true,
             description: "The list of location access restriction types supported by Arta's API.",
             tags: [
               "metadata"
