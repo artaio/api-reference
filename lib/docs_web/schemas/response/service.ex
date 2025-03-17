@@ -54,6 +54,12 @@ defmodule DocsWeb.Schemas.Response.Service do
         type: "boolean",
         description: "Set this flag to true if the service is required"
       },
+      metadata: %Schema{
+        type: "object",
+        description:
+          "Additional data about the service. For services with a `type` value of `\"transport\"` generated through instant quoting, `metadata` may include `reference_rate.provider` and `reference_rate.service_level` fields that indicate the carrier and mode of transport used to price this service",
+        example: %{}
+      },
       name: %Schema{
         type: "string",
         description: "The name of the service",

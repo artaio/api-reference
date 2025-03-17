@@ -315,6 +315,12 @@ defmodule DocsWeb.Schemas.Response.Request do
                   is_required: %Schema{
                     type: "boolean"
                   },
+                  metadata: %Schema{
+                    type: "object",
+                    description:
+                      "Additional data about the service. For services with a `type` value of `\"transport\"` generated through instant quoting, `metadata` may include `reference_rate.provider` and `reference_rate.service_level` fields that indicate the carrier and mode of transport used to price this service",
+                    example: %{}
+                  },
                   name: %Schema{
                     type: "string",
                     example: "Unpacking (destination)"
@@ -398,7 +404,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               items: DocsWeb.Schemas.Response.Tag
             },
             total: MonetaryAmount.schema(),
-            total_currency: Currency.schema(),
+            total_currency: Currency.schema()
           }
         }
       },
@@ -525,6 +531,12 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{
+                "reference_rate" => %{
+                  "provider" => "arta",
+                  "service_level" => "arta"
+                }
+              },
               "name" => "Specialized Shuttle",
               "sub_subtype" => "specialized_shuttle",
               "subtype" => "specialized",
@@ -536,6 +548,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Shadowbox",
               "sub_subtype" => "shadow_box",
               "subtype" => "packing_materials",
@@ -661,6 +674,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               ],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Debris Disposal",
               "sub_subtype" => "debris_disposal",
               "subtype" => "debris_disposal",
@@ -672,6 +686,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Fuel Surcharge",
               "sub_subtype" => "fuel_surcharge",
               "subtype" => "fees",
@@ -683,6 +698,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Strongbox",
               "sub_subtype" => "strongbox",
               "subtype" => "packing_materials",
@@ -694,6 +710,12 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{
+                "reference_rate" => %{
+                  "provider" => "arta",
+                  "service_level" => nil
+                }
+              },
               "name" => "Consolidated Trucking",
               "sub_subtype" => "road_groupage",
               "subtype" => "consolidated",
@@ -751,6 +773,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Fuel Surcharge",
               "sub_subtype" => "fuel_surcharge",
               "subtype" => "fees",
@@ -762,6 +785,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Collection",
               "sub_subtype" => "collection",
               "subtype" => "collection",
@@ -773,6 +797,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Ply Box",
               "sub_subtype" => "ply_box",
               "subtype" => "packing_materials",
@@ -784,6 +809,12 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{
+                "reference_rate" => %{
+                  "provider" => "fedex",
+                  "service_level" => "fedex_ground"
+                }
+              },
               "name" => "UPS Ground",
               "sub_subtype" => "parcel",
               "subtype" => "parcel",
@@ -806,6 +837,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Fuel Surcharge",
               "sub_subtype" => "fuel_surcharge",
               "subtype" => "fees",
@@ -817,6 +849,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Collection",
               "sub_subtype" => "collection",
               "subtype" => "collection",
@@ -828,6 +861,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Ply Box",
               "sub_subtype" => "ply_box",
               "subtype" => "packing_materials",
@@ -839,6 +873,12 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{
+                "reference_rate" => %{
+                  "provider" => "fedex",
+                  "service_level" => "fedex_2_day"
+                }
+              },
               "name" => "UPS Second Day Air",
               "sub_subtype" => "parcel",
               "subtype" => "parcel",
@@ -861,6 +901,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Fuel Surcharge",
               "sub_subtype" => "fuel_surcharge",
               "subtype" => "fees",
@@ -872,6 +913,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Collection",
               "sub_subtype" => "collection",
               "subtype" => "collection",
@@ -883,6 +925,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{},
               "name" => "Ply Box",
               "sub_subtype" => "ply_box",
               "subtype" => "packing_materials",
@@ -894,6 +937,12 @@ defmodule DocsWeb.Schemas.Response.Request do
               "included_services" => [],
               "is_requested" => false,
               "is_required" => true,
+              "metadata" => %{
+                "reference_rate" => %{
+                  "provider" => "fedex",
+                  "service_level" => "fedex_standard_overnight"
+                }
+              },
               "name" => "UPS Next Day Air",
               "sub_subtype" => "parcel",
               "subtype" => "parcel",

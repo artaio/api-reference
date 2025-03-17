@@ -936,6 +936,46 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/metadata/reference_rate_providers" => %PathItem{
+          get: %Operation{
+            summary: "Reference Rate Providers",
+            description: "The list of reference rate providers supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/referenceRateProviders",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of reference rate providers",
+                  "application/json",
+                  Response.Metadata.ReferenceRateProvider,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/reference_rate_service_levels" => %PathItem{
+          get: %Operation{
+            summary: "Reference Rate Service Levels",
+            description: "The list of reference rate service levels supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/referenceRateServiceLevels",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of reference rate service levels",
+                  "application/json",
+                  Response.Metadata.ReferenceRateServiceLevel,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
         "/metadata/request_statuses" => %PathItem{
           get: %Operation{
             summary: "Quote Request Statuses",

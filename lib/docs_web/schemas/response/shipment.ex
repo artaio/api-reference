@@ -41,14 +41,14 @@ defmodule DocsWeb.Schemas.Response.Shipment do
         type: :string,
         description: "The estimated CO2 emissions for the shipment",
         example: "0.5",
-        nullable: true,
+        nullable: true
       },
       emissions_unit: %Schema{
         type: :string,
         description:
           "The unit of measurement for emissions for this shipment. Typically measured in \"kg_co2e\" or \"kilograms of carbon dioxide equivalent\"",
         example: "kg_co2e",
-        nullable: true,
+        nullable: true
       },
       exceptions: %Schema{
         type: :array,
@@ -361,6 +361,12 @@ defmodule DocsWeb.Schemas.Response.Shipment do
           "included_services" => [],
           "is_requested" => false,
           "is_required" => true,
+          "metadata" => %{
+            "reference_rate" => %{
+              "provider" => "fedex",
+              "service_level" => "fedex_standard_overnight"
+            }
+          },
           "name" => "UPS Next Day Air",
           "sub_subtype" => "parcel",
           "subtype" => "parcel",
@@ -372,6 +378,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
           "included_services" => [],
           "is_requested" => false,
           "is_required" => true,
+          "metadata" => %{},
           "name" => "Strongbox",
           "sub_subtype" => "strongbox",
           "subtype" => "packing_materials",
@@ -383,6 +390,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
           "included_services" => [],
           "is_requested" => false,
           "is_required" => true,
+          "metadata" => %{},
           "name" => "Collection",
           "sub_subtype" => "collection",
           "subtype" => "collection",
@@ -394,6 +402,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
           "included_services" => [],
           "is_requested" => false,
           "is_required" => true,
+          "metadata" => %{},
           "name" => "Fuel Surcharge",
           "sub_subtype" => "fuel_surcharge",
           "subtype" => "fees",
