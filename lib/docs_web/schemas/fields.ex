@@ -5,12 +5,13 @@ defmodule DocsWeb.Schemas.Fields do
 
   def object_fields() do
     %{
-      internal_reference: %Schema{
-        description:
-          "This field can be used to pass through any data that you may want returned unaltered for your own later usage",
-        maxLength: 255,
-        type: "string",
-        example: "Accession ID: 823"
+      components: %Schema{
+        type: "array",
+        description: "A list of components in the object",
+        items: %Schema{
+          type: :object,
+          properties: object_component_fields()
+        }
       },
       current_packing: %Schema{
         type: "array",
@@ -28,6 +29,28 @@ defmodule DocsWeb.Schemas.Fields do
       details: %Schema{
         type: "object",
         properties: %{
+          creation_date: %Schema{
+            description: "Details about the timing in which an object was created",
+            type: "string",
+            example: "1980"
+          },
+          creator: %Schema{
+            description: "The creator of the object",
+            type: "string",
+            example: "Bob Smithson"
+          },
+          is_fragile: %Schema{
+            type: "boolean",
+            description:
+              "Set this flag to true is the item is fragile. This may effect packing and handling costs",
+            default: false
+          },
+          is_cites: %Schema{
+            type: "boolean",
+            description:
+              "Set to true if the object is governed by the Convention on International Trade in Endangered Species of Wild Fauna and Flora",
+            default: false
+          },
           materials: %Schema{
             type: "array",
             deprecated: true,
@@ -37,6 +60,112 @@ defmodule DocsWeb.Schemas.Fields do
               example: "canvas"
             }
           },
+          notes: %Schema{
+            type: "string",
+            description: "Any notes about the item",
+            example: "Artist signature in the lower left corner"
+          },
+          title: %Schema{
+            type: "string",
+            description: "The object title",
+            example: "Black Rectangle"
+          }
+        }
+      },
+      height: %Schema{
+        description: "The height of the object",
+        type: "string",
+        example: "32"
+      },
+      images: %Schema{
+        type: "array",
+        description: "A list image urls of the object",
+        items: %Schema{
+          type: "string",
+          format: "uri",
+          example: "http://example.com/image.jpg"
+        }
+      },
+      internal_reference: %Schema{
+        description:
+          "This field can be used to pass through any data that you may want returned unaltered for your own later usage",
+        maxLength: 255,
+        type: "string",
+        example: "Accession ID: 823"
+      },
+      public_reference: %Schema{
+        description:
+          "A client defined name for the object. The value provided for public_reference may be presented in notification emails and on shipment detail pages",
+        type: "string",
+        maxLength: 255,
+        example: "Round Smithson work"
+      },
+      subtype: %Schema{
+        description:
+          "The object subtype ID. Options are defined in the Object types metadata endpoint",
+        type: "string",
+        pattern: "^[0-9a-z_]{1,56}$",
+        example: "painting_unframed"
+      },
+      unit_of_measurement: %Schema{
+        type: "string",
+        enum: [
+          "in",
+          "cm"
+        ],
+        example: "in"
+      },
+      value: MonetaryAmount,
+      value_currency: Currency,
+      weight: %Schema{
+        description: "The weight of the object",
+        type: "string",
+        example: "3.0"
+      },
+      weight_unit: %Schema{
+        description: "The unit of the object",
+        type: "string",
+        enum: [
+          "lb",
+          "kg"
+        ],
+        example: "lb"
+      },
+      width: %Schema{
+        description: "The width of the object",
+        type: "string",
+        example: "15"
+      }
+    }
+  end
+
+  def object_fields_with_response_fields() do
+    object_fields()
+    |> Map.put(:id, %Schema{
+      type: :integer,
+      format: :int64
+    })
+    |> Map.put(:type, %Schema{
+      type: "string",
+      description: "The object type id",
+      pattern: "^[0-9a-z_]{1,56}$"
+    })
+    |> Map.update!(:components, fn component_schema ->
+      %{
+        component_schema
+        | items: %Schema{
+            type: :object,
+            properties: object_component_fields_with_id()
+          }
+      }
+    end)
+  end
+
+  def object_component_fields() do
+    %{
+      details: %Schema{
+        type: "object",
+        properties: %{
           creation_date: %Schema{
             description: "Details about the timing in which an object was created",
             type: "string",
@@ -56,34 +185,15 @@ defmodule DocsWeb.Schemas.Fields do
             type: "string",
             description: "The object title",
             example: "Black Rectangle"
-          },
-          is_fragile: %Schema{
-            type: "boolean",
-            description:
-              "Set this flag to true is the item is fragile. This may effect packing and handling costs",
-            default: false
-          },
-          is_cites: %Schema{
-            type: "boolean",
-            description:
-              "Set to true if the object is governed by the Convention on International Trade in Endangered Species of Wild Fauna and Flora",
-            default: false
           }
         }
       },
-      height: %Schema{
-        description: "The height of the object",
+      internal_reference: %Schema{
+        description:
+          "This field can be used to pass through any data that you may want returned unaltered for your own later usage",
+        maxLength: 255,
         type: "string",
-        example: "32"
-      },
-      images: %Schema{
-        type: "array",
-        description: "A list image urls of the object",
-        items: %Schema{
-          type: "string",
-          format: "uri",
-          example: "http://example.com/image.jpg"
-        }
+        example: "Accession ID: 823"
       },
       public_reference: %Schema{
         description:
@@ -92,50 +202,22 @@ defmodule DocsWeb.Schemas.Fields do
         maxLength: 255,
         example: "Round Smithson work"
       },
-      subtype: %Schema{
+      type: %Schema{
         description:
-          "The object subtype ID. Options are defined in the Object types metadata endpoint",
+          "The object component type ID. Options are defined in the Object Component types metadata endpoint",
         type: "string",
         pattern: "^[0-9a-z_]{1,56}$",
-        example: "painting_unframed"
-      },
-      width: %Schema{
-        description: "The width of the object",
-        type: "string",
-        example: "15"
-      },
-      unit_of_measurement: %Schema{
-        type: "string",
-        enum: [
-          "in",
-          "cm"
-        ],
-        example: "in"
-      },
-      weight: %Schema{
-        description: "The weight of the object",
-        type: "string",
-        example: "3.0"
-      },
-      weight_unit: %Schema{
-        description: "The unit of the object",
-        type: "string",
-        enum: [
-          "lb",
-          "kg"
-        ],
-        example: "lb"
-      },
-      value_currency: Currency,
-      value: MonetaryAmount
+        example: "painting_framed"
+      }
     }
   end
 
-  def object_fields_with_id() do
-    object_fields()
+  def object_component_fields_with_id() do
+    object_component_fields()
     |> Map.put(:id, %Schema{
-      type: :integer,
-      format: :int64
+      type: :string,
+      description: "The id of the component in UUID format",
+      format: :uuid
     })
   end
 
