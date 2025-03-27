@@ -1,7 +1,7 @@
 defmodule DocsWeb.Schemas.Response.Request do
-  alias DocsWeb.Schemas.Response.Location
-  alias DocsWeb.Schemas.Currency
-  alias DocsWeb.Schemas.MonetaryAmount
+  alias DocsWeb.Schemas.Response.{Location, Object}
+  alias DocsWeb.Schemas.{Currency, MonetaryAmount}
+
   alias OpenApiSpex.Schema
 
   require OpenApiSpex
@@ -105,121 +105,8 @@ defmodule DocsWeb.Schemas.Response.Request do
       },
       objects: %Schema{
         type: "array",
-        items: %Schema{
-          type: "object",
-          properties: %{
-            current_packing: %Schema{
-              type: "array",
-              description:
-                "A list of packing subtype IDs describing how the item is currently packed. Options are defined in the Packing Types metadata endpoint",
-              items: %Schema{
-                type: "string"
-              }
-            },
-            depth: %Schema{
-              description: "The depth of the object",
-              type: "string"
-            },
-            details: %Schema{
-              type: "object",
-              properties: %{
-                creation_date: %Schema{
-                  description: "Details about the timing in which an object was created",
-                  type: "string",
-                  nullable: true
-                },
-                creator: %Schema{
-                  description: "The creator of the object",
-                  type: "string"
-                },
-                is_cites: %Schema{
-                  type: "boolean",
-                  description:
-                    "Set to true if the object is governed by the Convention on International Trade in Endangered Species of Wild Fauna and Flora",
-                  default: false
-                },
-                is_fragile: %Schema{
-                  type: "boolean",
-                  description:
-                    "Set this flag to true is the item is fragile. This may effect packing and handling costs",
-                  default: false
-                },
-                materials: %Schema{
-                  type: "array",
-                  deprecated: true,
-                  description:
-                    "A list of IDs describing the types of materials used. Options are defined in the Object Materials metadata endpoint ",
-                  items: %Schema{
-                    type: "string"
-                  }
-                },
-                notes: %Schema{
-                  description: "Any notes about the object",
-                  type: "string"
-                },
-                title: %Schema{
-                  type: "string",
-                  description: "The object title"
-                }
-              }
-            },
-            height: %Schema{
-              description: "The height of the object",
-              type: "string"
-            },
-            id: %Schema{
-              type: "integer",
-              description: "The system-generated ID for this object",
-              example: 644,
-              readOnly: true
-            },
-            images: %Schema{
-              type: "array",
-              description: "A list image urls of the object",
-              items: %Schema{
-                type: "string",
-                format: "uri"
-              }
-            },
-            internal_reference: %Schema{
-              description:
-                "This field can be used to pass through any data about the object you may want returned unaltered for your own later usage",
-              maxLength: 255,
-              type: "string",
-              nullable: true
-            },
-            public_reference: %Schema{
-              description: "A user defined name of the object",
-              type: "string",
-              maxLength: 255,
-              nullable: true
-            },
-            subtype: %Schema{
-              description: "The object subtype id",
-              type: "string",
-              pattern: "^[0-9a-z_]{1,56}$"
-            },
-            type: %Schema{
-              type: "string",
-              description: "The object type id",
-              pattern: "^[0-9a-z_]{1,56}$"
-            },
-            width: %Schema{
-              description: "The width of the object",
-              type: "string"
-            },
-            weight: %Schema{
-              description: "The height of the object",
-              type: "string"
-            },
-            unit_of_measurement: %Schema{
-              type: "string",
-              enum: ["in", "cm"]
-            },
-            value: MonetaryAmount.schema(),
-            value_currency: Currency.schema()
-          }
-        }
+        description: "A list of objects to be shipped",
+        items: Object
       },
       origin: Location.schema(),
       payment_process: %Schema{
@@ -474,6 +361,47 @@ defmodule DocsWeb.Schemas.Response.Request do
       "object_count" => 1,
       "objects" => [
         %{
+          "components" => [
+            %{
+              "details" => %{
+                "creation_date" => "1980",
+                "creator" => "Bob Smithson",
+                "title" => "Black Rectangle",
+                "notes" => "Artist signature in the lower left corner"
+              },
+              "id" => "1f26b6e1-ce25-43a9-b4ea-2ceaac24ec3a",
+              "internal_reference" => "Accession ID: 823",
+              "public_reference" => "Round Smithson work",
+              "type" => "painting_framed"
+            }
+          ],
+          "current_packing" => ["cardboard_box"],
+          "depth" => "2",
+          "details" => %{
+            "creation_date" => nil,
+            "creator" => nil,
+            "is_cites" => false,
+            "is_fragile" => false,
+            "materials" => [],
+            "notes" => nil,
+            "title" => nil
+          },
+          "height" => "10.5",
+          "id" => 1644,
+          "images" => [],
+          "internal_reference" => nil,
+          "public_reference" => nil,
+          "subtype" => "prepacked_box",
+          "type" => "client_package",
+          "unit_of_measurement" => "in",
+          "value" => "15000",
+          "value_currency" => "USD",
+          "weight" => "3.5",
+          "weight_unit" => "lb",
+          "width" => "10"
+        },
+        %{
+          "components" => [],
           "current_packing" => [],
           "depth" => "2",
           "details" => %{
@@ -482,6 +410,7 @@ defmodule DocsWeb.Schemas.Response.Request do
             "is_cites" => false,
             "is_fragile" => false,
             "materials" => [],
+            "notes" => "Artist signature in the lower left corner",
             "title" => "All That Jazz"
           },
           "height" => "10.5",

@@ -12,6 +12,7 @@ To run this project, you will need to install the following dependencies on your
 
 - [Elixir](https://elixir-lang.org/install.html)
 - [Scalar CLI](https://github.com/scalar/scalar?tab=readme-ov-file#cli)
+- [jq](https://jqlang.org/)
 
 ## Generate the API specification
 
