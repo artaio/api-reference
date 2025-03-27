@@ -7,7 +7,8 @@ defmodule DocsWeb.Schemas.Fields do
     %{
       components: %Schema{
         type: "array",
-        description: "A list of components in the object",
+        description:
+          "A list of components in the object. Should be used only with a `prepacked_box` object subtype",
         items: %Schema{
           type: :object,
           properties: object_component_fields()
