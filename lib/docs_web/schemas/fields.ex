@@ -27,7 +27,7 @@ defmodule DocsWeb.Schemas.Fields do
         properties: %{
           country_of_origin: %Schema{
             description:
-              "The ISO 3166-1 alpha-2 country code of where the object was made or manufactured",
+              "The ISO 3166-1 alpha-2 country code where the object was made or manufactured",
             type: "string",
             maxLength: 2,
             minLength: 2,
@@ -200,7 +200,7 @@ defmodule DocsWeb.Schemas.Fields do
         properties: %{
           country_of_origin: %Schema{
             description:
-              "The ISO 3166-1 alpha-2 country code of where the object was made or manufactured",
+              "The ISO 3166-1 alpha-2 country code where the object was made or manufactured",
             type: "string",
             maxLength: 2,
             minLength: 2,
