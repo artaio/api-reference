@@ -313,6 +313,12 @@ defmodule DocsWeb.Schemas.Response.Shipment do
             %{
               "components" => [
                 %{
+                  "customs" => %{
+                    "country_of_origin" => "US",
+                    "hs_code" => "123456",
+                    "medium" => "oil on canvas",
+                    "temporary_admission" => true
+                  },
                   "details" => %{
                     "creation_date" => "1980",
                     "creator" => "Bob Smithson",
@@ -353,6 +359,12 @@ defmodule DocsWeb.Schemas.Response.Shipment do
             %{
               "components" => [],
               "current_packing" => [],
+              "customs" => %{
+                "country_of_origin" => "US",
+                "hs_code" => "123456",
+                "medium" => "oil on canvas",
+                "temporary_admission" => true
+              },
               "depth" => "2",
               "details" => %{
                 "creation_date" => nil,
