@@ -26,7 +26,8 @@ defmodule DocsWeb.Schemas.Fields do
         type: "object",
         properties: %{
           country_of_origin: %Schema{
-            description: "The ISO 3166-1 alpha-2 country code of origin of the object",
+            description:
+              "The ISO 3166-1 alpha-2 country code of where the object was made or manufactured",
             type: "string",
             maxLength: 2,
             minLength: 2,
@@ -45,7 +46,8 @@ defmodule DocsWeb.Schemas.Fields do
             example: "oil on canvas"
           },
           temporary_admission: %Schema{
-            description: "TBD",
+            description:
+              "Select true if the goods are currently in the country under a temporary admission declaration",
             type: "boolean",
             example: true
           }
@@ -197,7 +199,8 @@ defmodule DocsWeb.Schemas.Fields do
         type: "object",
         properties: %{
           country_of_origin: %Schema{
-            description: "The ISO 3166-1 alpha-2 country code of origin of the object",
+            description:
+              "The ISO 3166-1 alpha-2 country code of where the object was made or manufactured",
             type: "string",
             maxLength: 2,
             minLength: 2,
@@ -216,7 +219,8 @@ defmodule DocsWeb.Schemas.Fields do
             example: "oil on canvas"
           },
           temporary_admission: %Schema{
-            description: "TBD",
+            description:
+              "Select true if the goods are currently in the country under a temporary admission declaration",
             type: "boolean",
             example: true
           }
