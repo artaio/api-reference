@@ -212,6 +212,10 @@ defmodule DocsWeb.Schemas.Response.Request do
               description: "The height of the object",
               type: "string"
             },
+            weight_unit: %Schema{
+              type: "string",
+              enum: ["lb", "kg"]
+            },
             unit_of_measurement: %Schema{
               type: "string",
               enum: ["in", "cm"]
