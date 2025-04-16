@@ -209,7 +209,7 @@ defmodule DocsWeb.Schemas.Response.Request do
               type: "string"
             },
             weight: %Schema{
-              description: "The height of the object",
+              description: "The weight of the object",
               type: "string"
             },
             weight_unit: %Schema{
