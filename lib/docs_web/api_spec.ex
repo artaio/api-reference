@@ -554,6 +554,72 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/import_cost_estimates" => %PathItem{
+          get: %Operation{
+            summary: "List Import Cost Estimates",
+            description:
+              "Retrieve a paginated collection of Import Cost Estimates belonging to your Organization",
+            tags: [
+              "import_cost_estimates"
+            ],
+            operationId: "importCostEstimates/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Import Cost Estimate records",
+                  "application/json",
+                  list(Response.ImportCostEstimate),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create an Import Cost Estimate",
+            description: "Create an Import Cost Estimate to get a quote for your shipment",
+            tags: [
+              "import_cost_estimates"
+            ],
+            operationId: "importCostEstimates/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: DocsWeb.Schemas.RequestBody.ImportCostEstimateCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created Import Cost Estimate",
+                  "application/json",
+                  Response.ImportCostEstimate,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build()
+            }
+          }
+        },
+        "/import_cost_estimates/{import_cost_estimate_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get an Import Cost Estimate",
+            description: "Retrieve an existing Import Cost Estimate record",
+            tags: ["import_cost_estimates"],
+            operationId: "importCostEstimates/get",
+            parameters: [Authorization.parameter(), Parameters.ImportCostEstimateID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Import Cost Estimate response",
+                  "application/json",
+                  Response.ImportCostEstimate,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
         "/invoice_payments" => %PathItem{
           get: %Operation{
             summary: "List Invoice Payment",
