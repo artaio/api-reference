@@ -234,6 +234,18 @@ defmodule DocsWeb.Schemas.Response.Request do
         example: "invoicing",
         enum: ["checkout", "invoicing"]
       },
+      preferred_parcel_transport_services: %Schema{
+        type: "array",
+        description:
+          "Optionally instruct the Arta API to return a subset of parcel quotes for specific transport services. For example if you would prefer to only return parcel ground quotes, you can set this field to `[\"ground\"]` The list valid transport service IDs are available at the /metadata/parcel_transport_services endpoint.",
+        example: [
+          "ground"
+        ],
+        nullable: true,
+        items: %Schema{
+          type: "string"
+        }
+      },
       preferred_quote_types: %Schema{
         type: "array",
         description:
@@ -523,6 +535,7 @@ defmodule DocsWeb.Schemas.Response.Request do
       },
       "payment_process" => "invoicing",
       "preferred_quote_types" => [],
+      "preferred_parcel_transport_services" => [],
       "public_reference" => nil,
       "quote_types" => ["premium", "select", "parcel"],
       "quotes" => [
