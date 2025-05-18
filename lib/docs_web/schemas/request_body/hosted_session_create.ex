@@ -90,7 +90,8 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
                   example: "spring-jewelry-sale"
                 }
               }
-            }
+            },
+            required: ["objects", "origin"]
           }
         },
         required: ["hosted_session"],
@@ -106,7 +107,8 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
             properties: %{
               request_id: %Schema{
                 type: :string,
-                description: "The ID of an existing Request to be shared."
+                description: "The ID of an existing Request to be shared.",
+                required: true
               }
             }
           }
