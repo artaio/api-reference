@@ -391,7 +391,9 @@ defmodule DocsWeb.Schemas.Response.Request do
               "id" => "1f26b6e1-ce25-43a9-b4ea-2ceaac24ec3a",
               "internal_reference" => "Accession ID: 823",
               "public_reference" => "Round Smithson work",
-              "type" => "painting_framed"
+              "type" => "painting_framed",
+              "value" => "15000",
+              "value_currency" => "USD"
             }
           ],
           "current_packing" => ["cardboard_box"],

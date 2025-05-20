@@ -240,7 +240,9 @@ defmodule DocsWeb.Schemas.Fields do
         type: "string",
         pattern: "^[0-9a-z_]{1,56}$",
         example: "painting_framed"
-      }
+      },
+      value: MonetaryAmount,
+      value_currency: Currency
     }
   end
 
