@@ -558,7 +558,7 @@ defmodule DocsWeb.ApiSpec do
           get: %Operation{
             summary: "List Import Cost Estimates",
             description:
-              "Retrieve a paginated collection of Import Cost Estimates belonging to your Organization",
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve a paginated collection of import cost estimates belonging to your organization.",
             tags: [
               "import_cost_estimates"
             ],
@@ -576,7 +576,8 @@ defmodule DocsWeb.ApiSpec do
           },
           post: %Operation{
             summary: "Create an Import Cost Estimate",
-            description: "Create an Import Cost Estimate to get a quote for your shipment",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCreate an import cost estimate to calculate cross-border duties, fees, and taxes for your international shipments.",
             tags: [
               "import_cost_estimates"
             ],
@@ -604,7 +605,8 @@ defmodule DocsWeb.ApiSpec do
         "/import_cost_estimates/{import_cost_estimate_id}" => %PathItem{
           get: %Operation{
             summary: "Get an Import Cost Estimate",
-            description: "Retrieve an existing Import Cost Estimate record",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve an existing import cost estimate record by its unique identifier.",
             tags: ["import_cost_estimates"],
             operationId: "importCostEstimates/get",
             parameters: [Authorization.parameter(), Parameters.ImportCostEstimateID.parameter()],
