@@ -16,6 +16,9 @@ defmodule DocsWeb.Schemas.RequestBody.ImportCostEstimateCreate do
           destination: %Schema{
             type: :object,
             description: "Details about the destination where it will be imported to",
+            required: [
+              "country"
+            ],
             properties: %{
               city: %Schema{
                 type: :string,
@@ -32,25 +35,40 @@ defmodule DocsWeb.Schemas.RequestBody.ImportCostEstimateCreate do
               region: %Schema{
                 type: :string,
                 nullable: true,
-                description: "State, province, or region of the destination"
+                description:
+                  "State, province, or region of the destination. May be required depending on the destination country."
               }
             }
           },
           end_use: %Schema{
             type: :string,
             nullable: true,
-            description:
-              "Optional field specifying the end use of the goods (e.g., resale, personal use)"
+            description: "Optional field specifying the end use of the goods",
+            enum: [
+              "for_resale",
+              "not_for_resale"
+            ]
           },
           objects: %Schema{
             type: :array,
             description: "List of objects/items being imported",
             items: %Schema{
               type: :object,
+              required: [
+                "hs_code",
+                "value",
+                "value_currency"
+              ],
               properties: %{
+                quantity: %Schema{
+                  type: :number,
+                  nullable: true,
+                  description: "Quantity of the object"
+                },
                 reference: %Schema{
                   type: :string,
-                  nullable: true
+                  nullable: true,
+                  description: "Reference identifier for the object"
                 },
                 value_currency: %Schema{
                   type: :string,
@@ -74,6 +92,9 @@ defmodule DocsWeb.Schemas.RequestBody.ImportCostEstimateCreate do
           },
           origin: %Schema{
             type: :object,
+            required: [
+              "country"
+            ],
             properties: %{
               country: %Schema{
                 type: :string,
@@ -84,16 +105,21 @@ defmodule DocsWeb.Schemas.RequestBody.ImportCostEstimateCreate do
           reference: %Schema{
             type: :string,
             nullable: true,
-            description: "Optional reference string for tracking the estimate or related process"
+            description: "Optional reference string for identifying the estimate in your systems"
           },
           transport: %Schema{
             type: :object,
             description: "Information about the transport method and cost",
+            required: [
+              "amount",
+              "amount_currency",
+              "service_level"
+            ],
             properties: %{
               service_level: %Schema{
                 type: :string,
                 description:
-                  "Service level for transport (e.g., ups_expedited, fedex_international_first etc)"
+                  "Service level for transport (e.g., ups_expedited, fedex_international_first etc). Options are listed in the reference rate service levels metadata endpoint"
               },
               amount_currency: %Schema{
                 type: :string,
