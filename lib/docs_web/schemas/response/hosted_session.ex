@@ -58,6 +58,18 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         enum: ["checkout", "invoicing"],
         readOnly: true
       },
+      preferred_parcel_transport_services: %Schema{
+        type: "array",
+        description:
+          "Optionally instruct the Arta API to filter Parcel and Self Ship quotes for specific transport services. For example, if you would prefer to only return `ground` quotes, you can set this field to `[\"ground\"]` The list of valid transport service IDs is available at the /metadata/parcel_transport_services endpoint.",
+        example: [
+          "ground"
+        ],
+        nullable: true,
+        items: %Schema{
+          type: "string"
+        }
+      },
       preferred_quote_types: %Schema{
         type: :array,
         description:
