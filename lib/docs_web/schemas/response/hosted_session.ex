@@ -61,7 +61,7 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       preferred_parcel_transport_services: %Schema{
         type: "array",
         description:
-          "Optionally instruct the Arta API to return a subset of parcel quotes for specific transport services. For example if you would prefer to only return parcel ground quotes, you can set this field to `[\"ground\"]` The list valid transport service IDs are available at the /metadata/parcel_transport_services endpoint.",
+          "Optionally instruct the Arta API to filter Parcel and Self Ship quotes for specific transport services. For example, if you would prefer to only return solely `ground` quotes, you can set this field to `[\"ground\"]` The list of valid transport service IDs is available at the /metadata/parcel_transport_services endpoint.",
         example: [
           "ground"
         ],
