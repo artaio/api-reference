@@ -5,6 +5,6 @@ defmodule DocsWeb.Schemas.Response.Object do
 
   OpenApiSpex.schema(%{
     type: :object,
-    properties: Fields.object_fields_with_id()
+    properties: Fields.object_fields_with_response_fields()
   })
 end
