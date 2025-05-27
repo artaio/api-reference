@@ -8,10 +8,11 @@ defmodule DocsWeb.Schemas.Fields do
       components: %Schema{
         type: "array",
         description:
-          "A list of components in the object. Should be used only with a `prepacked_box` object subtype",
+          "A list of components in the object. Should be used only with a `prepacked_box` object subtype.\n\nWhen components are present, the object value must equal the sum of component values.",
         items: %Schema{
           type: :object,
-          properties: object_component_fields()
+          properties: object_component_fields(),
+          required: ["type", "value"]
         }
       },
       current_packing: %Schema{
