@@ -215,7 +215,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
             label_url: %Schema{
               type: :string,
               description:
-                "A URL at which parcel package shipping labels may be downladed and printed",
+                "A URL at which parcel package shipping labels may be downloaded and printed",
               nullable: true
             },
             label_format_urls: %Schema{
@@ -226,49 +226,49 @@ defmodule DocsWeb.Schemas.Response.Shipment do
               properties: %{
                 png_4_x_6: %Schema{
                   type: :string,
-                  description: "PNG 4x6 inches - Centers the 4x6 label on the page, scales it up to full size",
+                  description: "PNG 4x6 inch label - centered on the page and scaled to fill exactly 4x6 inches (no margins)",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=png_4_x_6"
                 },
                 pdf_4_x_6: %Schema{
                   type: :string,
-                  description: "PDF 4x6 inches - Centers the label on the page, scales it up to full size with 0.5\" margins on all four sides",
+                  description: "PDF 4x6 inch label - centered and scaled to full size with 0.5 inch margins on all sides",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_4_x_6"
                 },
                 pdf_letter: %Schema{
                   type: :string,
-                  description: "PDF US Letter (8.5x11 inches) - Centers the label on the page, scales it up to full size with 1\" margins on all four sides",
+                  description: "PDF US Letter (8.5x11 inch) - centered and scaled to full size with 1 inch margins on all sides",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_letter"
                 },
                 pdf_letter_half_page: %Schema{
                   type: :string,
-                  description: "PDF US Letter landscape, half page (8.5x11 inches) - 4x6 label positioned on left side with 1.5\" top/bottom margins and 1.25\" left/right margins",
+                  description: "PDF US Letter landscape (11x8.5 inch) - 4x6 label on left half with 1.5 inch top/bottom and 1.25 inch left/right margins",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page"
                 },
                 pdf_a4: %Schema{
                   type: :string,
-                  description: "PDF A4 paper (8.3x11.7 inches) - Centers the label on the page, scales it up to full size with 1\" top/bottom margins and 1.25\" left/right margins",
+                  description: "PDF A4 (8.3x11.7 inch) - centered and scaled to full size with 1 inch top/bottom and 1.25 inch left/right margins",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_a4"
                 },
                 pdf_a4_half_page: %Schema{
                   type: :string,
-                  description: "PDF A4 landscape, half page (8.3x11.7 inches) - 4x6 label positioned on left side with 1.15\" top/bottom margins and 1.85\" left/right margins",
+                  description: "PDF A4 landscape (11.7x8.3 inch) - 4x6 label on left half with 1.15 inch top/bottom and 1.85 inch left/right margins",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page"
                 },
                 zpl_8dpmm: %Schema{
                   type: :string,
-                  description: "ZPL for 8 dots/mm printers (203 DPI) - Centers the 4x6 label on the page, scales it up to full size",
+                  description: "ZPL for 8 dots/mm (203 DPI) printers - 4x6 label centered on the media at native resolution",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=zpl_8dpmm"
                 },
                 zpl_12dpmm: %Schema{
                   type: :string,
-                  description: "ZPL for 12 dots/mm printers (300 DPI) - Centers the 4x6 label on the page, scales it up to full size",
+                  description: "ZPL for 12 dots/mm (300 DPI) printers - 4x6 label centered on the media at native resolution",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=zpl_12dpmm"
                 }
