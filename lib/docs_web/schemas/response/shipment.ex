@@ -218,6 +218,26 @@ defmodule DocsWeb.Schemas.Response.Shipment do
                 "A URL at which parcel package shipping labels may be downladed and printed",
               nullable: true
             },
+            label_format_urls: %Schema{
+              type: :object,
+              description:
+                "A map of shipping label format types to their respective download URLs. Returns null if no shipping label exists",
+              nullable: true,
+              additionalProperties: %Schema{
+                type: :string,
+                nullable: true
+              },
+              example: %{
+                "pdf_4_x_6" => "https://labels.example.com/labels/456/token123?format=pdf_4_x_6",
+                "pdf_a4" => "https://labels.example.com/labels/456/token123?format=pdf_a4",
+                "pdf_a4_half_page" => "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page",
+                "pdf_letter" => "https://labels.example.com/labels/456/token123?format=pdf_letter",
+                "pdf_letter_half_page" => "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page",
+                "png_4_x_6" => "https://labels.example.com/labels/456/token123?format=png_4_x_6",
+                "zpl_8dpmm" => "https://labels.example.com/labels/456/token123?format=zpl_8dpmm",
+                "zpl_12dpmm" => "https://labels.example.com/labels/456/token123?format=zpl_12dpmm"
+              }
+            },
             package_id: %Schema{
               type: :integer,
               format: :int64,
