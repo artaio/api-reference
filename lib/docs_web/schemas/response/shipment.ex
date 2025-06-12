@@ -232,31 +232,31 @@ defmodule DocsWeb.Schemas.Response.Shipment do
                 },
                 pdf_4_x_6: %Schema{
                   type: :string,
-                  description: "PDF 4x6 inches - Centers the 4x6 label on the page, scales it up to full size",
+                  description: "PDF 4x6 inches - Centers the label on the page, scales it up to full size with 0.5\" margins on all four sides",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_4_x_6"
                 },
                 pdf_letter: %Schema{
                   type: :string,
-                  description: "PDF US Letter (8.5x11 inches) - Centers the label on the page, scales it up to full size",
+                  description: "PDF US Letter (8.5x11 inches) - Centers the label on the page, scales it up to full size with 1\" margins on all four sides",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_letter"
                 },
                 pdf_letter_half_page: %Schema{
                   type: :string,
-                  description: "PDF US Letter landscape, half page (8.5x11 inches) - 4x6 label positioned on left side",
+                  description: "PDF US Letter landscape, half page (8.5x11 inches) - 4x6 label positioned on left side with 1.5\" top/bottom margins and 1.25\" left/right margins",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page"
                 },
                 pdf_a4: %Schema{
                   type: :string,
-                  description: "PDF A4 paper (8.3x11.7 inches) - Centers the label on the page, scales it up to full size",
+                  description: "PDF A4 paper (8.3x11.7 inches) - Centers the label on the page, scales it up to full size with 1\" top/bottom margins and 1.25\" left/right margins",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_a4"
                 },
                 pdf_a4_half_page: %Schema{
                   type: :string,
-                  description: "PDF A4 landscape, half page (8.3x11.7 inches) - 4x6 label positioned on left side",
+                  description: "PDF A4 landscape, half page (8.3x11.7 inches) - 4x6 label positioned on left side with 1.15\" top/bottom margins and 1.85\" left/right margins",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page"
                 },
