@@ -223,17 +223,63 @@ defmodule DocsWeb.Schemas.Response.Shipment do
               description:
                 "A map of shipping label format types to their respective download URLs. Returns null if no shipping label exists",
               nullable: true,
-              additionalProperties: %Schema{
-                type: :string,
-                nullable: true
+              properties: %{
+                png_4_x_6: %Schema{
+                  type: :string,
+                  description: "PNG 4x6 inches - Centers the 4x6 label on the page, scales it up to full size",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=png_4_x_6"
+                },
+                pdf_4_x_6: %Schema{
+                  type: :string,
+                  description: "PDF 4x6 inches - Centers the 4x6 label on the page, scales it up to full size",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=pdf_4_x_6"
+                },
+                pdf_letter: %Schema{
+                  type: :string,
+                  description: "PDF US Letter (8.5x11 inches) - Centers the label on the page, scales it up to full size",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=pdf_letter"
+                },
+                pdf_letter_half_page: %Schema{
+                  type: :string,
+                  description: "PDF US Letter landscape, half page (8.5x11 inches) - 4x6 label positioned on left side",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page"
+                },
+                pdf_a4: %Schema{
+                  type: :string,
+                  description: "PDF A4 paper (8.3x11.7 inches) - Centers the label on the page, scales it up to full size",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=pdf_a4"
+                },
+                pdf_a4_half_page: %Schema{
+                  type: :string,
+                  description: "PDF A4 landscape, half page (8.3x11.7 inches) - 4x6 label positioned on left side",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page"
+                },
+                zpl_8dpmm: %Schema{
+                  type: :string,
+                  description: "ZPL for 8 dots/mm printers (203 DPI) - Centers the 4x6 label on the page, scales it up to full size",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=zpl_8dpmm"
+                },
+                zpl_12dpmm: %Schema{
+                  type: :string,
+                  description: "ZPL for 12 dots/mm printers (300 DPI) - Centers the 4x6 label on the page, scales it up to full size",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=zpl_12dpmm"
+                }
               },
               example: %{
+                "png_4_x_6" => "https://labels.example.com/labels/456/token123?format=png_4_x_6",
                 "pdf_4_x_6" => "https://labels.example.com/labels/456/token123?format=pdf_4_x_6",
-                "pdf_a4" => "https://labels.example.com/labels/456/token123?format=pdf_a4",
-                "pdf_a4_half_page" => "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page",
                 "pdf_letter" => "https://labels.example.com/labels/456/token123?format=pdf_letter",
                 "pdf_letter_half_page" => "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page",
-                "png_4_x_6" => "https://labels.example.com/labels/456/token123?format=png_4_x_6",
+                "pdf_a4" => "https://labels.example.com/labels/456/token123?format=pdf_a4",
+                "pdf_a4_half_page" => "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page",
                 "zpl_8dpmm" => "https://labels.example.com/labels/456/token123?format=zpl_8dpmm",
                 "zpl_12dpmm" => "https://labels.example.com/labels/456/token123?format=zpl_12dpmm"
               }
