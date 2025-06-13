@@ -81,6 +81,14 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
                 maxLength: 255,
                 example: "Order #1437"
               },
+              quoting_strategy: %Schema{
+                type: "string",
+                description:
+                  "The quoting strategy used to generate the quotes in the hosted session",
+                maxLength: 255,
+                example: "best_rate",
+                enum: ["best_rate", "compare_carriers"]
+              },
               shipping_notes: %Schema{
                 type: "string",
                 description:
