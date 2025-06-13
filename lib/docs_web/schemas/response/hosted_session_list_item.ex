@@ -1,11 +1,11 @@
-defmodule DocsWeb.Schemas.Response.HostedSession do
+defmodule DocsWeb.Schemas.Response.HostedSessionListItem do
   alias OpenApiSpex.Schema
   alias DocsWeb.Schemas.Response
 
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "HostedSession",
+    title: "HostedSessionListItem",
     type: :object,
     properties: %{
       additional_services: %Schema{
@@ -25,7 +25,36 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       created_at: %Schema{
         type: :string
       },
-      destination: Response.NullableLocation,
+      destination: %Schema{
+        type: "object",
+        description: "A minimal representation of the destination address for the hosted session",
+        additionalProperties: false,
+        properties: %{
+          city: %Schema{
+            type: "string",
+            description: "The destination address city",
+            example: "Los Angeles",
+            nullable: true
+          },
+          country: %Schema{
+            type: "string",
+            description: "The destination address country in 2-digit ISO 3166-1 alpha-2 format",
+            example: "US"
+          },
+          postal_code: %Schema{
+            type: "string",
+            description: "The destination address postal code",
+            example: "90024",
+            nullable: true
+          },
+          region: %Schema{
+            type: "string",
+            description: "The destination address region",
+            example: "CA",
+            nullable: true
+          }
+        }
+      },
       id: %Schema{
         type: :integer,
         format: :int64
@@ -49,33 +78,33 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         description: "A list of objects to be shipped",
         items: Response.Object
       },
-      origin: Response.Location,
-      payment_process: %Schema{
-        type: :string,
-        description:
-          "The primary method by which payment to Arta will be handled for any shipment booked through this hosted session",
-        example: "checkout",
-        enum: ["checkout", "invoicing"],
-        readOnly: true
-      },
-      preferred_parcel_transport_services: %Schema{
-        type: "array",
-        description:
-          "Optionally instruct the Arta API to filter Parcel and Self Ship quotes for specific transport services. For example, if you would prefer to only return `ground` quotes, you can set this field to `[\"ground\"]` The list of valid transport service IDs is available at the /metadata/parcel_transport_services endpoint.",
-        example: [
-          "ground"
-        ],
-        nullable: true,
-        items: %Schema{
-          type: "string"
-        }
-      },
-      preferred_quote_types: %Schema{
-        type: :array,
-        description:
-          "An optional field presenting the list of quote types the caller instructed Arta to return as part of the hosted session",
-        items: %Schema{
-          type: :string
+      origin: %Schema{
+        type: "object",
+        description: "A minimal representation of the origin address for the hosted session",
+        properties: %{
+          city: %Schema{
+            type: "string",
+            description: "The origin address city",
+            example: "Brooklyn",
+            nullable: true
+          },
+          country: %Schema{
+            type: "string",
+            description: "The origin address country in 2-digit ISO 3166-1 alpha-2 format",
+            example: "US"
+          },
+          postal_code: %Schema{
+            type: "string",
+            description: "The origin address postal code",
+            example: "11211",
+            nullable: true
+          },
+          region: %Schema{
+            type: "string",
+            description: "The origin address region",
+            example: "NY",
+            nullable: true
+          }
         }
       },
       private_token: %Schema{
@@ -173,26 +202,11 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         }
       ],
       "origin" => %{
-        "access_restrictions" => [],
-        "address_line_1" => "11 W 53rd St",
-        "address_line_2" => nil,
-        "address_line_3" => nil,
         "city" => "New York",
-        "contacts" => [
-          %{
-            "email_address" => "mary@example.com",
-            "name" => "Mary Quinn Sullivan",
-            "phone_number" => "(333) 333-3333"
-          }
-        ],
         "country" => "US",
         "postal_code" => "10019",
-        "region" => "NY",
-        "title" => "Warehouse"
+        "region" => "NY"
       },
-      "payment_process" => "invoicing",
-      "preferred_parcel_transport_services" => [],
-      "preferred_quote_types" => [],
       "private_token" => "6f76b6e1-ce25-43a9-b4ea-2ceaac24ec7e",
       "public_reference" => nil,
       "quoting_strategy" => "best_rate",
