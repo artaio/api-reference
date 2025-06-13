@@ -143,6 +143,13 @@ defmodule DocsWeb.Schemas.Response.RequestListItem do
           enum: ["parcel", "premium", "select", "self_ship"]
         }
       },
+      quoting_strategy: %Schema{
+        type: "string",
+        description: "The quoting strategy used to generate the quotes in this request",
+        maxLength: 255,
+        example: "best_rate",
+        enum: ["best_rate", "compare_carriers"]
+      },
       shortcode: %Schema{
         type: "string",
         example: "DEMO-R723LA",
@@ -194,6 +201,7 @@ defmodule DocsWeb.Schemas.Response.RequestListItem do
       },
       "public_reference" => nil,
       "quote_types" => ["parcel", "select", "premium"],
+      "quoting_strategy" => "best_rate",
       "shortcode" => "DEMO-R29NAW",
       "status" => "closed",
       "tags" => [],

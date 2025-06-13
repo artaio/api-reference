@@ -424,6 +424,13 @@ defmodule DocsWeb.Schemas.Response.Request do
           }
         }
       },
+      quoting_strategy: %Schema{
+        type: "string",
+        description: "The quoting strategy used to generate the quotes in this request",
+        maxLength: 255,
+        example: "best_rate",
+        enum: ["best_rate", "compare_carriers"]
+      },
       shipping_notes: %Schema{
         type: "string",
         description:
@@ -974,6 +981,7 @@ defmodule DocsWeb.Schemas.Response.Request do
           "total_currency" => "USD"
         }
       ],
+      "quoting_strategy" => "best_rate",
       "shipping_notes" => nil,
       "shortcode" => "DEMO-R29NAW",
       "status" => "quoted",
