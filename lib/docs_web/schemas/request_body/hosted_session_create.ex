@@ -84,7 +84,7 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
               quoting_strategy: %Schema{
                 type: "string",
                 description:
-                  "The quoting strategy used to generate the quotes in the hosted session",
+                  "The quoting strategy used when creating quotes for any request for this hosted session. Determines whether the API returns a single best-rate option per transport speed or multiple carrier options for comparison. If not specified, the default strategy (“best_rate”) will be applied.",
                 maxLength: 255,
                 example: "best_rate",
                 enum: ["best_rate", "compare_carriers"]
