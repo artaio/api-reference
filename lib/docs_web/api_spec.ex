@@ -1007,7 +1007,7 @@ defmodule DocsWeb.ApiSpec do
         "/metadata/quoting_strategies" => %PathItem{
           get: %Operation{
             summary: "Quoting Strategies",
-            description: "The list of quoting strategies supported by Arta's API.",
+            description: "The list of quoting strategies supported by Arta.",
             tags: [
               "metadata"
             ],
