@@ -312,6 +312,12 @@ defmodule DocsWeb.Schemas.Response.Shipment do
           "objects" => [
             %{
               "current_packing" => [],
+              "customs" => %{
+                "country_of_origin" => "US",
+                "hs_code" => "123456",
+                "medium" => "oil on canvas",
+                "temporary_admission" => true
+              },
               "depth" => "2",
               "details" => %{
                 "creation_date" => nil,
