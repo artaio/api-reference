@@ -1,7 +1,6 @@
 defmodule DocsWeb.Schemas.Response.Request do
-  alias DocsWeb.Schemas.Response.Location
-  alias DocsWeb.Schemas.Currency
-  alias DocsWeb.Schemas.MonetaryAmount
+  alias DocsWeb.Schemas.{Currency, MonetaryAmount}
+  alias DocsWeb.Schemas.Response.{Location, Object}
   alias OpenApiSpex.Schema
 
   require OpenApiSpex
@@ -105,125 +104,8 @@ defmodule DocsWeb.Schemas.Response.Request do
       },
       objects: %Schema{
         type: "array",
-        items: %Schema{
-          type: "object",
-          properties: %{
-            current_packing: %Schema{
-              type: "array",
-              description:
-                "A list of packing subtype IDs describing how the item is currently packed. Options are defined in the Packing Types metadata endpoint",
-              items: %Schema{
-                type: "string"
-              }
-            },
-            depth: %Schema{
-              description: "The depth of the object",
-              type: "string"
-            },
-            details: %Schema{
-              type: "object",
-              properties: %{
-                creation_date: %Schema{
-                  description: "Details about the timing in which an object was created",
-                  type: "string",
-                  nullable: true
-                },
-                creator: %Schema{
-                  description: "The creator of the object",
-                  type: "string"
-                },
-                is_cites: %Schema{
-                  type: "boolean",
-                  description:
-                    "Set to true if the object is governed by the Convention on International Trade in Endangered Species of Wild Fauna and Flora",
-                  default: false
-                },
-                is_fragile: %Schema{
-                  type: "boolean",
-                  description:
-                    "Set this flag to true is the item is fragile. This may effect packing and handling costs",
-                  default: false
-                },
-                materials: %Schema{
-                  type: "array",
-                  deprecated: true,
-                  description:
-                    "A list of IDs describing the types of materials used. Options are defined in the Object Materials metadata endpoint ",
-                  items: %Schema{
-                    type: "string"
-                  }
-                },
-                notes: %Schema{
-                  description: "Any notes about the object",
-                  type: "string"
-                },
-                title: %Schema{
-                  type: "string",
-                  description: "The object title"
-                }
-              }
-            },
-            height: %Schema{
-              description: "The height of the object",
-              type: "string"
-            },
-            id: %Schema{
-              type: "integer",
-              description: "The system-generated ID for this object",
-              example: 644,
-              readOnly: true
-            },
-            images: %Schema{
-              type: "array",
-              description: "A list image urls of the object",
-              items: %Schema{
-                type: "string",
-                format: "uri"
-              }
-            },
-            internal_reference: %Schema{
-              description:
-                "This field can be used to pass through any data about the object you may want returned unaltered for your own later usage",
-              maxLength: 255,
-              type: "string",
-              nullable: true
-            },
-            public_reference: %Schema{
-              description: "A user defined name of the object",
-              type: "string",
-              maxLength: 255,
-              nullable: true
-            },
-            subtype: %Schema{
-              description: "The object subtype id",
-              type: "string",
-              pattern: "^[0-9a-z_]{1,56}$"
-            },
-            type: %Schema{
-              type: "string",
-              description: "The object type id",
-              pattern: "^[0-9a-z_]{1,56}$"
-            },
-            width: %Schema{
-              description: "The width of the object",
-              type: "string"
-            },
-            weight: %Schema{
-              description: "The weight of the object",
-              type: "string"
-            },
-            weight_unit: %Schema{
-              type: "string",
-              enum: ["lb", "kg"]
-            },
-            unit_of_measurement: %Schema{
-              type: "string",
-              enum: ["in", "cm"]
-            },
-            value: MonetaryAmount.schema(),
-            value_currency: Currency.schema()
-          }
-        }
+        description: "A list of objects to be shipped",
+        items: Object
       },
       origin: Location.schema(),
       payment_process: %Schema{
@@ -499,6 +381,12 @@ defmodule DocsWeb.Schemas.Response.Request do
       "objects" => [
         %{
           "current_packing" => [],
+          "customs" => %{
+            "country_of_origin" => "US",
+            "hs_code" => "123456",
+            "medium" => "oil on canvas",
+            "temporary_admission" => true
+          },
           "depth" => "2",
           "details" => %{
             "creation_date" => nil,
