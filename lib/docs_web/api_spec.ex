@@ -1004,6 +1004,26 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/metadata/quoting_strategies" => %PathItem{
+          get: %Operation{
+            summary: "Quoting Strategies",
+            description: "The list of quoting strategies supported by Arta.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/quotingStrategies",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of quoting strategies",
+                  "application/json",
+                  Response.Metadata.QuotingStrategy,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
         "/metadata/reference_rate_providers" => %PathItem{
           get: %Operation{
             summary: "Reference Rate Providers",
