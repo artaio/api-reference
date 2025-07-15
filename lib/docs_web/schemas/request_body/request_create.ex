@@ -228,6 +228,18 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
               }
             }
           },
+          preferred_parcel_transport_services: %Schema{
+            type: "array",
+            description:
+              "Optionally instruct the Arta API to filter Parcel and Self Ship quotes for specific transport services. For example, if you would prefer to only return `ground` quotes, you can set this field to `[\"ground\"]` The list of valid transport service IDs is available at the /metadata/parcel_transport_services endpoint.",
+            example: [
+              "ground"
+            ],
+            nullable: true,
+            items: %Schema{
+              type: "string"
+            }
+          },
           preferred_quote_types: %Schema{
             type: :array,
             description:
@@ -243,6 +255,14 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
             type: :string,
             maxLength: 255,
             example: "Order #1437"
+          },
+          quoting_strategy: %Schema{
+            type: "string",
+            description:
+              "The quoting strategy used when creating quotes for this request. Determines whether the API returns a single best-rate option per transport speed or multiple carrier options for comparison. If not specified, the default strategy (“best_rate”) will be applied.",
+            maxLength: 255,
+            example: "best_rate",
+            enum: ["best_rate", "compare_carriers"]
           },
           shipping_notes: %Schema{
             type: :string,

@@ -215,8 +215,87 @@ defmodule DocsWeb.Schemas.Response.Shipment do
             label_url: %Schema{
               type: :string,
               description:
-                "A URL at which parcel package shipping labels may be downladed and printed",
+                "A URL at which parcel package shipping labels may be downloaded and printed",
               nullable: true
+            },
+            label_format_urls: %Schema{
+              type: :object,
+              description:
+                "A map of shipping label format types to their respective download URLs. Returns null if no shipping label exists",
+              nullable: true,
+              properties: %{
+                png_4_x_6: %Schema{
+                  type: :string,
+                  description:
+                    "PNG 4x6 inch label - centered on the page and scaled to fill exactly 4x6 inches (no margins)",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=png_4_x_6"
+                },
+                pdf_4_x_6: %Schema{
+                  type: :string,
+                  description:
+                    "PDF 4x6 inch label - centered and scaled to full size with 0.5 inch margins on all sides",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=pdf_4_x_6"
+                },
+                pdf_letter: %Schema{
+                  type: :string,
+                  description:
+                    "PDF US Letter (8.5x11 inch) - centered and scaled to full size with 1 inch margins on all sides",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=pdf_letter"
+                },
+                pdf_letter_half_page: %Schema{
+                  type: :string,
+                  description:
+                    "PDF US Letter landscape (11x8.5 inch) - 4x6 label on left half with 1.5 inch top/bottom and 1.25 inch left/right margins",
+                  nullable: true,
+                  example:
+                    "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page"
+                },
+                pdf_a4: %Schema{
+                  type: :string,
+                  description:
+                    "PDF A4 (8.3x11.7 inch) - centered and scaled to full size with 1 inch top/bottom and 1.25 inch left/right margins",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=pdf_a4"
+                },
+                pdf_a4_half_page: %Schema{
+                  type: :string,
+                  description:
+                    "PDF A4 landscape (11.7x8.3 inch) - 4x6 label on left half with 1.15 inch top/bottom and 1.85 inch left/right margins",
+                  nullable: true,
+                  example:
+                    "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page"
+                },
+                zpl_8dpmm: %Schema{
+                  type: :string,
+                  description:
+                    "ZPL for 8 dots/mm (203 DPI) printers - 4x6 label centered on the media at native resolution",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=zpl_8dpmm"
+                },
+                zpl_12dpmm: %Schema{
+                  type: :string,
+                  description:
+                    "ZPL for 12 dots/mm (300 DPI) printers - 4x6 label centered on the media at native resolution",
+                  nullable: true,
+                  example: "https://labels.example.com/labels/456/token123?format=zpl_12dpmm"
+                }
+              },
+              example: %{
+                "png_4_x_6" => "https://labels.example.com/labels/456/token123?format=png_4_x_6",
+                "pdf_4_x_6" => "https://labels.example.com/labels/456/token123?format=pdf_4_x_6",
+                "pdf_letter" =>
+                  "https://labels.example.com/labels/456/token123?format=pdf_letter",
+                "pdf_letter_half_page" =>
+                  "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page",
+                "pdf_a4" => "https://labels.example.com/labels/456/token123?format=pdf_a4",
+                "pdf_a4_half_page" =>
+                  "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page",
+                "zpl_8dpmm" => "https://labels.example.com/labels/456/token123?format=zpl_8dpmm",
+                "zpl_12dpmm" => "https://labels.example.com/labels/456/token123?format=zpl_12dpmm"
+              }
             },
             package_id: %Schema{
               type: :integer,
@@ -328,7 +407,9 @@ defmodule DocsWeb.Schemas.Response.Shipment do
                   "id" => "1f26b6e1-ce25-43a9-b4ea-2ceaac24ec3a",
                   "internal_reference" => "Accession ID: 823",
                   "public_reference" => "Round Smithson work",
-                  "type" => "painting_framed"
+                  "type" => "painting_framed",
+                  "value" => "15000",
+                  "value_currency" => "USD"
                 }
               ],
               "current_packing" => ["cardboard_box"],

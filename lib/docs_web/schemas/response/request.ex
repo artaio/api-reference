@@ -1,6 +1,6 @@
 defmodule DocsWeb.Schemas.Response.Request do
-  alias DocsWeb.Schemas.Response.{Location, Object}
   alias DocsWeb.Schemas.{Currency, MonetaryAmount}
+  alias DocsWeb.Schemas.Response.{Location, Object}
 
   alias OpenApiSpex.Schema
 
@@ -116,6 +116,18 @@ defmodule DocsWeb.Schemas.Response.Request do
         maxLength: 255,
         example: "invoicing",
         enum: ["checkout", "invoicing"]
+      },
+      preferred_parcel_transport_services: %Schema{
+        type: "array",
+        description:
+          "Optionally instruct the Arta API to filter Parcel and Self Ship quotes for specific transport services. For example, if you would prefer to only return `ground` quotes, you can set this field to `[\"ground\"]` The list of valid transport service IDs is available at the /metadata/parcel_transport_services endpoint.",
+        example: [
+          "ground"
+        ],
+        nullable: true,
+        items: %Schema{
+          type: "string"
+        }
       },
       preferred_quote_types: %Schema{
         type: "array",
@@ -295,6 +307,14 @@ defmodule DocsWeb.Schemas.Response.Request do
           }
         }
       },
+      quoting_strategy: %Schema{
+        type: "string",
+        description:
+          "The quoting strategy used when creating quotes for this request. Determines whether the API returns a single best-rate option per transport speed or multiple carrier options for comparison. If not specified, the default strategy (“best_rate”) will be applied.",
+        maxLength: 255,
+        example: "best_rate",
+        enum: ["best_rate", "compare_carriers"]
+      },
       shipping_notes: %Schema{
         type: "string",
         description:
@@ -378,7 +398,9 @@ defmodule DocsWeb.Schemas.Response.Request do
               "id" => "1f26b6e1-ce25-43a9-b4ea-2ceaac24ec3a",
               "internal_reference" => "Accession ID: 823",
               "public_reference" => "Round Smithson work",
-              "type" => "painting_framed"
+              "type" => "painting_framed",
+              "value" => "15000",
+              "value_currency" => "USD"
             }
           ],
           "current_packing" => ["cardboard_box"],
@@ -460,6 +482,7 @@ defmodule DocsWeb.Schemas.Response.Request do
       },
       "payment_process" => "invoicing",
       "preferred_quote_types" => [],
+      "preferred_parcel_transport_services" => [],
       "public_reference" => nil,
       "quote_types" => ["premium", "select", "parcel"],
       "quotes" => [
@@ -898,6 +921,7 @@ defmodule DocsWeb.Schemas.Response.Request do
           "total_currency" => "USD"
         }
       ],
+      "quoting_strategy" => "best_rate",
       "shipping_notes" => nil,
       "shortcode" => "DEMO-R29NAW",
       "status" => "quoted",

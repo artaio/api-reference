@@ -143,6 +143,14 @@ defmodule DocsWeb.Schemas.Response.RequestListItem do
           enum: ["parcel", "premium", "select", "self_ship"]
         }
       },
+      quoting_strategy: %Schema{
+        type: "string",
+        description:
+          "TThe quoting strategy used when creating quotes for this request. Determines whether the API returns a single best-rate option per transport speed or multiple carrier options for comparison. If not specified, the default strategy (“best_rate”) will be applied.",
+        maxLength: 255,
+        example: "best_rate",
+        enum: ["best_rate", "compare_carriers"]
+      },
       shortcode: %Schema{
         type: "string",
         example: "DEMO-R723LA",
@@ -194,6 +202,7 @@ defmodule DocsWeb.Schemas.Response.RequestListItem do
       },
       "public_reference" => nil,
       "quote_types" => ["parcel", "select", "premium"],
+      "quoting_strategy" => "best_rate",
       "shortcode" => "DEMO-R29NAW",
       "status" => "closed",
       "tags" => [],

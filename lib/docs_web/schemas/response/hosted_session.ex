@@ -58,6 +58,18 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         enum: ["checkout", "invoicing"],
         readOnly: true
       },
+      preferred_parcel_transport_services: %Schema{
+        type: "array",
+        description:
+          "Optionally instruct the Arta API to filter Parcel and Self Ship quotes for specific transport services. For example, if you would prefer to only return `ground` quotes, you can set this field to `[\"ground\"]` The list of valid transport service IDs is available at the /metadata/parcel_transport_services endpoint.",
+        example: [
+          "ground"
+        ],
+        nullable: true,
+        items: %Schema{
+          type: "string"
+        }
+      },
       preferred_quote_types: %Schema{
         type: :array,
         description:
@@ -139,7 +151,9 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
               "id" => "1f26b6e1-ce25-43a9-b4ea-2ceaac24ec3a",
               "internal_reference" => "Accession ID: 823",
               "public_reference" => "Round Smithson work",
-              "type" => "painting_framed"
+              "type" => "painting_framed",
+              "value" => "15000",
+              "value_currency" => "USD"
             }
           ],
           "current_packing" => ["cardboard_box"],

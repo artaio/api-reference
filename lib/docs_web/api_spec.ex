@@ -554,6 +554,74 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/import_cost_estimates" => %PathItem{
+          get: %Operation{
+            summary: "List Import Cost Estimates",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve a paginated collection of import cost estimates belonging to your organization.",
+            tags: [
+              "import_cost_estimates"
+            ],
+            operationId: "importCostEstimates/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Import Cost Estimate records",
+                  "application/json",
+                  list(Response.ImportCostEstimate),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create an Import Cost Estimate",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCreate an import cost estimate to calculate cross-border duties, fees, and taxes for your international shipments.",
+            tags: [
+              "import_cost_estimates"
+            ],
+            operationId: "importCostEstimates/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: DocsWeb.Schemas.RequestBody.ImportCostEstimateCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created Import Cost Estimate",
+                  "application/json",
+                  Response.ImportCostEstimate,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build()
+            }
+          }
+        },
+        "/import_cost_estimates/{import_cost_estimate_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get an Import Cost Estimate",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve an existing import cost estimate record by its unique identifier.",
+            tags: ["import_cost_estimates"],
+            operationId: "importCostEstimates/get",
+            parameters: [Authorization.parameter(), Parameters.ImportCostEstimateID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Import Cost Estimate response",
+                  "application/json",
+                  Response.ImportCostEstimate,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
         "/invoice_payments" => %PathItem{
           get: %Operation{
             summary: "List Invoice Payment",
@@ -931,6 +999,26 @@ defmodule DocsWeb.ApiSpec do
                   "A collection of quote types",
                   "application/json",
                   Response.Metadata.Quote,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/quoting_strategies" => %PathItem{
+          get: %Operation{
+            summary: "Quoting Strategies",
+            description: "The list of quoting strategies supported by Arta.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/quotingStrategies",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of quoting strategies",
+                  "application/json",
+                  Response.Metadata.QuotingStrategy,
                   headers: default_headers()
                 )
             }
