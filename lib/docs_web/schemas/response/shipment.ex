@@ -226,49 +226,59 @@ defmodule DocsWeb.Schemas.Response.Shipment do
               properties: %{
                 png_4_x_6: %Schema{
                   type: :string,
-                  description: "PNG 4x6 inch label - centered on the page and scaled to fill exactly 4x6 inches (no margins)",
+                  description:
+                    "PNG 4x6 inch label - centered on the page and scaled to fill exactly 4x6 inches (no margins)",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=png_4_x_6"
                 },
                 pdf_4_x_6: %Schema{
                   type: :string,
-                  description: "PDF 4x6 inch label - centered and scaled to full size with 0.5 inch margins on all sides",
+                  description:
+                    "PDF 4x6 inch label - centered and scaled to full size with 0.5 inch margins on all sides",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_4_x_6"
                 },
                 pdf_letter: %Schema{
                   type: :string,
-                  description: "PDF US Letter (8.5x11 inch) - centered and scaled to full size with 1 inch margins on all sides",
+                  description:
+                    "PDF US Letter (8.5x11 inch) - centered and scaled to full size with 1 inch margins on all sides",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_letter"
                 },
                 pdf_letter_half_page: %Schema{
                   type: :string,
-                  description: "PDF US Letter landscape (11x8.5 inch) - 4x6 label on left half with 1.5 inch top/bottom and 1.25 inch left/right margins",
+                  description:
+                    "PDF US Letter landscape (11x8.5 inch) - 4x6 label on left half with 1.5 inch top/bottom and 1.25 inch left/right margins",
                   nullable: true,
-                  example: "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page"
+                  example:
+                    "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page"
                 },
                 pdf_a4: %Schema{
                   type: :string,
-                  description: "PDF A4 (8.3x11.7 inch) - centered and scaled to full size with 1 inch top/bottom and 1.25 inch left/right margins",
+                  description:
+                    "PDF A4 (8.3x11.7 inch) - centered and scaled to full size with 1 inch top/bottom and 1.25 inch left/right margins",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=pdf_a4"
                 },
                 pdf_a4_half_page: %Schema{
                   type: :string,
-                  description: "PDF A4 landscape (11.7x8.3 inch) - 4x6 label on left half with 1.15 inch top/bottom and 1.85 inch left/right margins",
+                  description:
+                    "PDF A4 landscape (11.7x8.3 inch) - 4x6 label on left half with 1.15 inch top/bottom and 1.85 inch left/right margins",
                   nullable: true,
-                  example: "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page"
+                  example:
+                    "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page"
                 },
                 zpl_8dpmm: %Schema{
                   type: :string,
-                  description: "ZPL for 8 dots/mm (203 DPI) printers - 4x6 label centered on the media at native resolution",
+                  description:
+                    "ZPL for 8 dots/mm (203 DPI) printers - 4x6 label centered on the media at native resolution",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=zpl_8dpmm"
                 },
                 zpl_12dpmm: %Schema{
                   type: :string,
-                  description: "ZPL for 12 dots/mm (300 DPI) printers - 4x6 label centered on the media at native resolution",
+                  description:
+                    "ZPL for 12 dots/mm (300 DPI) printers - 4x6 label centered on the media at native resolution",
                   nullable: true,
                   example: "https://labels.example.com/labels/456/token123?format=zpl_12dpmm"
                 }
@@ -276,10 +286,13 @@ defmodule DocsWeb.Schemas.Response.Shipment do
               example: %{
                 "png_4_x_6" => "https://labels.example.com/labels/456/token123?format=png_4_x_6",
                 "pdf_4_x_6" => "https://labels.example.com/labels/456/token123?format=pdf_4_x_6",
-                "pdf_letter" => "https://labels.example.com/labels/456/token123?format=pdf_letter",
-                "pdf_letter_half_page" => "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page",
+                "pdf_letter" =>
+                  "https://labels.example.com/labels/456/token123?format=pdf_letter",
+                "pdf_letter_half_page" =>
+                  "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page",
                 "pdf_a4" => "https://labels.example.com/labels/456/token123?format=pdf_a4",
-                "pdf_a4_half_page" => "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page",
+                "pdf_a4_half_page" =>
+                  "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page",
                 "zpl_8dpmm" => "https://labels.example.com/labels/456/token123?format=zpl_8dpmm",
                 "zpl_12dpmm" => "https://labels.example.com/labels/456/token123?format=zpl_12dpmm"
               }
@@ -377,6 +390,55 @@ defmodule DocsWeb.Schemas.Response.Shipment do
           "is_sufficiently_packed" => false,
           "objects" => [
             %{
+              "components" => [
+                %{
+                  "customs" => %{
+                    "country_of_origin" => "US",
+                    "hs_code" => "123456",
+                    "medium" => "oil on canvas",
+                    "temporary_admission" => true
+                  },
+                  "details" => %{
+                    "creation_date" => "1980",
+                    "creator" => "Bob Smithson",
+                    "title" => "Black Rectangle",
+                    "notes" => "Artist signature in the lower left corner"
+                  },
+                  "id" => "1f26b6e1-ce25-43a9-b4ea-2ceaac24ec3a",
+                  "internal_reference" => "Accession ID: 823",
+                  "public_reference" => "Round Smithson work",
+                  "type" => "painting_framed",
+                  "value" => "15000",
+                  "value_currency" => "USD"
+                }
+              ],
+              "current_packing" => ["cardboard_box"],
+              "depth" => "2",
+              "details" => %{
+                "creation_date" => nil,
+                "creator" => nil,
+                "is_cites" => false,
+                "is_fragile" => false,
+                "materials" => [],
+                "notes" => nil,
+                "title" => nil
+              },
+              "height" => "10.5",
+              "id" => 621,
+              "images" => [],
+              "internal_reference" => nil,
+              "public_reference" => nil,
+              "subtype" => "prepacked_box",
+              "type" => "client_package",
+              "unit_of_measurement" => "in",
+              "value" => "15000",
+              "value_currency" => "USD",
+              "weight" => "3.5",
+              "weight_unit" => "lb",
+              "width" => "10"
+            },
+            %{
+              "components" => [],
               "current_packing" => [],
               "customs" => %{
                 "country_of_origin" => "US",
@@ -391,6 +453,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
                 "is_cites" => false,
                 "is_fragile" => false,
                 "materials" => [],
+                "notes" => "Artist signature in the lower left corner",
                 "title" => "All That Jazz"
               },
               "height" => "10.5",

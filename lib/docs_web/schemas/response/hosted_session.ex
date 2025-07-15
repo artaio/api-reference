@@ -134,6 +134,55 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       "internal_reference" => nil,
       "objects" => [
         %{
+          "components" => [
+            %{
+              "customs" => %{
+                "country_of_origin" => "US",
+                "hs_code" => "123456",
+                "medium" => "oil on canvas",
+                "temporary_admission" => true
+              },
+              "details" => %{
+                "creation_date" => "1980",
+                "creator" => "Bob Smithson",
+                "title" => "Black Rectangle",
+                "notes" => "Artist signature in the lower left corner"
+              },
+              "id" => "1f26b6e1-ce25-43a9-b4ea-2ceaac24ec3a",
+              "internal_reference" => "Accession ID: 823",
+              "public_reference" => "Round Smithson work",
+              "type" => "painting_framed",
+              "value" => "15000",
+              "value_currency" => "USD"
+            }
+          ],
+          "current_packing" => ["cardboard_box"],
+          "depth" => "2",
+          "details" => %{
+            "creation_date" => nil,
+            "creator" => nil,
+            "is_cites" => false,
+            "is_fragile" => false,
+            "materials" => [],
+            "notes" => nil,
+            "title" => nil
+          },
+          "height" => "10.5",
+          "id" => 12346,
+          "images" => [],
+          "internal_reference" => nil,
+          "public_reference" => nil,
+          "subtype" => "prepacked_box",
+          "type" => "client_package",
+          "unit_of_measurement" => "in",
+          "value" => "15000",
+          "value_currency" => "USD",
+          "weight" => "3.5",
+          "weight_unit" => "lb",
+          "width" => "10"
+        },
+        %{
+          "components" => [],
           "current_packing" => [],
           "customs" => %{
             "country_of_origin" => "US",

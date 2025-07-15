@@ -863,6 +863,26 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/metadata/object_components" => %PathItem{
+          get: %Operation{
+            summary: "Object Components",
+            description: "The list of object component types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/objectComponents",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of object component types",
+                  "application/json",
+                  Response.Metadata.ObjectComponent,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
         "/metadata/object_materials" => %PathItem{
           get: %Operation{
             summary: "Object Materials",
