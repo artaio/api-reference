@@ -136,6 +136,12 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         %{
           "components" => [
             %{
+              "customs" => %{
+                "country_of_origin" => "US",
+                "hs_code" => "123456",
+                "medium" => "oil on canvas",
+                "temporary_admission" => true
+              },
               "details" => %{
                 "creation_date" => "1980",
                 "creator" => "Bob Smithson",

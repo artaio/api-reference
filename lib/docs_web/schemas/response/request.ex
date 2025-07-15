@@ -1,6 +1,7 @@
 defmodule DocsWeb.Schemas.Response.Request do
   alias DocsWeb.Schemas.{Currency, MonetaryAmount}
   alias DocsWeb.Schemas.Response.{Location, Object}
+
   alias OpenApiSpex.Schema
 
   require OpenApiSpex
@@ -382,6 +383,12 @@ defmodule DocsWeb.Schemas.Response.Request do
         %{
           "components" => [
             %{
+              "customs" => %{
+                "country_of_origin" => "US",
+                "hs_code" => "123456",
+                "medium" => "oil on canvas",
+                "temporary_admission" => true
+              },
               "details" => %{
                 "creation_date" => "1980",
                 "creator" => "Bob Smithson",

@@ -196,6 +196,37 @@ defmodule DocsWeb.Schemas.Fields do
 
   def object_component_fields() do
     %{
+      customs: %Schema{
+        type: "object",
+        properties: %{
+          country_of_origin: %Schema{
+            description:
+              "The ISO 3166-1 alpha-2 country code where the object was made or manufactured",
+            type: "string",
+            maxLength: 2,
+            minLength: 2,
+            example: "US"
+          },
+          hs_code: %Schema{
+            description:
+              "The Harmonized System code for the object. This is a 6-10 digit code used to classify traded products",
+            type: "string",
+            example: "123456"
+          },
+          medium: %Schema{
+            description:
+              "The medium of the object. This is a description of the material or materials used to create the object",
+            type: "string",
+            example: "oil on canvas"
+          },
+          temporary_admission: %Schema{
+            description:
+              "Select true if the goods are currently in the country under a temporary admission declaration",
+            type: "boolean",
+            example: true
+          }
+        }
+      },
       details: %Schema{
         type: "object",
         properties: %{
