@@ -28,4 +28,15 @@ defmodule DocsWeb.Schemas.Payload.Object do
       properties: Fields.object_fields()
     }
   end
+
+  def call(:inbound_booking_session) do
+    %Schema{
+      type: :object,
+      properties: Fields.object_fields(),
+      required: [
+        :subtype,
+        :value
+      ]
+    }
+  end
 end
