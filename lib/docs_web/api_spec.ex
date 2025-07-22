@@ -1601,7 +1601,7 @@ defmodule DocsWeb.ApiSpec do
                 ),
               422 =>
                 Operation.response(
-                  "Unprocessible entity",
+                  "Unprocessable entity",
                   "application/json",
                   Response.Error
                 )
