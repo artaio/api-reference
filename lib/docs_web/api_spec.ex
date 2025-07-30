@@ -483,7 +483,7 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A paginated collection of hosted sessions",
                   "application/json",
-                  list(Response.HostedSession),
+                  list(Response.HostedSessionListItem),
                   headers: default_headers()
                 )
             }

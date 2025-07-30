@@ -4,6 +4,38 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
 
   require OpenApiSpex
 
+  @public_instructions_object_details_description "A client defined multi-line block of text presented to users on the object form in inbound booking hosted sessions.
+
+- Only visible if `can_user_confirm_object_dimensions` is true
+
+- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
+
+- Rendered text supports a maximum of 400 characters not including links and markup"
+
+  @public_instructions_location_quotes_description "A client defined multi-line block of text presented to users on the location and quote selection view for booking, shared request, and inbound booking hosted sessions.
+
+- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
+
+- Rendered text supports a maximum of 400 characters not including links and markup"
+
+  @public_instructions_payment_description "A client defined multi-line block of text presented to users on the post-shipment booking payment view when required for booking, shared request, and inbound booking hosted sessions.
+
+- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
+
+- Rendered text supports a maximum of 400 characters not including links and markup"
+
+  @public_instructions_booking_review_description "A client defined multi-line block of text presented to users in the quote review modal window prior to booking a shipment for booking, shared request, and inbound booking sessions.
+
+- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
+
+- Rendered text supports a maximum of 400 characters not including links and markup"
+
+  @public_instructions_confirmation_description "A client defined multi-line block of text presented to users on the post-shipment booking confirmation view for booking, shared request, and inbound booking hosted sessions.
+
+- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
+
+- Rendered text supports a maximum of 400 characters not including links and markup"
+
   @hosted_session_properties %{
     additional_services: %Schema{
       type: "array",
@@ -64,6 +96,22 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
         type: "string"
       }
     },
+    public_instructions_location_quotes: %Schema{
+      type: "string",
+      description: @public_instructions_location_quotes_description
+    },
+    public_instructions_payment: %Schema{
+      type: "string",
+      description: @public_instructions_payment_description
+    },
+    public_instructions_booking_review: %Schema{
+      type: "string",
+      description: @public_instructions_booking_review_description
+    },
+    public_instructions_confirmation: %Schema{
+      type: "string",
+      description: @public_instructions_confirmation_description
+    },
     public_reference: %Schema{
       description:
         "A client defined name for the request. The value provided for the public_reference field may appear in notification emails and shipment detail pages",
@@ -73,7 +121,7 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
     },
     quoting_strategy: %Schema{
       description:
-        "The quoting strategy used when creating quotes for this request. Determines whether the API returns a single best-rate option per transport speed or multiple carrier options for comparison",
+        "The quoting strategy used when creating quote requests for this booking session. Determines whether the API returns a single best-rate option per transport speed or multiple carrier options for comparison",
       type: "string",
       maxLength: 255,
       example: "best_rate",
@@ -112,46 +160,22 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
     }
   }
 
-  @public_instructions_descr "A client defined multi-line block of text presented to users on the object form
-in inbound booking hosted sessions.
-
-- Only visibile if `can_user_confirm_object_dimensions` is true
-
-- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
-
-- Rendered text supports a maximum of 400 characters not including links and markup"
-
   @inbound_session_properties Map.merge(@hosted_session_properties, %{
                                 can_user_confirm_object_dimensions: %Schema{
                                   type: "boolean",
                                   description:
-                                    "Determines whether your customer can verify and update object dimension information when completing and inbound booking session.",
+                                    "Determines whether your customer can verify and update object dimension information when completing an inbound booking session.",
                                   default: false
-                                },
-                                public_instructions_object_details: %Schema{
-                                  type: "string",
-                                  description: @public_instructions_descr,
-                                  example: "Please confirm the dimensions of your objects below."
-                                },
-                                public_instructions_location_quotes: %Schema{
-                                  type: "string",
-                                  description: @public_instructions_descr
-                                },
-                                public_instructions_payment: %Schema{
-                                  type: "string",
-                                  description: @public_instructions_descr
-                                },
-                                public_instructions_booking_review: %Schema{
-                                  type: "string",
-                                  description: @public_instructions_descr
-                                },
-                                public_instructions_confirmation: %Schema{
-                                  type: "string",
-                                  description: @public_instructions_descr
                                 },
                                 objects: %Schema{
                                   type: "array",
                                   items: Object.call(:inbound_booking_session)
+                                },
+                                public_instructions_object_details: %Schema{
+                                  type: "string",
+                                  description: @public_instructions_object_details_description,
+                                  example:
+                                    "Please confirm the dimensions of the objects you are shipping."
                                 },
                                 type: %Schema{
                                   type: "string",
