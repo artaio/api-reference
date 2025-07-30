@@ -185,6 +185,10 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         description: "A list of tags associated with this hosted session",
         items: DocsWeb.Schemas.Response.Tag
       },
+      type: %Schema{
+        type: "string",
+        description: "The type of the hosted session"
+      },
       updated_at: %Schema{
         type: :string
       },
@@ -319,6 +323,7 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       "status" => "new",
       "success_url" => "http://example.com/success",
       "tags" => [],
+      "type" => "booking",
       "updated_at" => "2021-01-21T17:22:10.129653",
       "url" => "https://book.arta.io/b/42/6f76b6e1-ce25-43a9-b4ea-2ceaac24ec7e"
     }
