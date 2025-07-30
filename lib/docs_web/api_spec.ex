@@ -27,6 +27,7 @@ defmodule DocsWeb.ApiSpec do
 
   alias DocsWeb.Schemas.RequestBody.{
     AttachmentCreate,
+    CollectionTagRuleCreate,
     HostedSessionCreate,
     ApiKeyCreate,
     OrganizationUpdate,
@@ -1571,6 +1572,106 @@ Use the private url in the successful hosted session response to direct your use
                   "Successful Shipment get response",
                   "application/json",
                   Response.Shipment,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
+        "/collection_tag_rules" => %PathItem{
+          get: %Operation{
+            summary: "List Collection Tag Rules",
+            description:
+              "Retrieve a paginated collection of all tag rules configured for your organization.\n\nCollection Tag Rules allow organizations to automatically segment Collections into distinct lists based on shipment tags. This feature is particularly useful for organizations with multiple sellers who don't have dashboard access, enabling automated organization of collections without manual intervention.",
+            tags: [
+              "collection_tag_rules"
+            ],
+            operationId: "collectionTagRules/list",
+            parameters: [
+              Authorization.parameter(),
+              Page.parameter(),
+              PageSize.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Collection Tag Rule records",
+                  "application/json",
+                  list(Response.CollectionTagRule),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Collection Tag Rule",
+            description:
+              "Creates a new tag rule for automatically segmenting collections.\n\nType of matching rule to apply. Valid values:\n\n* `exact_match`: Creates separate collection lists only for shipments with tags that exactly match the specified pattern\n* `pattern_match`: Uses wildcard matching to create separate collections for tags matching the pattern (supports `*` wildcard)\n\n**Notes:**\n\n* Tag rules automatically apply to new shipments and collections; existing collections are not retroactively affected\n* Wildcard patterns in `pattern_match` rules only support the `*` character for matching any sequence of characters\n* Only one of `tag_id` or `pattern` should be provided.",
+            tags: [
+              "collection_tag_rules"
+            ],
+            operationId: "collectionTagRules/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: CollectionTagRuleCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created collection tag rule",
+                  "application/json",
+                  Response.CollectionTagRule,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build(),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              422 =>
+                Operation.response(
+                  "Unprocessable entity",
+                  "application/json",
+                  Response.Error
+                )
+            }
+          }
+        },
+        "/collection_tag_rules/{collection_tag_rule_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Collection Tag Rule",
+            description: "Retrieve a specific tag rule by its ID.",
+            tags: ["collection_tag_rules"],
+            operationId: "collectionTagRules/get",
+            parameters: [Authorization.parameter(), Parameters.CollectionTagRuleID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Collection Tag Rule response",
+                  "application/json",
+                  Response.CollectionTagRule,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          },
+          delete: %Operation{
+            summary: "Delete a Collection Tag Rule",
+            description: "Permanently deletes a tag rule. This action cannot be undone.",
+            tags: ["collection_tag_rules"],
+            operationId: "collectionTagRules/delete",
+            parameters: [Authorization.parameter(), Parameters.CollectionTagRuleID.parameter()],
+            responses: %{
+              204 =>
+                Operation.response(
+                  "Collection Tag Rule deleted",
+                  "application/json",
+                  nil,
                   headers: default_headers()
                 ),
               404 => Response.NotFound.build()
