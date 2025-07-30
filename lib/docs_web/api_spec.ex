@@ -483,15 +483,29 @@ defmodule DocsWeb.ApiSpec do
                 Operation.response(
                   "A paginated collection of hosted sessions",
                   "application/json",
-                  list(Response.HostedSession),
+                  list(Response.HostedSessionListItem),
                   headers: default_headers()
                 )
             }
           },
           post: %Operation{
             summary: "Create a Hosted Session",
-            description:
-              "Create a hosted session resource to generate an Arta Booking url.\n\nThis endpoint expects one of two versions of the `hosted_session` schema:\n\n* You may send a `hosted_session` object with a subset of the fields required for generating quote requests via the Arta API. With this schema, you must minimally include valid `objects` and `origin` details in your API call. Additionally, you may provide a `success_url` and a `cancel_url` to determine where Arta will redirect the user after the session is complete\n\n* Alternatively, you may share an existing Quote Request by sending a `hosted_session` object with the corresponding request's `request_id`. This will create an Arta Booking session for the request\n\nUse the private `url` in the successful hosted session response to direct your users to the Arta Booking web page so that they may configure and book their own shipment.",
+            description: "**Availability for Inbound Booking Sessions: Public Preview**
+
+*Inbound Booking is currently in public preview and available only to approved accounts. Please contact Arta to request access for your organization.*
+
+Create a hosted session resource to generate an Arta Booking url.
+
+This endpoint expects one of three types of the hosted_session schema:
+
+* **Booking Sessions**: With this schema, you must minimally include valid objects and origin details in your API call. Your customers will be able to confirm their destination details and book their preferred shipment quote. Additionally, you may provide a success_url and a cancel_url to determine where Arta will redirect the user after the session is complete.
+
+* **Inbound Booking Sessions**: With this schema, you must minimally include valid objects and destination details in your API call. Your customers will be able to confirm their origin details and book their preferred shipment quote. For Self Ship quotes, Arta will make any labels available for download. Customers may optionally review and update object dimension details in the hosted session workflow if `can_user_confirm_object_dimensions` is set to true. Additionally, you may provide a success_url and a cancel_url to determine where Arta will redirect the user after the session is complete.
+
+* **Shared Requests**: Alternatively, you may share an existing quote request by sending a `hosted_session` object with the corresponding request's request_id.
+
+Use the private url in the successful hosted session response to direct your users to the Arta Booking web page so that they may configure and book their own shipment.
+",
             tags: [
               "hosted_sessions"
             ],

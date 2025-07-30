@@ -1,43 +1,11 @@
-defmodule DocsWeb.Schemas.Response.HostedSession do
+defmodule DocsWeb.Schemas.Response.HostedSessionListItem do
   alias OpenApiSpex.Schema
   alias DocsWeb.Schemas.Response
 
   require OpenApiSpex
 
-  @public_instructions_object_details_description "A client defined multi-line block of text presented to users on the object form in inbound booking hosted sessions.
-
-- Only visible if `can_user_confirm_object_dimensions` is true
-
-- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
-
-- Rendered text supports a maximum of 400 characters not including links and markup"
-
-  @public_instructions_location_quotes_description "A client defined multi-line block of text presented to users on the location and quote selection view for booking, shared request, and inbound booking hosted sessions.
-
-- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
-
-- Rendered text supports a maximum of 400 characters not including links and markup"
-
-  @public_instructions_payment_description "A client defined multi-line block of text presented to users on the post-shipment booking payment view when required for booking, shared request, and inbound booking hosted sessions.
-
-- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
-
-- Rendered text supports a maximum of 400 characters not including links and markup"
-
-  @public_instructions_booking_review_description "A client defined multi-line block of text presented to users in the quote review modal window prior to booking a shipment for booking, shared request, and inbound booking sessions.
-
-- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
-
-- Rendered text supports a maximum of 400 characters not including links and markup"
-
-  @public_instructions_confirmation_description "A client defined multi-line block of text presented to users on the post-shipment booking confirmation view for booking, shared request, and inbound booking hosted sessions.
-
-- Supports multiple lines and markdown-inspired anchor link syntax `[view more](https://moma.org/)`
-
-- Rendered text supports a maximum of 400 characters not including links and markup"
-
   OpenApiSpex.schema(%{
-    title: "HostedSession",
+    title: "HostedSessionListItem",
     type: :object,
     properties: %{
       additional_services: %Schema{
@@ -119,27 +87,6 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
         type: :string,
         description:
           "A private access token for this resource. It is used to generate the private URL for the hosted session"
-      },
-      public_instructions_booking_review: %Schema{
-        type: "string",
-        description: @public_instructions_booking_review_description
-      },
-      public_instructions_confirmation: %Schema{
-        type: "string",
-        description: @public_instructions_confirmation_description
-      },
-      public_instructions_location_quotes: %Schema{
-        type: "string",
-        description: @public_instructions_location_quotes_description
-      },
-      public_instructions_payment: %Schema{
-        type: "string",
-        description: @public_instructions_payment_description
-      },
-      public_instructions_object_details: %Schema{
-        type: "string",
-        description: @public_instructions_object_details_description,
-        example: "Please confirm the dimensions of the objects you are shipping."
       },
       public_reference: %Schema{
         type: :string,
@@ -307,15 +254,10 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       "payment_process" => "invoicing",
       "preferred_quote_types" => [],
       "private_token" => "6f76b6e1-ce25-43a9-b4ea-2ceaac24ec7e",
-      "public_instructions_booking_review" => nil,
-      "public_instructions_confirmation" => nil,
-      "public_instructions_location_quotes" => nil,
-      "public_instructions_object_details" => nil,
-      "public_instructions_payment" => nil,
       "public_reference" => nil,
       "quoting_strategy" => "best_rate",
       "shipping_notes" => nil,
-      "shortcode" => "DEMO-B49SVZ",
+      "shortcode" => "DEMO-BA9SVZ",
       "status" => "new",
       "success_url" => "http://example.com/success",
       "tags" => [],
