@@ -132,6 +132,10 @@ defmodule DocsWeb.Schemas.Response.HostedSessionListItem do
         description: "A list of tags associated with this hosted session",
         items: DocsWeb.Schemas.Response.Tag
       },
+      type: %Schema{
+        type: "string",
+        description: "The type of the hosted session"
+      },
       updated_at: %Schema{
         type: :string
       },
@@ -259,6 +263,7 @@ defmodule DocsWeb.Schemas.Response.HostedSessionListItem do
       "shipping_notes" => nil,
       "shortcode" => "DEMO-BA9SVZ",
       "status" => "new",
+      "type" => "booking",
       "success_url" => "http://example.com/success",
       "tags" => [],
       "updated_at" => "2021-01-21T17:22:10.129653",
