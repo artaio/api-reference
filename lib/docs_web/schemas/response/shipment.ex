@@ -137,12 +137,10 @@ defmodule DocsWeb.Schemas.Response.Shipment do
         properties: %{
           delivery_end: %Schema{
             type: :string,
-            format: :date,
             nullable: true
           },
           delivery_start: %Schema{
             type: :string,
-            format: :date,
             nullable: true
           },
           delivery_window_modifier: %Schema{
@@ -153,12 +151,10 @@ defmodule DocsWeb.Schemas.Response.Shipment do
           },
           pickup_end: %Schema{
             type: :string,
-            format: :date,
             nullable: true
           },
           pickup_start: %Schema{
             type: :string,
-            format: :date,
             nullable: true
           },
           pickup_window_modifier: %Schema{

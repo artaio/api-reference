@@ -486,7 +486,6 @@ defmodule DocsWeb.Schemas.Fields do
       hold_until: %Schema{
         type: :string,
         description: "The date the shipment will be held until",
-        format: "date",
         nullable: true
       },
       id: %Schema{
