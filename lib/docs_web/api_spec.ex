@@ -860,6 +860,158 @@ Use the private url in the successful hosted session response to direct your use
             }
           }
         },
+        "/metadata/insurance_policy_statuses" => %PathItem{
+          get: %Operation{
+            summary: "Insurance Policy Statuses",
+            description: "The list of insurance policy statuses supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/insurancePolicyStatuses",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of insurance policy statuses",
+                  "application/json",
+                  Response.Metadata.InsurancePolicyStatus,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/insurance_policy_statuses/{id}" => %PathItem{
+          get: %Operation{
+            summary: "Get Insurance Policy Status",
+            description: "Retrieve a specific insurance policy status by ID.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/getInsurancePolicyStatus",
+            parameters: [
+              Authorization.parameter(),
+              %OpenApiSpex.Parameter{
+                in: :path,
+                name: :id,
+                description: "The insurance policy status ID",
+                required: true,
+                schema: %Schema{type: :string},
+                example: "active"
+              }
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A single insurance policy status",
+                  "application/json",
+                  %Schema{
+                    type: :object,
+                    properties: %{
+                      description: %Schema{
+                        type: :string,
+                        description: "A detailed description of the insurance policy status",
+                        example: "in transit state"
+                      },
+                      id: %Schema{
+                        type: :string,
+                        description: "The ID representing the insurance policy status",
+                        example: "active"
+                      },
+                      name: %Schema{
+                        type: :string,
+                        description: "A brief title for the status",
+                        example: "Active"
+                      },
+                      sequence: %Schema{
+                        type: [:integer, :null],
+                        description:
+                          "The order sequence number for status flow. Null for non-sequential statuses",
+                        example: 3,
+                        nullable: true
+                      },
+                      terminal: %Schema{
+                        type: :boolean,
+                        description:
+                          "Whether this is a final/terminal state that cannot be changed",
+                        example: false
+                      }
+                    }
+                  },
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/insurance_policy_coverage_types" => %PathItem{
+          get: %Operation{
+            summary: "Insurance Policy Coverage Types",
+            description: "The list of insurance policy coverage types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/insurancePolicyCoverageTypes",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of insurance policy coverage types",
+                  "application/json",
+                  Response.Metadata.InsurancePolicyCoverageType,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/insurance_policy_coverage_types/{id}" => %PathItem{
+          get: %Operation{
+            summary: "Get Insurance Policy Coverage Type",
+            description: "Retrieve a specific insurance policy coverage type by ID.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/getInsurancePolicyCoverageType",
+            parameters: [
+              Authorization.parameter(),
+              %OpenApiSpex.Parameter{
+                in: :path,
+                name: :id,
+                description: "The insurance policy coverage type ID",
+                required: true,
+                schema: %Schema{type: :string},
+                example: "arta_shipping"
+              }
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A single insurance policy coverage type",
+                  "application/json",
+                  %Schema{
+                    type: :object,
+                    properties: %{
+                      description: %Schema{
+                        type: :string,
+                        description:
+                          "A detailed description of the insurance policy coverage type",
+                        example: "Coverage for shipments handled through Arta's shipping services"
+                      },
+                      id: %Schema{
+                        type: :string,
+                        description: "The ID representing the insurance policy coverage type",
+                        example: "arta_shipping"
+                      },
+                      name: %Schema{
+                        type: :string,
+                        description: "A brief title for the coverage type",
+                        example: "Arta Shipping"
+                      }
+                    }
+                  },
+                  headers: default_headers()
+                )
+            }
+          }
+        },
         "/metadata/location_access_restrictions" => %PathItem{
           get: %Operation{
             summary: "Location Access Restrictions",
