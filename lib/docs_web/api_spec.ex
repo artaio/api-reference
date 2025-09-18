@@ -2119,7 +2119,7 @@ Use the private url in the successful hosted session response to direct your use
           patch: %Operation{
             summary: "Purchase Shipping Protection Coverage",
             description:
-              "This endpoint finalizes coverage for an existing Shipping Protection Policy. It validates that the caller's organization has API access, verifies the referenced insurance policy belongs to the target shipping protection policy, and checks tracking data (carrier/service-level and status). Coverage can be purchased only when all packages are PRE_TRANSIT and compliant with transport requirements. On success, the system confirms the insurance policy, creates a track shipment linked to the policy (including locations, packages, objects, and tags), and returns the updated policy snapshot.",
+              "Activates insurance coverage for an existing Shipping Protection Policy. Coverage can only be purchased when all packages are in PRE_TRANSIT status and meet the required transport, packaging, and service specifications. Once successful, the policy status changes to confirmed and coverage becomes active.",
             tags: ["shipping_protection_policies"],
             operationId: "shippingProtectionPolicies/purchaseCoverage",
             parameters: [Authorization.parameter(), ShippingProtectionPolicyID.parameter()],
