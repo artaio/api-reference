@@ -2073,7 +2073,7 @@ Use the private url in the successful hosted session response to direct your use
           post: %Operation{
             summary: "Create a Shipping Protection Policy",
             description:
-              "Create a new shipping protection policy with calculated insurance policy, normalized locations, packages, and requirements",
+              "Create a new shipping protection policy with insurance coverage for your shipment. Specify the origin, destination, packages, and objects to be insured to receive coverage options and requirements.",
             tags: ["shipping_protection_policies"],
             operationId: "shippingProtectionPolicies/create",
             parameters: [Authorization.parameter()],
