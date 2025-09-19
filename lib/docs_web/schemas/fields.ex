@@ -1048,7 +1048,7 @@ defmodule DocsWeb.Schemas.Fields do
 
   def shipment_reference_fields() do
     %{
-      arta_id: %Schema{
+      id: %Schema{
         type: "string",
         format: :uuid,
         description: "ARTA shipment identifier (UUID format).",

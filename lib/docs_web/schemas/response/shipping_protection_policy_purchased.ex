@@ -142,7 +142,7 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicyPurchased do
       ],
       "public_reference" => "PUBLIC_REF_123",
       "shipment" => %{
-        "arta_id" => "fa61548d-5a26-4983-8f16-1bcccdb5c4f8",
+        "id" => "fa61548d-5a26-4983-8f16-1bcccdb5c4f8",
         "shortcode" => "ARTA-486257",
         "status" => "pending"
       },
