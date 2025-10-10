@@ -323,7 +323,7 @@ defmodule DocsWeb.Schemas.Response.Request do
       },
       shortcode: %Schema{
         type: "string",
-        description: "A brief and unique string identifier for the request resource",
+        description: "A brief and unique string identifier for the resource",
         example: "DEMO-B8FIRV"
       },
       status: %Schema{
@@ -338,6 +338,11 @@ defmodule DocsWeb.Schemas.Response.Request do
           "expired",
           "pending"
         ]
+      },
+      tags: %Schema{
+        type: :array,
+        description: "A list of tags associated with this request",
+        items: DocsWeb.Schemas.Response.Tag
       },
       updated_at: %Schema{
         type: "string",
