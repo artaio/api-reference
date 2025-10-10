@@ -1,7 +1,12 @@
 defmodule DocsWeb.Schemas.Response.ShipmentList do
   alias OpenApiSpex.Schema
 
-  alias DocsWeb.Schemas.{Currency, MinimalLocation, MonetaryAmount}
+  alias DocsWeb.Schemas.{
+    Currency, 
+    MinimalLocation, 
+    MonetaryAmount,
+    Tag
+  }
 
   require OpenApiSpex
 
@@ -77,9 +82,7 @@ defmodule DocsWeb.Schemas.Response.ShipmentList do
       tags: %Schema{
         type: :array,
         description: "A list of tags associated with the shipment",
-        items: %Schema{
-          type: :string
-        }
+        items: Tag
       },
       total: MonetaryAmount,
       total_currency: Currency,
