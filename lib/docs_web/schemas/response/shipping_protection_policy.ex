@@ -9,10 +9,10 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
     properties: Fields.shipping_protection_policy_response_fields(),
     example: %{
       "created_at" => "2025-09-18T14:38:32.124915",
-      "currency" => "USD",
       "destination" => %{
         "address_line_1" => "456 Oak Ave",
         "address_line_2" => nil,
+        "address_line_3" => nil,
         "city" => "Los Angeles",
         "contacts" => [
           %{
@@ -25,15 +25,29 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
         "postal_code" => "90210",
         "region" => "CA"
       },
+      "exceptions" => [
+        %{
+          "created_at" => "2025-10-14T18:41:05.561394",
+          "exception_type_label" => nil,
+          "hold_until" => nil,
+          "id" => "8ca7d58b-469e-4aaf-9305-f25532f391e7",
+          "object_id" => nil,
+          "package_id" => nil,
+          "resolution" => nil,
+          "source" => "automatic",
+          "status" => "new",
+          "type" => "prepayment_required",
+          "updated_at" => "2025-10-14T18:41:05.561394"
+        }
+      ],
       "id" => "4da6d140-d33b-43c4-abe1-b04389fe6782",
       "insurance_policy" => %{
         "coverage_type" => "client_shipping",
-        "id" => 36,
+        "created_by" => nil,
         "insurance_cost" => "61.25",
         "insurance_cost_currency" => "USD",
         "insured_value" => "3500.00",
         "insured_value_currency" => "USD",
-        "shortcode" => "ARTA-IPWC1UGUE",
         "status" => "new",
         "status_changed_at" => "2025-09-18T14:38:32.267335"
       },
@@ -41,6 +55,7 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
       "origin" => %{
         "address_line_1" => "123 Main St",
         "address_line_2" => nil,
+        "address_line_3" => nil,
         "city" => "New York",
         "contacts" => [
           %{
@@ -73,11 +88,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
                   "carrier" => "fedex",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "10000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_express_saver"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_standard_overnight"
@@ -88,11 +107,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
                   "carrier" => "ups",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_next_day_air"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_next_day_air_saver"
@@ -103,11 +126,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
                   "carrier" => "usps",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "1000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "usps_ground_advantage"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "50000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "usps_priority_mail_express"
@@ -158,11 +185,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
                   "carrier" => "fedex",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "10000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_express_saver"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_standard_overnight"
@@ -173,11 +204,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
                   "carrier" => "ups",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_next_day_air"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_next_day_air_saver"
@@ -188,6 +223,8 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
                   "carrier" => "usps",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "50000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "usps_priority_mail_express"

@@ -12,12 +12,10 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
       "id" => "e7a928f6-109c-40d5-90b3-821ea263fe21",
       "insurance_policy" => %{
         "coverage_type" => "client_shipping",
-        "id" => 35,
         "insurance_cost" => "64.54",
         "insurance_cost_currency" => "USD",
         "insured_value" => "3688.17",
-        "insured_value_currency" => "USD",
-        "shortcode" => "ARTA-IP02D8PCK"
+        "insured_value_currency" => "USD"
       },
       "objects" => [
         %{
@@ -39,11 +37,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "fedex",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "10000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_ground"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_fedex_same_day"
@@ -54,11 +56,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "ups",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "10000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_ground"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_next_day_air_saver"
@@ -69,11 +75,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "usps",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "1000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "usps_ground_advantage"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "50000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "usps_priority_mail_express"
@@ -86,6 +96,8 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "dhl_express",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "dhl_express_worldwide"
@@ -96,11 +108,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "fedex",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "10000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_economy_service"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_priority_express"
@@ -111,11 +127,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "ups",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "10000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_3_day_select"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_worldwide_express_plus"
@@ -149,11 +169,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "fedex",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "10000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_express_saver"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_standard_overnight"
@@ -164,11 +188,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "ups",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "10000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_ground"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_next_day_air_saver"
@@ -179,6 +207,8 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "usps",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "50000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "usps_priority_mail_express"
@@ -191,6 +221,8 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "dhl_express",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "dhl_express_worldwide"
@@ -201,11 +233,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "fedex",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "10000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_economy_service"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "200000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "fedex_priority_express"
@@ -216,11 +252,15 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
                   "carrier" => "ups",
                   "data" => [
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "10000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_3_day_select"
                     },
                     %{
+                      "min_value" => "0.00",
+                      "min_value_currency" => "USD",
                       "max_value" => "50000.00",
                       "max_value_currency" => "USD",
                       "service_level" => "ups_expedited"

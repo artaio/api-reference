@@ -11,7 +11,7 @@ defmodule DocsWeb.Schemas.RequestBody.ShippingProtectionPolicyPurchaseCoverage d
     properties: %{
       shipping_protection_policy: %Schema{
         type: :object,
-        required: ["insurance_policy_id"],
+        required: ["insurance_policy"],
         properties: Fields.purchase_coverage_request_fields()
       }
     },

@@ -493,6 +493,13 @@ defmodule DocsWeb.Schemas.Fields do
         description: "The id of the exception in UUID format",
         format: :uuid
       },
+      object_id: %Schema{
+        type: :integer,
+        format: :int64,
+        description: "The object associated with this exception (optional)",
+        example: nil,
+        nullable: true
+      },
       package_id: %Schema{
         type: :integer,
         format: :int64,
@@ -680,7 +687,15 @@ defmodule DocsWeb.Schemas.Fields do
         example: "INTERNAL_REF_456",
         nullable: true
       },
-      currency: Currency,
+      exceptions: %Schema{
+        type: "array",
+        description:
+          "List of exceptions of type prepayment_required that must be resolved before the policy can proceed.",
+        items: %Schema{
+          type: :object,
+          properties: shipment_exception_base_fields()
+        }
+      },
       origin: %Schema{
         type: "object",
         description: "Normalized `Location` with contact details.",
@@ -940,6 +955,8 @@ defmodule DocsWeb.Schemas.Fields do
                 "Service level for transport (e.g., fedex_express_saver, etc). Options are listed in the reference rate service levels metadata endpoint",
               example: "fedex_express_saver"
             },
+            min_value: MonetaryAmount,
+            min_value_currency: Currency,
             max_value: MonetaryAmount,
             max_value_currency: Currency
           }
@@ -950,17 +967,6 @@ defmodule DocsWeb.Schemas.Fields do
 
   def insurance_policy_fields() do
     %{
-      id: %Schema{
-        type: :integer,
-        description: "Unique internal identifier for the insurance policy",
-        example: 37
-      },
-      shortcode: %Schema{
-        type: "string",
-        description:
-          "Human-readable insurance policy identifier with ORG-IP prefix for easy reference",
-        example: "ORG-IPABCDEFG"
-      },
       coverage_type: %Schema{
         type: "string",
         description:
@@ -976,6 +982,12 @@ defmodule DocsWeb.Schemas.Fields do
 
   def insurance_policy_response_fields() do
     insurance_policy_fields()
+    |> Map.put(:created_by, %Schema{
+      type: "integer",
+      description: "User ID who created the policy (null for Customer API).",
+      example: 381,
+      nullable: true
+    })
     |> Map.put(:status, %Schema{
       type: "string",
       description: "e.g., `New`, `Confirmed`.",
@@ -1001,6 +1013,12 @@ defmodule DocsWeb.Schemas.Fields do
         type: "string",
         description: "Second line of address",
         example: "Suite 100",
+        nullable: true
+      },
+      address_line_3: %Schema{
+        type: "string",
+        description: "Third line of address",
+        example: "Building C",
         nullable: true
       },
       city: %Schema{
@@ -1069,11 +1087,19 @@ defmodule DocsWeb.Schemas.Fields do
 
   def purchase_coverage_request_fields() do
     %{
-      insurance_policy_id: %Schema{
-        type: :integer,
-        description:
-          "ID of the insurance policy to confirm for this shipping protection policy. Must belong to the same policy.",
-        example: 37
+      insurance_policy: %Schema{
+        type: :object,
+        description: "Insurance policy update object",
+        required: ["status"],
+        properties: %{
+          status: %Schema{
+            type: "string",
+            description:
+              "Status to set for the insurance policy. Must be 'confirmed' to purchase coverage.",
+            example: "confirmed",
+            enum: ["confirmed"]
+          }
+        }
       }
     }
   end
