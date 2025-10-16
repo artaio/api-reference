@@ -115,7 +115,7 @@ defmodule DocsWeb.Schemas.Response.HostedSessionListItem do
       },
       shortcode: %Schema{
         type: :string,
-        description: "A brief and unique string identifier for the request resource",
+        description: "A brief and unique string identifier for the resource",
         example: "DEMO-B8FIRV"
       },
       status: %Schema{

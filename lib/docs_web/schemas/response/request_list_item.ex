@@ -170,6 +170,11 @@ defmodule DocsWeb.Schemas.Response.RequestListItem do
           "pending"
         ]
       },
+      tags: %Schema{
+        type: :array,
+        description: "A list of tags associated with this request",
+        items: DocsWeb.Schemas.Response.Tag
+      },
       updated_at: %Schema{
         type: "string",
         description:

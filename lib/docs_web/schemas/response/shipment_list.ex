@@ -77,9 +77,7 @@ defmodule DocsWeb.Schemas.Response.ShipmentList do
       tags: %Schema{
         type: :array,
         description: "A list of tags associated with the shipment",
-        items: %Schema{
-          type: :string
-        }
+        items: DocsWeb.Schemas.Response.Tag
       },
       total: MonetaryAmount,
       total_currency: Currency,
