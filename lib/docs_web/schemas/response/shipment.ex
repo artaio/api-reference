@@ -27,8 +27,14 @@ defmodule DocsWeb.Schemas.Response.Shipment do
         type: :string,
         description:
           "The status of an associated electronic export information document required for customs clearance. Returns null if the shipment does not have an associated EEI Form",
-        example: "not_required",
-        enum: ["not_required", "required", "submitted", "approved", "rejected"],
+        example: "pending",
+        enum: [
+          "approved",
+          "cleared",
+          "pending",
+          "rejected",
+          "submitted"
+        ],
         nullable: true
       },
       eei_form_url: %Schema{
