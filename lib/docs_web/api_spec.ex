@@ -32,7 +32,8 @@ defmodule DocsWeb.ApiSpec do
     OrganizationUpdate,
     ShipmentCreate,
     TagCreate,
-    TagUpdate
+    TagUpdate,
+    TestModeTransformationCreate
   }
 
   @behaviour OpenApi
@@ -1979,6 +1980,145 @@ Use the private url in the successful hosted session response to direct your use
                   "Successful Webhook response",
                   "application/json",
                   Response.WebhookSecretToken,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
+        "/test_mode_transformations/options" => %PathItem{
+          get: %Operation{
+            summary: "List Test Mode Transformation Types",
+            description: """
+              Retrieve the list of available test mode transformation types for a specific resource. Test mode transformations allow you to
+              simulate state changes in shipments and requests during testing.
+
+              This endpoint returns the transformation types that are valid for the specified resource based on its current state.
+
+              Available test mode transformation types:
+              * `confirm` - Confirms a shipment, advancing it from pending to confirmed state
+              * `collect` - Marks a shipment as collected from the origin location
+              * `transit` - Updates a shipment to in-transit status
+              * `complete` - Marks a shipment as completed/delivered
+              * `cancel` - Cancels a shipment or request
+              * `expire` - Expires a request that is no longer needed
+            """,
+            tags: ["test_mode_transformations"],
+            operationId: "testModeTransformations/options",
+            parameters: [
+              Authorization.parameter(),
+              Parameters.TestModeTransformationResourceID.parameter(),
+              Parameters.TestModeTransformationResourceType.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of available test mode transformation types",
+                  "application/json",
+                  Response.Metadata.TestModeTransformationType,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/test_mode_transformations" => %PathItem{
+          get: %Operation{
+            summary: "List Test Mode Transformations",
+            description: """
+              Retrieve a paginated collection of test mode transformation resources for a specific resource. This endpoint allows you to view
+              the history of state changes applied to a specific test mode shipment or request.
+            """,
+            tags: ["test_mode_transformations"],
+            operationId: "testModeTransformations/list",
+            parameters: [
+              Authorization.parameter(),
+              Parameters.TestModeTransformationResourceID.parameter(),
+              Parameters.TestModeTransformationResourceType.parameter(),
+              Page.parameter(),
+              PageSize.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A paginated collection of test mode transformations",
+                  "application/json",
+                  list(Response.TestModeTransformation),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Test Mode Transformation",
+            description: """
+              Create a new test mode transformation resource to change the state of a shipment or request. This
+              endpoint simulates lifecycle events that would normally occur through the fulfillment process.
+
+              **Important Notes:**
+              * Test mode transformations only work in Test mode (using a test API key)
+              * The target resource (shipment or request) must exist and be in a compatible state
+              * Some transformation types may only apply to specific resource types
+              * Invalid state transitions will return a 422 error
+
+              **Common Use Cases:**
+              * Testing shipment lifecycle workflows
+              * Simulating delivery for integration testing
+              * Testing request expiration scenarios
+              * Validating webhook notifications for different states
+            """,
+            tags: ["test_mode_transformations"],
+            operationId: "testModeTransformations/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: TestModeTransformationCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created test mode transformation",
+                  "application/json",
+                  Response.TestModeTransformation,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build(),
+              403 =>
+                Operation.response(
+                  "Forbidden - test mode transformations are only available in test mode",
+                  "application/json",
+                  Response.Error
+                ),
+              404 => Response.NotFound.build(),
+              422 =>
+                Operation.response(
+                  "Unprocessable entity - invalid test mode transformation for current resource state",
+                  "application/json",
+                  Response.Error
+                )
+            }
+          }
+        },
+        "/test_mode_transformations/{test_mode_transformation_id}" => %PathItem{
+          get: %Operation{
+            summary: "Retrieve a Test Mode Transformation",
+            description: """
+              Retrieve an existing test mode transformation resource by its ID. This allows you to check the
+              status and details of a previously applied test mode transformation.
+            """,
+            tags: ["test_mode_transformations"],
+            operationId: "testModeTransformations/get",
+            parameters: [
+              Authorization.parameter(),
+              Parameters.TestModeTransformationID.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful test mode transformation get response",
+                  "application/json",
+                  Response.TestModeTransformation,
                   headers: default_headers()
                 ),
               404 => Response.NotFound.build()
