@@ -856,6 +856,67 @@ Use the private url in the successful hosted session response to direct your use
             }
           }
         },
+        "/metadata/insurance_policy_statuses" => %PathItem{
+          get: %Operation{
+            summary: "Insurance Policy Statuses",
+            description: "The list of insurance policy statuses supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/insurancePolicyStatuses",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of insurance policy statuses",
+                  "application/json",
+                  Response.Metadata.InsurancePolicyStatus,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/insurance_policy_coverage_types" => %PathItem{
+          get: %Operation{
+            summary: "Insurance Policy Coverage Types",
+            description: "The list of insurance policy coverage types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/insurancePolicyCoverageTypes",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of insurance policy coverage types",
+                  "application/json",
+                  Response.Metadata.InsurancePolicyCoverageType,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/insurance_policy_booking_disqualifications" => %PathItem{
+          get: %Operation{
+            summary: "Insurance Policy Booking Disqualifications",
+            description:
+              "The list of reasons that may disqualify an insurance policy from being booked.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/insurancePolicyBookingDisqualifications",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of insurance policy booking disqualifications",
+                  "application/json",
+                  Response.Metadata.InsurancePolicyBookingDisqualification,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
         "/metadata/location_access_restrictions" => %PathItem{
           get: %Operation{
             summary: "Location Access Restrictions",
