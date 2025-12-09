@@ -51,8 +51,7 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       },
       cancel_url: %Schema{
         type: :string,
-        description:
-          "The URL the user will be redirected to after an Arta Booking session is cancelled"
+        description: "The URL the user will be redirected to after an Arta Booking session is cancelled"
       },
       can_user_confirm_object_dimensions: %Schema{
         type: "boolean",
@@ -69,8 +68,7 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       },
       insurance: %Schema{
         type: :string,
-        description:
-          "The id of an insurance type. If requesting Arta insurance, object values must be provided.",
+        description: "The id of an insurance type. If requesting Arta insurance, object values must be provided.",
         example: "arta_transit_insurance",
         nullable: true
       },
@@ -177,8 +175,7 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       },
       success_url: %Schema{
         type: :string,
-        description:
-          "The URL the user will be redirected to after an Arta Booking session is completed"
+        description: "The URL the user will be redirected to after an Arta Booking session is completed"
       },
       tags: %Schema{
         type: :array,

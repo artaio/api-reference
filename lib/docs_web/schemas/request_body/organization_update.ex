@@ -18,8 +18,7 @@ defmodule DocsWeb.Schemas.RequestBody.OrganizationUpdate do
           },
           company_name: %Schema{
             type: :string,
-            description:
-              "The legal name for this organization; used as part of Arta's billing and invoicing processes."
+            description: "The legal name for this organization; used as part of Arta's billing and invoicing processes."
           },
           display_name: %Schema{
             type: :string,

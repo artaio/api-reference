@@ -11,8 +11,7 @@ defmodule DocsWeb.Schemas.Response.Metadata.ShipmentExceptionType do
       properties: %{
         can_create: %Schema{
           type: :boolean,
-          description:
-            "Defines whether or not shipment exceptions of this type may be created by API clients"
+          description: "Defines whether or not shipment exceptions of this type may be created by API clients"
         },
         category: %Schema{
           type: :string,
@@ -28,8 +27,7 @@ defmodule DocsWeb.Schemas.Response.Metadata.ShipmentExceptionType do
         },
         resolutions: %Schema{
           type: :array,
-          description:
-            "A list of strings representing accepted resolutions for shipment exceptions of this type",
+          description: "A list of strings representing accepted resolutions for shipment exceptions of this type",
           items: %Schema{
             type: :string
           }

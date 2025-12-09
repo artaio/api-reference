@@ -40,8 +40,7 @@ defmodule DocsWeb.Schemas.Response.Tag do
       },
       is_active: %Schema{
         type: "boolean",
-        description:
-          "Indicates whether or not the tag is active. Inactive tags may not be associated to new resources"
+        description: "Indicates whether or not the tag is active. Inactive tags may not be associated to new resources"
       },
       name: %Schema{
         type: :string,

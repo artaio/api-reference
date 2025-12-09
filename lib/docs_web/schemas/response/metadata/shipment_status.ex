@@ -12,8 +12,7 @@ defmodule DocsWeb.Schemas.Response.Metadata.ShipmentStatus do
         description: %Schema{
           type: :string,
           description: "A long form description",
-          example:
-            "A quote has been booked and is awaiting confirmation by an Arta logistics specialist"
+          example: "A quote has been booked and is awaiting confirmation by an Arta logistics specialist"
         },
         id: %Schema{
           type: :string,
