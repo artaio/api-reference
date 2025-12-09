@@ -19,7 +19,7 @@ defmodule DocsWeb.Schemas.RequestBody.TestModeTransformationCreate do
               * `transit` - Updates a shipment to in-transit status
               * `complete` - Marks a shipment as completed/delivered
               * `cancel` - Cancels a shipment or request
-              * `expire` - Expires a request that is no longer needed",
+              * `expire` - Expires a request that is no longer needed
             """,
             type: :string,
             enum: ["confirm", "collect", "transit", "complete", "cancel", "expire"],
