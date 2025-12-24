@@ -12,7 +12,7 @@ defmodule DocsWeb.Schemas.Response.Metadata.InsurancePolicyStatus do
         description: %Schema{
           type: :string,
           description: "A long form description",
-          example: "The insurance policy is currently active and providing coverage."
+          example: "in transit state"
         },
         id: %Schema{
           type: :string,

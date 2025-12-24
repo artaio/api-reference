@@ -13,7 +13,7 @@ defmodule DocsWeb.Schemas.Response.Metadata.InsurancePolicyBookingDisqualificati
           type: :string,
           description: "A long form description",
           example:
-            "Insurance coverage cannot be activated because the package is already in transit."
+            "Insurance coverage cannot be activated because one or more packages have already been picked up by the carrier. Coverage must be purchased before shipment begins."
         },
         id: %Schema{
           type: :string,

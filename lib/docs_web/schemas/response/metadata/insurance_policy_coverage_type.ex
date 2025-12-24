@@ -12,7 +12,7 @@ defmodule DocsWeb.Schemas.Response.Metadata.InsurancePolicyCoverageType do
         description: %Schema{
           type: :string,
           description: "A long form description",
-          example: "Coverage for shipments handled through Arta's shipping services."
+          example: "Coverage for shipments handled through Arta's shipping services"
         },
         id: %Schema{
           type: :string,
