@@ -1,10 +1,6 @@
 defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimateListItem do
   @moduledoc """
   Schema for Shipping Protection Estimate items in list responses.
-
-  This is a lighter version of ShippingProtectionEstimate that excludes the `objects`
-  field for performance reasons. The full object details are only returned when
-  fetching a single estimate by ID.
   """
   alias DocsWeb.Schemas.Fields
   alias OpenApiSpex.Schema
