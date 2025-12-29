@@ -9,10 +9,10 @@ defmodule DocsWeb.Schemas.Response.Tag do
       color: %Schema{
         type: :string,
         description: "The hexadecimal color code for the tag, without the leading `#`.",
-        pattern: "^[0-9A-F]{6}$",
+        pattern: "^[0-9A-Fa-f]{6}$",
         maxLength: 6,
         minLength: 6,
-        example: "0000FF"
+        example: "ffffff"
       },
       created_at: %Schema{
         type: :string,
@@ -66,13 +66,13 @@ defmodule DocsWeb.Schemas.Response.Tag do
       }
     },
     example: %{
-      "color" => "008000",
+      "color" => "ffffff",
       "created_at" => "2024-09-25T19:17:54.871490",
-      "created_by" => nil,
-      "description" => nil,
+      "created_by" => 381,
+      "description" => "premium",
       "id" => "f7e4b35b-5131-47c2-9a88-238bd6e62e2d",
-      "is_active" => false,
-      "name" => "ct-warehouse",
+      "is_active" => true,
+      "name" => "premium",
       "updated_at" => "2024-09-25T19:19:01.648283",
       "updated_by" => nil
     }

@@ -24,6 +24,7 @@ defmodule DocsWeb.ApiSpec do
 
   alias DocsWeb.Parameters
   alias DocsWeb.Schemas.{APIKey, Response}
+  alias DocsWeb.Schemas.Response.ShippingProtectionEstimateListItem
   alias DocsWeb.Parameters.{Authorization, Page, PageSize}
 
   alias DocsWeb.Schemas.RequestBody.{
@@ -2132,7 +2133,7 @@ Use the private url in the successful hosted session response to direct your use
           get: %Operation{
             summary: "List Shipping Protection Estimates",
             description:
-              "Retrieve a paginated collection of Shipping Protection Estimates belonging to your Organization",
+              "Retrieve a paginated collection of Shipping Protection Estimates belonging to your Organization.",
             tags: ["shipping_protection_estimates"],
             operationId: "shippingProtectionEstimates/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -2141,7 +2142,7 @@ Use the private url in the successful hosted session response to direct your use
                 Operation.response(
                   "A collection of Shipping Protection Estimates",
                   "application/json",
-                  list(Response.ShippingProtectionEstimate),
+                  list(ShippingProtectionEstimateListItem),
                   headers: default_headers()
                 )
             }
@@ -2299,6 +2300,13 @@ Use the private url in the successful hosted session response to direct your use
         metadata: %Schema{
           type: "object",
           properties: %{
+            is_estimate: %Schema{
+              type: "boolean",
+              description:
+                "Indicates whether the total_count is an estimate or exact count. When true, the count may be approximate for performance reasons.",
+              example: false,
+              readOnly: true
+            },
             page: %Schema{
               type: "integer",
               format: "int64",
