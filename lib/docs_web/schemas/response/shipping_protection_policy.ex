@@ -49,7 +49,8 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
         "insured_value" => "3500.00",
         "insured_value_currency" => "USD",
         "status" => "new",
-        "status_changed_at" => "2025-09-18T14:38:32.267335"
+        "status_changed_at" => "2025-09-18T14:38:32.267335",
+        "disqualifications" => []
       },
       "internal_reference" => "INTERNAL_REF_456",
       "origin" => %{
@@ -164,7 +165,12 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
               "value_currency" => "USD"
             }
           ],
-          "package_trackings" => [%{"tracking_number" => "TRACK001"}],
+          "package_trackings" => [
+            %{
+              "tracking_number" => "TRACK001",
+              "url" => nil
+            }
+          ],
           "status" => "pending"
         },
         %{
@@ -251,7 +257,12 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicy do
               "value_currency" => "USD"
             }
           ],
-          "package_trackings" => [%{"tracking_number" => "TRACK002"}],
+          "package_trackings" => [
+            %{
+              "tracking_number" => "TRACK002",
+              "url" => nil
+            }
+          ],
           "status" => "pending"
         }
       ],

@@ -49,7 +49,8 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicyPurchased do
         "insured_value" => "1000.00",
         "insured_value_currency" => "USD",
         "status" => "confirmed",
-        "status_changed_at" => "2025-09-18T14:54:23.704119"
+        "status_changed_at" => "2025-09-18T14:54:23.704119",
+        "disqualifications" => []
       },
       "internal_reference" => "INTERNAL_REF_456",
       "origin" => %{
@@ -159,7 +160,8 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionPolicyPurchased do
           ],
           "package_trackings" => [
             %{
-              "tracking_number" => "TRACK001"
+              "tracking_number" => "TRACK001",
+              "url" => "https://tools.usps.com/go/TrackConfirmAction?tLabels=TRACK001"
             }
           ],
           "status" => "pending"

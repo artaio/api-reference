@@ -853,7 +853,7 @@ defmodule DocsWeb.Schemas.Fields do
       },
       package_trackings: %Schema{
         type: "array",
-        description: "Tracking information with `tracking_number` field.",
+        description: "Tracking information with `tracking_number` and `url` fields.",
         items: %Schema{
           type: :object,
           properties: %{
@@ -861,6 +861,12 @@ defmodule DocsWeb.Schemas.Fields do
               type: "string",
               description: "Package tracking number provided by commercial carrier",
               example: "1ZXXXXXXXXXXXXXXXX"
+            },
+            url: %Schema{
+              type: "string",
+              description: "Direct URL to carrier tracking page (populated after carrier lookup)",
+              example: "https://tools.usps.com/go/TrackConfirmAction?tLabels=1234567890",
+              nullable: true
             }
           }
         }
@@ -990,7 +996,7 @@ defmodule DocsWeb.Schemas.Fields do
     })
     |> Map.put(:status, %Schema{
       type: "string",
-      description: "e.g., `New`, `Confirmed`.",
+      description: "e.g., `new`, `confirmed`, `disqualified`.",
       example: "new"
     })
     |> Map.put(:status_changed_at, %Schema{
@@ -999,6 +1005,27 @@ defmodule DocsWeb.Schemas.Fields do
       example: "2024-08-13T22:44:39.593704",
       description:
         "A NaiveDatetime-formatted timestamp describing when the insurance policy status was last changed with microsecond precision"
+    })
+    |> Map.put(:disqualifications, %Schema{
+      type: "array",
+      description:
+        "Array of disqualification reasons. Empty when policy is not disqualified.",
+      items: %Schema{
+        type: :object,
+        properties: %{
+          reason_code: %Schema{
+            type: "string",
+            description: "Machine-readable disqualification code for programmatic handling",
+            example: "package_in_transit"
+          },
+          reason: %Schema{
+            type: "string",
+            description: "Human-readable explanation with actionable guidance",
+            example:
+              "Insurance coverage cannot be activated because one or more packages have already been picked up by the carrier."
+          }
+        }
+      }
     })
   end
 
