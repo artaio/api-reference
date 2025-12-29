@@ -640,7 +640,7 @@ defmodule DocsWeb.Schemas.Fields do
         items: %Schema{
           type: :object,
           properties: shipping_protection_package_fields(),
-          required: ["objects"]
+          required: ["tracking_number", "objects"]
         }
       },
       tags: %Schema{
@@ -1078,6 +1078,7 @@ defmodule DocsWeb.Schemas.Fields do
         description: "Contact details (at least one contact required).",
         items: %Schema{
           type: :object,
+          required: ["name", "email_address", "phone_number"],
           properties: %{
             name: %Schema{
               type: "string",
