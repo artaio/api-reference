@@ -624,14 +624,14 @@ defmodule DocsWeb.Schemas.Fields do
       origin: %Schema{
         type: "object",
         description: "Shipment origin.",
-        properties: location_fields(),
-        required: ["country", "address_line_1", "city"]
+        properties: shipping_protection_location_request_fields(),
+        required: ["country", "address_line_1", "city", "contacts"]
       },
       destination: %Schema{
         type: "object",
         description: "Shipment destination.",
-        properties: location_fields(),
-        required: ["country", "address_line_1", "city"]
+        properties: shipping_protection_location_request_fields(),
+        required: ["country", "address_line_1", "city", "contacts"]
       },
       packages: %Schema{
         type: "array",
@@ -1033,6 +1033,71 @@ defmodule DocsWeb.Schemas.Fields do
         }
       ]
     })
+  end
+
+  @doc """
+  Location request fields for Shipping Protection endpoints.
+  """
+  def shipping_protection_location_request_fields() do
+    %{
+      address_line_1: %Schema{
+        type: "string",
+        description: "First line of address",
+        example: "87 Richardson St"
+      },
+      address_line_2: %Schema{
+        type: "string",
+        description: "Second line of address",
+        nullable: true
+      },
+      city: %Schema{
+        type: "string",
+        description: "City name",
+        example: "Brooklyn"
+      },
+      country: %Schema{
+        type: "string",
+        maxLength: 2,
+        minLength: 2,
+        description: "ISO 3166-1 alpha-2 country code",
+        example: "US"
+      },
+      postal_code: %Schema{
+        type: "string",
+        description: "Postal/ZIP code",
+        example: "11211"
+      },
+      region: %Schema{
+        type: "string",
+        description:
+          "State or region code (use 2-letter abbreviations for US states and Canadian provinces)",
+        example: "NY"
+      },
+      contacts: %Schema{
+        type: "array",
+        description: "Contact details (at least one contact required).",
+        items: %Schema{
+          type: :object,
+          properties: %{
+            name: %Schema{
+              type: "string",
+              description: "Contact person name",
+              example: "Contact Name"
+            },
+            email_address: %Schema{
+              type: "string",
+              description: "Contact email address",
+              example: "docs@arta.io"
+            },
+            phone_number: %Schema{
+              type: "string",
+              description: "Contact phone number",
+              example: "646 828 7333"
+            }
+          }
+        }
+      }
+    }
   end
 
   def location_response_fields() do
