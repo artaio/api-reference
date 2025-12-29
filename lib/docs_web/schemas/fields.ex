@@ -539,7 +539,6 @@ defmodule DocsWeb.Schemas.Fields do
     }
   end
 
-  # Shipping Protection Estimate fields
   def shipping_protection_estimate_request_fields() do
     %{
       currency: Currency,

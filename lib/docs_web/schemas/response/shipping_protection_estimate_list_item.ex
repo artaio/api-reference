@@ -44,7 +44,7 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimateListItem do
     },
     example: %{
       "id" => "ca68a18d-ae32-4beb-b258-a7d95c8129c1",
-      "shortcode" => "DARKO-ESTLVESBPK",
+      "shortcode" => "ARTA-ESTLVESBPK",
       "created_at" => "2025-12-29T14:15:40.208426",
       "insurance_policy" => %{
         "coverage_type" => "client_shipping",
