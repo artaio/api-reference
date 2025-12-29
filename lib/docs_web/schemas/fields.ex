@@ -1008,24 +1008,30 @@ defmodule DocsWeb.Schemas.Fields do
     })
     |> Map.put(:disqualifications, %Schema{
       type: "array",
-      description:
-        "Array of disqualification reasons. Empty when policy is not disqualified.",
+      description: "Array of disqualification reasons. Empty when policy is not disqualified.",
       items: %Schema{
         type: :object,
         properties: %{
           reason_code: %Schema{
             type: "string",
             description: "Machine-readable disqualification code for programmatic handling",
-            example: "package_in_transit"
+            example: "transport_method_not_covered"
           },
           reason: %Schema{
             type: "string",
             description: "Human-readable explanation with actionable guidance",
             example:
-              "Insurance coverage cannot be activated because one or more packages have already been picked up by the carrier."
+              "The selected shipping service is not covered by this insurance policy. Coverage cannot be activated for this shipment."
           }
         }
-      }
+      },
+      example: [
+        %{
+          "reason_code" => "transport_method_not_covered",
+          "reason" =>
+            "The selected shipping service is not covered by this insurance policy. Coverage cannot be activated for this shipment."
+        }
+      ]
     })
   end
 
