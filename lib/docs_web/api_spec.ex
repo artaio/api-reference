@@ -9,6 +9,7 @@ defmodule DocsWeb.ApiSpec do
   alias DocsWeb.Schemas.RequestBody.RequestCreate
   alias DocsWeb.Parameters.ArtaQuoteTimeout
   alias DocsWeb.Parameters.Search
+  alias DocsWeb.Parameters.{ShippingProtectionEstimateID, ShippingProtectionPolicyID}
 
   alias OpenApiSpex.{
     Info,
@@ -23,6 +24,7 @@ defmodule DocsWeb.ApiSpec do
 
   alias DocsWeb.Parameters
   alias DocsWeb.Schemas.{APIKey, Response}
+  alias DocsWeb.Schemas.Response.ShippingProtectionEstimateListItem
   alias DocsWeb.Parameters.{Authorization, Page, PageSize}
 
   alias DocsWeb.Schemas.RequestBody.{
@@ -31,6 +33,9 @@ defmodule DocsWeb.ApiSpec do
     ApiKeyCreate,
     OrganizationUpdate,
     ShipmentCreate,
+    ShippingProtectionEstimateCreate,
+    ShippingProtectionPolicyCreate,
+    ShippingProtectionPolicyPurchaseCoverage,
     TagCreate,
     TagUpdate
   }
@@ -851,6 +856,145 @@ Use the private url in the successful hosted session response to direct your use
                   "A collection of insurance types",
                   "application/json",
                   Response.Metadata.Insurance,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/insurance_policy_statuses" => %PathItem{
+          get: %Operation{
+            summary: "Insurance Policy Statuses",
+            description: "The list of insurance policy statuses supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/insurancePolicyStatuses",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of insurance policy statuses",
+                  "application/json",
+                  Response.Metadata.InsurancePolicyStatus,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/insurance_policy_statuses/{id}" => %PathItem{
+          get: %Operation{
+            summary: "Get Insurance Policy Status",
+            description: "Retrieve a specific insurance policy status by ID.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/getInsurancePolicyStatus",
+            parameters: [
+              Authorization.parameter(),
+              %OpenApiSpex.Parameter{
+                in: :path,
+                name: :id,
+                description: "The insurance policy status ID",
+                required: true,
+                schema: %Schema{type: :string},
+                example: "active"
+              }
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A single insurance policy status",
+                  "application/json",
+                  %Schema{
+                    type: :object,
+                    properties: %{
+                      id: %Schema{
+                        type: :string,
+                        description: "The ID representing the insurance policy status",
+                        example: "active"
+                      },
+                      name: %Schema{
+                        type: :string,
+                        description: "A brief title for the status",
+                        example: "Active"
+                      },
+                      description: %Schema{
+                        type: :string,
+                        description: "A detailed description of the insurance policy status",
+                        example: "in transit state"
+                      }
+                    }
+                  },
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/insurance_policy_coverage_types" => %PathItem{
+          get: %Operation{
+            summary: "Insurance Policy Coverage Types",
+            description: "The list of insurance policy coverage types supported by Arta's API.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/insurancePolicyCoverageTypes",
+            parameters: [Authorization.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of insurance policy coverage types",
+                  "application/json",
+                  Response.Metadata.InsurancePolicyCoverageType,
+                  headers: default_headers()
+                )
+            }
+          }
+        },
+        "/metadata/insurance_policy_coverage_types/{id}" => %PathItem{
+          get: %Operation{
+            summary: "Get Insurance Policy Coverage Type",
+            description: "Retrieve a specific insurance policy coverage type by ID.",
+            tags: [
+              "metadata"
+            ],
+            operationId: "metadata/getInsurancePolicyCoverageType",
+            parameters: [
+              Authorization.parameter(),
+              %OpenApiSpex.Parameter{
+                in: :path,
+                name: :id,
+                description: "The insurance policy coverage type ID",
+                required: true,
+                schema: %Schema{type: :string},
+                example: "arta_shipping"
+              }
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A single insurance policy coverage type",
+                  "application/json",
+                  %Schema{
+                    type: :object,
+                    properties: %{
+                      description: %Schema{
+                        type: :string,
+                        description:
+                          "A detailed description of the insurance policy coverage type",
+                        example: "Coverage for shipments handled through Arta's shipping services"
+                      },
+                      id: %Schema{
+                        type: :string,
+                        description: "The ID representing the insurance policy coverage type",
+                        example: "arta_shipping"
+                      },
+                      name: %Schema{
+                        type: :string,
+                        description: "A brief title for the coverage type",
+                        example: "Arta Shipping"
+                      }
+                    }
+                  },
                   headers: default_headers()
                 )
             }
@@ -1984,6 +2128,160 @@ Use the private url in the successful hosted session response to direct your use
               404 => Response.NotFound.build()
             }
           }
+        },
+        "/shipping_protection_estimates" => %PathItem{
+          get: %Operation{
+            summary: "List Shipping Protection Estimates",
+            description:
+              "Retrieve a paginated collection of Shipping Protection Estimates belonging to your Organization.",
+            tags: ["shipping_protection_estimates"],
+            operationId: "shippingProtectionEstimates/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Shipping Protection Estimates",
+                  "application/json",
+                  list(ShippingProtectionEstimateListItem),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Shipping Protection Estimate",
+            description:
+              "Create a new shipping protection estimate to calculate insurance coverage and premium for objects to be shipped",
+            tags: ["shipping_protection_estimates"],
+            operationId: "shippingProtectionEstimates/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: ShippingProtectionEstimateCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created shipping protection estimate",
+                  "application/json",
+                  Response.ShippingProtectionEstimate,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build()
+            }
+          }
+        },
+        "/shipping_protection_estimates/{id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Shipping Protection Estimate",
+            description: "Retrieve an existing Shipping Protection Estimate",
+            tags: ["shipping_protection_estimates"],
+            operationId: "shippingProtectionEstimates/get",
+            parameters: [Authorization.parameter(), ShippingProtectionEstimateID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Shipping Protection Estimate response",
+                  "application/json",
+                  Response.ShippingProtectionEstimate,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
+        "/shipping_protection_policies" => %PathItem{
+          get: %Operation{
+            summary: "List Shipping Protection Policies",
+            description:
+              "Retrieve a paginated collection of Shipping Protection Policies belonging to your Organization",
+            tags: ["shipping_protection_policies"],
+            operationId: "shippingProtectionPolicies/list",
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Shipping Protection Policies",
+                  "application/json",
+                  list(Response.ShippingProtectionPolicy),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Shipping Protection Policy",
+            description:
+              "Create a new shipping protection policy with insurance coverage for your shipment. Specify the origin, destination, packages, and objects to be insured to receive coverage options and requirements.",
+            tags: ["shipping_protection_policies"],
+            operationId: "shippingProtectionPolicies/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: ShippingProtectionPolicyCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created shipping protection policy",
+                  "application/json",
+                  Response.ShippingProtectionPolicy,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build()
+            }
+          }
+        },
+        "/shipping_protection_policies/{id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Shipping Protection Policy",
+            description: "Retrieve an existing Shipping Protection Policy",
+            tags: ["shipping_protection_policies"],
+            operationId: "shippingProtectionPolicies/get",
+            parameters: [Authorization.parameter(), ShippingProtectionPolicyID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Shipping Protection Policy response",
+                  "application/json",
+                  Response.ShippingProtectionPolicy,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
+        "/shipping_protection_policies/{id}/purchase_coverage" => %PathItem{
+          patch: %Operation{
+            summary: "Purchase Shipping Protection Coverage",
+            description:
+              "Activates insurance coverage for an existing Shipping Protection Policy. Coverage can only be purchased when all packages are in PRE_TRANSIT status and meet the required transport, packaging, and service specifications. Once successful, the policy status changes to confirmed and coverage becomes active.",
+            tags: ["shipping_protection_policies"],
+            operationId: "shippingProtectionPolicies/purchaseCoverage",
+            parameters: [Authorization.parameter(), ShippingProtectionPolicyID.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: ShippingProtectionPolicyPurchaseCoverage
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The updated shipping protection policy with confirmed insurance policy and current requirements",
+                  "application/json",
+                  Response.ShippingProtectionPolicyPurchased,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build(),
+              404 => Response.NotFound.build()
+            }
+          }
         }
       }
     }
@@ -2002,6 +2300,13 @@ Use the private url in the successful hosted session response to direct your use
         metadata: %Schema{
           type: "object",
           properties: %{
+            is_estimate: %Schema{
+              type: "boolean",
+              description:
+                "Indicates whether the total_count is an estimate or exact count. When true, the count may be approximate for performance reasons.",
+              example: false,
+              readOnly: true
+            },
             page: %Schema{
               type: "integer",
               format: "int64",

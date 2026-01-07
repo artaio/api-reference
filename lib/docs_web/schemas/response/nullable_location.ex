@@ -32,7 +32,8 @@ defmodule DocsWeb.Schemas.Response.NullableLocation do
       },
       region: %Schema{
         type: :string,
-        description: "Political region name, for US states and Canada provinces, use 2 letter abbreviations"
+        description:
+          "Political region name, for US states and Canada provinces, use 2 letter abbreviations"
       },
       postal_code: %Schema{
         type: :string,
@@ -42,7 +43,8 @@ defmodule DocsWeb.Schemas.Response.NullableLocation do
         type: :string,
         maxLength: 2,
         minLength: 2,
-        description: "The ISO 3166-1 alpha-2 country code of the current or last known location if available"
+        description:
+          "The ISO 3166-1 alpha-2 country code of the current or last known location if available"
       },
       title: %Schema{
         type: :string,
