@@ -798,7 +798,22 @@ defmodule DocsWeb.Schemas.Fields do
         items: %Schema{
           type: :object,
           properties: shipping_protection_object_fields(),
-          required: ["subtype", "value", "value_currency"]
+          required: ["subtype", "value", "value_currency"],
+          example: %{
+            subtype: "painting_unframed",
+            value: "1000.00",
+            value_currency: "USD",
+            title: "Test Painting",
+            creator: "Artist A",
+            creation_date: "1985",
+            images: [
+              "https://example.com/painting1.jpg",
+              "https://example.com/painting2.jpg"
+            ],
+            internal_reference: "INT-PAINT-001",
+            notes: "Delicate watercolor, requires climate control",
+            public_reference: "PUB-PAINT-001"
+          }
         }
       }
     }
