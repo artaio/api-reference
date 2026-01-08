@@ -82,14 +82,12 @@ defmodule DocsWeb.Schemas.RequestBody.ShipmentCreate do
                     },
                     tracking_number: %Schema{
                       type: "string",
-                      description:
-                        "The tracking number of the shipment provided by the commercial carrier",
+                      description: "The tracking number of the shipment provided by the commercial carrier",
                       example: "1ZXXXXXXXXXXXXXXXX"
                     },
                     url: %Schema{
                       type: :string,
-                      description:
-                        "The url that links to the tracking page on the commercial carrier's website"
+                      description: "The url that links to the tracking page on the commercial carrier's website"
                     }
                   },
                   required: ["carrier", "tracking_number"]
@@ -111,8 +109,7 @@ defmodule DocsWeb.Schemas.RequestBody.ShipmentCreate do
               },
               shipping_notes: %Schema{
                 type: "string",
-                description:
-                  "This field can be used to provide Arta any additional context about the shipment",
+                description: "This field can be used to provide Arta any additional context about the shipment",
                 maxLength: 255,
                 example: "New customer"
               },

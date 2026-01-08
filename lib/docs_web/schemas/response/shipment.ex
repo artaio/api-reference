@@ -210,14 +210,12 @@ defmodule DocsWeb.Schemas.Response.Shipment do
           properties: %{
             carrier_name: %Schema{
               type: "string",
-              description:
-                "The name of the carrier providing transport services for a specific package",
+              description: "The name of the carrier providing transport services for a specific package",
               example: "UPS"
             },
             label_url: %Schema{
               type: :string,
-              description:
-                "A URL at which parcel package shipping labels may be downloaded and printed",
+              description: "A URL at which parcel package shipping labels may be downloaded and printed",
               nullable: true
             },
             label_format_urls: %Schema{
@@ -252,8 +250,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
                   description:
                     "PDF US Letter landscape (11x8.5 inch) - 4x6 label on left half with 1.5 inch top/bottom and 1.25 inch left/right margins",
                   nullable: true,
-                  example:
-                    "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page"
+                  example: "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page"
                 },
                 pdf_a4: %Schema{
                   type: :string,
@@ -267,8 +264,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
                   description:
                     "PDF A4 landscape (11.7x8.3 inch) - 4x6 label on left half with 1.15 inch top/bottom and 1.85 inch left/right margins",
                   nullable: true,
-                  example:
-                    "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page"
+                  example: "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page"
                 },
                 zpl_8dpmm: %Schema{
                   type: :string,
@@ -288,13 +284,10 @@ defmodule DocsWeb.Schemas.Response.Shipment do
               example: %{
                 "png_4_x_6" => "https://labels.example.com/labels/456/token123?format=png_4_x_6",
                 "pdf_4_x_6" => "https://labels.example.com/labels/456/token123?format=pdf_4_x_6",
-                "pdf_letter" =>
-                  "https://labels.example.com/labels/456/token123?format=pdf_letter",
-                "pdf_letter_half_page" =>
-                  "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page",
+                "pdf_letter" => "https://labels.example.com/labels/456/token123?format=pdf_letter",
+                "pdf_letter_half_page" => "https://labels.example.com/labels/456/token123?format=pdf_letter_half_page",
                 "pdf_a4" => "https://labels.example.com/labels/456/token123?format=pdf_a4",
-                "pdf_a4_half_page" =>
-                  "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page",
+                "pdf_a4_half_page" => "https://labels.example.com/labels/456/token123?format=pdf_a4_half_page",
                 "zpl_8dpmm" => "https://labels.example.com/labels/456/token123?format=zpl_8dpmm",
                 "zpl_12dpmm" => "https://labels.example.com/labels/456/token123?format=zpl_12dpmm"
               }
@@ -312,10 +305,8 @@ defmodule DocsWeb.Schemas.Response.Shipment do
             },
             url: %Schema{
               type: :string,
-              description:
-                "A carrier-provided URL for fetching delivery events related to this package's transport",
-              example:
-                "https://www.ups.com/track?loc=en_us&tracknum=1ZXXXXXXXXXXXXXXXX&Requester=NS/"
+              description: "A carrier-provided URL for fetching delivery events related to this package's transport",
+              example: "https://www.ups.com/track?loc=en_us&tracknum=1ZXXXXXXXXXXXXXXXX&Requester=NS/"
             }
           }
         }
@@ -330,8 +321,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
       url: %Schema{
         type: :string,
         description: "The track URL for this shipment on the Arta web platform",
-        example:
-          "https://connect.shiparta.com/shipments/6b12c76a-5217-4cd6-82d8-7aa5265egood/5xTRnCvYkdMFdcFFMWUZaCmXz"
+        example: "https://connect.shiparta.com/shipments/6b12c76a-5217-4cd6-82d8-7aa5265egood/5xTRnCvYkdMFdcFFMWUZaCmXz"
       }
     },
     example: %{
@@ -554,8 +544,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
       "tags" => [],
       "tracking" => [],
       "updated_at" => "2021-01-21T21:00:58.579870",
-      "url" =>
-        "https://connect.shiparta.com/shipments/6b12c76a-5217-4cd6-82d8-7aa5265egood/5xTRnCvYkdMFdcFFMWUZaCmXz"
+      "url" => "https://connect.shiparta.com/shipments/6b12c76a-5217-4cd6-82d8-7aa5265egood/5xTRnCvYkdMFdcFFMWUZaCmXz"
     }
   })
 end

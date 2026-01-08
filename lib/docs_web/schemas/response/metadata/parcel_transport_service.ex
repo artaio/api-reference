@@ -12,8 +12,7 @@ defmodule DocsWeb.Schemas.Response.Metadata.ParcelTransportService do
         description: %Schema{
           type: :string,
           description: "A long form description",
-          example:
-            "Delivers the following business day once shipped. Available in the contiguous US and Puerto Rico."
+          example: "Delivers the following business day once shipped. Available in the contiguous US and Puerto Rico."
         },
         id: %Schema{
           type: :string,

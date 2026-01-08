@@ -24,22 +24,19 @@ defmodule DocsWeb.Schemas.Response.Service do
             },
             sub_subtype: %Schema{
               type: "string",
-              description:
-                "The service subsubtype ID. Options are defined in the Service types metadata endpoint",
+              description: "The service subsubtype ID. Options are defined in the Service types metadata endpoint",
               pattern: "^[0-9a-z_]{1,56}$",
               example: "road_groupage"
             },
             subtype: %Schema{
               type: "string",
-              description:
-                "The service subtype ID. Options are defined in the Service types metadata endpoint",
+              description: "The service subtype ID. Options are defined in the Service types metadata endpoint",
               pattern: "^[0-9a-z_]{1,56}$",
               example: "consolidated"
             },
             type: %Schema{
               type: "string",
-              description:
-                "The service type ID. Options are defined in the Service types metadata endpoint",
+              description: "The service type ID. Options are defined in the Service types metadata endpoint",
               pattern: "^[0-9a-z_]{1,56}$",
               example: "transport"
             }
@@ -67,22 +64,19 @@ defmodule DocsWeb.Schemas.Response.Service do
       },
       sub_subtype: %Schema{
         type: "string",
-        description:
-          "The service subsubtype ID. Options are defined in the Service types metadata endpoint",
+        description: "The service subsubtype ID. Options are defined in the Service types metadata endpoint",
         pattern: "^[0-9a-z_]{1,56}$",
         example: "road_groupage"
       },
       subtype: %Schema{
         type: "string",
-        description:
-          "The service subtype ID. Options are defined in the Service types metadata endpoint",
+        description: "The service subtype ID. Options are defined in the Service types metadata endpoint",
         pattern: "^[0-9a-z_]{1,56}$",
         example: "consolidated"
       },
       type: %Schema{
         type: "string",
-        description:
-          "The service type ID. Options are defined in the Service types metadata endpoint",
+        description: "The service type ID. Options are defined in the Service types metadata endpoint",
         pattern: "^[0-9a-z_]{1,56}$",
         example: "transport"
       }
