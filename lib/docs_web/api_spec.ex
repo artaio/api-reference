@@ -82,8 +82,7 @@ defmodule DocsWeb.ApiSpec do
       paths: %{
         "/api_keys" => %PathItem{
           get: %Operation{
-            description:
-              "Retrieve a paginated collection of API Keys belonging to your Organization",
+            description: "Retrieve a paginated collection of API Keys belonging to your Organization",
             operationId: "apiKeys/list",
             summary: "List API Keys",
             tags: [
@@ -171,8 +170,7 @@ defmodule DocsWeb.ApiSpec do
         "/attachments" => %PathItem{
           get: %Operation{
             summary: "List Attachments",
-            description:
-              "Retrieve a paginated collection of Attachment records belonging to your Organization",
+            description: "Retrieve a paginated collection of Attachment records belonging to your Organization",
             tags: [
               "attachments"
             ],
@@ -259,8 +257,7 @@ defmodule DocsWeb.ApiSpec do
         "/email_rules" => %PathItem{
           get: %Operation{
             summary: "List Email Rules",
-            description:
-              "Retrieve a paginated collection of Email Rules belonging to your Organization",
+            description: "Retrieve a paginated collection of Email Rules belonging to your Organization",
             tags: ["email_rules"],
             operationId: "emailRules/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -276,8 +273,7 @@ defmodule DocsWeb.ApiSpec do
           },
           post: %Operation{
             summary: "Create an Email Rule",
-            description:
-              "Create an email rule to configure email notifications for your organization.",
+            description: "Create an email rule to configure email notifications for your organization.",
             tags: ["email_rules"],
             operationId: "emailRules/create",
             parameters: [Authorization.parameter()],
@@ -362,8 +358,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/email_subscriptions" => %PathItem{
           get: %Operation{
-            description:
-              "Retrieve a paginated collection of Email Subscriptions belonging to your Organization",
+            description: "Retrieve a paginated collection of Email Subscriptions belonging to your Organization",
             operationId: "emailSubscriptions/list",
             summary: "List Email Subscriptions",
             tags: [
@@ -382,8 +377,7 @@ defmodule DocsWeb.ApiSpec do
           },
           post: %Operation{
             summary: "Create an Email Subscription",
-            description:
-              "Create an email subscription to configure email notifications for your organization.",
+            description: "Create an email subscription to configure email notifications for your organization.",
             tags: [
               "email_subscriptions"
             ],
@@ -470,8 +464,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/hosted_sessions" => %PathItem{
           get: %Operation{
-            description:
-              "Retrieve a paginated collection of hosted sessions belonging to your organization",
+            description: "Retrieve a paginated collection of hosted sessions belonging to your organization",
             operationId: "hostedSessions/list",
             summary: "List Hosted Sessions",
             tags: [
@@ -639,8 +632,7 @@ Use the private url in the successful hosted session response to direct your use
         "/invoice_payments" => %PathItem{
           get: %Operation{
             summary: "List Invoice Payment",
-            description:
-              "Retrieve a paginated collection of Invoice Payments belonging to your Organization",
+            description: "Retrieve a paginated collection of Invoice Payments belonging to your Organization",
             tags: [
               "invoice_payments"
             ],
@@ -679,8 +671,7 @@ Use the private url in the successful hosted session response to direct your use
         "/invoices" => %PathItem{
           get: %Operation{
             summary: "List Invoices",
-            description:
-              "Retrieve a paginated collection of Invoices belonging to your Organization",
+            description: "Retrieve a paginated collection of Invoices belonging to your Organization",
             tags: [
               "invoices"
             ],
@@ -719,8 +710,7 @@ Use the private url in the successful hosted session response to direct your use
         "/logs" => %PathItem{
           get: %Operation{
             summary: "List Logs",
-            description:
-              "Retrieve a paginated collection of Log records belonging to your Organization",
+            description: "Retrieve a paginated collection of Log records belonging to your Organization",
             tags: [
               "logs"
             ],
@@ -1181,8 +1171,7 @@ Use the private url in the successful hosted session response to direct your use
         "/organization" => %PathItem{
           get: %Operation{
             summary: "Get an Organization",
-            description:
-              "Retrieve the Organization associated with the API Key in the Authorization header",
+            description: "Retrieve the Organization associated with the API Key in the Authorization header",
             tags: ["organization"],
             operationId: "organization-get",
             parameters: [Authorization.parameter()],
@@ -1199,8 +1188,7 @@ Use the private url in the successful hosted session response to direct your use
           },
           patch: %Operation{
             summary: "Update an Organization",
-            description:
-              "Update the Organization associated with the API Key in the Authorization header",
+            description: "Update the Organization associated with the API Key in the Authorization header",
             tags: ["organization"],
             operationId: "organization-patch",
             parameters: [Authorization.parameter()],
@@ -1226,8 +1214,7 @@ Use the private url in the successful hosted session response to direct your use
         "/payments" => %PathItem{
           get: %Operation{
             summary: "List Payments",
-            description:
-              "Retrieve a paginated collection of Payments belonging to your Organization",
+            description: "Retrieve a paginated collection of Payments belonging to your Organization",
             tags: [
               "payments"
             ],
@@ -1266,8 +1253,7 @@ Use the private url in the successful hosted session response to direct your use
         "/requests" => %PathItem{
           get: %Operation{
             summary: "List Quote Requests",
-            description:
-              "Retrieve a paginated collection of Quote Request records belonging to your Organization",
+            description: "Retrieve a paginated collection of Quote Request records belonging to your Organization",
             tags: ["requests"],
             operationId: "requests/list",
             parameters: [
@@ -1407,8 +1393,7 @@ Use the private url in the successful hosted session response to direct your use
         "/shipment_exceptions" => %PathItem{
           get: %Operation{
             summary: "List Shipment Exceptions",
-            description:
-              "Retrieve a paginated collection of Shipment Exceptions belonging to your Organization",
+            description: "Retrieve a paginated collection of Shipment Exceptions belonging to your Organization",
             tags: ["shipment_exceptions"],
             operationId: "shipmentExceptions/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -1493,8 +1478,7 @@ Use the private url in the successful hosted session response to direct your use
         "/shipments" => %PathItem{
           get: %Operation{
             summary: "List Shipments",
-            description:
-              "Retrieve a paginated collection of Shipment records belonging to your Organization",
+            description: "Retrieve a paginated collection of Shipment records belonging to your Organization",
             tags: [
               "shipments"
             ],
@@ -1706,8 +1690,7 @@ Use the private url in the successful hosted session response to direct your use
         "/uploads" => %PathItem{
           get: %Operation{
             summary: "List Uploads",
-            description:
-              "Retrieve a paginated collection of Uploads belonging to your Organization",
+            description: "Retrieve a paginated collection of Uploads belonging to your Organization",
             tags: ["uploads"],
             operationId: "uploads/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -1785,8 +1768,7 @@ Use the private url in the successful hosted session response to direct your use
         "/webhook_deliveries" => %PathItem{
           get: %Operation{
             summary: "List Webhook Deliveries",
-            description:
-              "Retrieve a paginated collection of Webhook Deliveries belonging to your Organization",
+            description: "Retrieve a paginated collection of Webhook Deliveries belonging to your Organization",
             tags: ["webhook_deliveries"],
             operationId: "webhookDeliveries/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -1823,8 +1805,7 @@ Use the private url in the successful hosted session response to direct your use
         "/webhooks" => %PathItem{
           get: %Operation{
             summary: "List Webhooks",
-            description:
-              "Retrieve a paginated collection of Webhooks belonging to your Organization",
+            description: "Retrieve a paginated collection of Webhooks belonging to your Organization",
             tags: ["webhooks"],
             operationId: "webhooks/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -1968,8 +1949,7 @@ Use the private url in the successful hosted session response to direct your use
         "/webhooks/{webhook_id}/secret_token/reset" => %PathItem{
           patch: %Operation{
             summary: "Reset a Web Hook Secret Token",
-            description:
-              "Regenerate the secret token associated with a webhook endpoint resource",
+            description: "Regenerate the secret token associated with a webhook endpoint resource",
             tags: ["webhooks"],
             operationId: "webhooks-secret-token-reset-patch",
             parameters: [Authorization.parameter(), Parameters.WebhookID.parameter()],

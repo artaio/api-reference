@@ -47,8 +47,7 @@ defmodule DocsWeb.Schemas.Response.WebhookDelivery do
       response_body: %Schema{
         type: :string,
         example: "{\"received\": true}",
-        description:
-          "A string representation of the response body Arta received from your endpoint",
+        description: "A string representation of the response body Arta received from your endpoint",
         readOnly: true
       },
       response_status_code: %Schema{

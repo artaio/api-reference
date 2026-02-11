@@ -21,7 +21,8 @@ defmodule Docs.MixProject do
   defp deps do
     [
       {:open_api_spex, "~> 3.18"},
-      {:jason, "~> 1.2"}
+      {:jason, "~> 1.2"},
+      {:credo, "~> 1.7", only: [:dev], runtime: false}
     ]
   end
 

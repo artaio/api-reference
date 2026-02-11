@@ -9,8 +9,7 @@ defmodule DocsWeb.Schemas.RequestBody.RequestUpdateCustom do
     properties: %{
       note: %Schema{
         type: "string",
-        description:
-          "An optional note providing additional context for the Arta team about your custom quote request."
+        description: "An optional note providing additional context for the Arta team about your custom quote request."
       }
     }
   })

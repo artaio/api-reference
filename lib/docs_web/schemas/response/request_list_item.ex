@@ -9,8 +9,7 @@ defmodule DocsWeb.Schemas.Response.RequestListItem do
     properties: %{
       bookable: %Schema{
         type: "object",
-        description:
-          "Communicates whether the quotes generated for this request may be booked into shipments",
+        description: "Communicates whether the quotes generated for this request may be booked into shipments",
         properties: %{
           missing: %Schema{
             type: "array",

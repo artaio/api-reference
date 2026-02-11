@@ -12,8 +12,7 @@ defmodule DocsWeb.Schemas.Response.Metadata.ObjectMaterial do
         description: %Schema{
           type: :string,
           description: "A long form description of the currency",
-          example:
-            "a strong, coarse unbleached cloth made from hemp, flax, cotton, or a similar yarn"
+          example: "a strong, coarse unbleached cloth made from hemp, flax, cotton, or a similar yarn"
         },
         id: %Schema{
           type: :string,

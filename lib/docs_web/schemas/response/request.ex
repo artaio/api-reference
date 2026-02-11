@@ -80,8 +80,7 @@ defmodule DocsWeb.Schemas.Response.Request do
       },
       insurance: %Schema{
         type: "string",
-        description:
-          "The id of an insurance type. If requesting Arta insurance, object values must be provided.",
+        description: "The id of an insurance type. If requesting Arta insurance, object values must be provided.",
         example: "arta_transit_insurance",
         nullable: true
       },
@@ -146,8 +145,7 @@ defmodule DocsWeb.Schemas.Response.Request do
       },
       quote_types: %Schema{
         type: "array",
-        description:
-          "The list of quote types returned as part of the quotes in this quote request",
+        description: "The list of quote types returned as part of the quotes in this quote request",
         items: %Schema{
           type: "string",
           description: "The id of a quote type",
