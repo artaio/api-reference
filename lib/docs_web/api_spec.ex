@@ -7,6 +7,7 @@ defmodule DocsWeb.ApiSpec do
   alias DocsWeb.Schemas.RequestBody.RequestUpdateCustom
   alias DocsWeb.Schemas.RequestBody.RequestUpdateContacts
   alias DocsWeb.Schemas.RequestBody.RequestCreate
+  alias DocsWeb.Schemas.RequestBody.AddressVerificationCreate
   alias DocsWeb.Parameters.ArtaQuoteTimeout
   alias DocsWeb.Parameters.Search
 
@@ -161,6 +162,86 @@ defmodule DocsWeb.ApiSpec do
                   "API Key deleted",
                   "application/json",
                   nil,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
+        "/address_verifications" => %PathItem{
+          get: %Operation{
+            summary: "List Address Verifications",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve a paginated collection of address verifications belonging to your organization, sorted by creation date descending",
+            tags: ["address_verifications"],
+            operationId: "addressVerifications/list",
+            parameters: [
+              Authorization.parameter(),
+              Page.parameter(),
+              PageSize.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Address Verification records",
+                  "application/json",
+                  list(Response.AddressVerification),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create an Address Verification",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nVerify an address and receive a corrected recommendation.",
+            tags: ["address_verifications"],
+            operationId: "addressVerifications/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: AddressVerificationCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created address verification",
+                  "application/json",
+                  Response.AddressVerification,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build(),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              422 =>
+                Operation.response(
+                  "Unprocessible entity",
+                  "application/json",
+                  Response.Error
+                )
+            }
+          }
+        },
+        "/address_verifications/{address_verification_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get an Address Verification",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve an existing address verification by its ID",
+            tags: ["address_verifications"],
+            operationId: "addressVerifications/get",
+            parameters: [Authorization.parameter(), Parameters.AddressVerificationID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Address Verification response",
+                  "application/json",
+                  Response.AddressVerification,
                   headers: default_headers()
                 ),
               404 => Response.NotFound.build()
