@@ -1,35 +1,44 @@
 defmodule DocsWeb.ApiSpec do
-  alias DocsWeb.Schemas.RequestBody.WebhookUpdate
-  alias DocsWeb.Schemas.RequestBody.WebhookCreate
-  alias DocsWeb.Schemas.RequestBody.UploadCreate
-  alias DocsWeb.Schemas.RequestBody.ShipmentExceptionUpdate
-  alias DocsWeb.Schemas.RequestBody.ShipmentExceptionCreate
-  alias DocsWeb.Schemas.RequestBody.RequestUpdateCustom
-  alias DocsWeb.Schemas.RequestBody.RequestUpdateContacts
-  alias DocsWeb.Schemas.RequestBody.RequestCreate
-  alias DocsWeb.Schemas.RequestBody.AddressVerificationCreate
-  alias DocsWeb.Parameters.ArtaQuoteTimeout
-  alias DocsWeb.Parameters.Search
+  alias DocsWeb.Schemas.RequestBody.{
+    AddressVerificationCreate,
+    RequestCreate,
+    RequestUpdateContacts,
+    RequestUpdateCustom,
+    SelfShipCollectionCreate,
+    SelfShipCollectionPickupAvailability,
+    ShipmentExceptionCreate,
+    ShipmentExceptionUpdate,
+    UploadCreate,
+    WebhookCreate,
+    WebhookUpdate
+  }
 
   alias OpenApiSpex.{
     Info,
-    OpenApi,
-    Schema,
-    Server,
     MediaType,
+    OpenApi,
     Operation,
     PathItem,
-    RequestBody
+    RequestBody,
+    Schema,
+    Server
   }
 
-  alias DocsWeb.Parameters
   alias DocsWeb.Schemas.{APIKey, Response}
-  alias DocsWeb.Parameters.{Authorization, Page, PageSize}
+  alias DocsWeb.Parameters
+
+  alias DocsWeb.Parameters.{
+    ArtaQuoteTimeout,
+    Authorization,
+    Page,
+    PageSize,
+    Search
+  }
 
   alias DocsWeb.Schemas.RequestBody.{
+    ApiKeyCreate,
     AttachmentCreate,
     HostedSessionCreate,
-    ApiKeyCreate,
     OrganizationUpdate,
     ShipmentCreate,
     TagCreate,
@@ -2043,6 +2052,186 @@ Use the private url in the successful hosted session response to direct your use
                   headers: default_headers()
                 ),
               404 => Response.NotFound.build()
+            }
+          }
+        },
+        "/self_ship_collections" => %PathItem{
+          get: %Operation{
+            summary: "List Self Ship Collections",
+            description:
+              "Retrieve a paginated collection of Self Ship Collection records belonging to your Organization.\n\nThis endpoint requires the `self_ship_collections_api` feature flag.\n\nSupported countries: US and GB.\n\nSupported carrier: FedEx.",
+            tags: [
+              "self_ship_collections"
+            ],
+            operationId: "selfShipCollections/list",
+            parameters: [
+              Authorization.parameter(),
+              Page.parameter(),
+              PageSize.parameter(),
+              %OpenApiSpex.Parameter{
+                name: "status",
+                description: "Filter by collection status",
+                in: :query,
+                schema: %Schema{
+                  type: :string,
+                  enum: ["scheduled", "closed", "cancelled", "incomplete"]
+                }
+              },
+              %OpenApiSpex.Parameter{
+                name: "carrier",
+                description: "Filter by carrier",
+                in: :query,
+                schema: %Schema{type: :string}
+              },
+              %OpenApiSpex.Parameter{
+                name: "country",
+                description: "Filter by country code",
+                in: :query,
+                schema: %Schema{type: :string}
+              },
+              %OpenApiSpex.Parameter{
+                name: "region",
+                description: "Filter by state or region",
+                in: :query,
+                schema: %Schema{type: :string}
+              },
+              %OpenApiSpex.Parameter{
+                name: "city",
+                description: "Filter by city",
+                in: :query,
+                schema: %Schema{type: :string}
+              },
+              %OpenApiSpex.Parameter{
+                name: "postal_code",
+                description: "Filter by postal code",
+                in: :query,
+                schema: %Schema{type: :string}
+              },
+              %OpenApiSpex.Parameter{
+                name: "shortcode",
+                description: "Filter by shortcode",
+                in: :query,
+                schema: %Schema{type: :string}
+              },
+              %OpenApiSpex.Parameter{
+                name: "external_id",
+                description: "Filter by external provider confirmation code",
+                in: :query,
+                schema: %Schema{type: :string}
+              },
+              %OpenApiSpex.Parameter{
+                name: "address_line_1",
+                description: "Filter by primary address",
+                in: :query,
+                schema: %Schema{type: :string}
+              },
+              %OpenApiSpex.Parameter{
+                name: "address_line_2",
+                description: "Filter by secondary address",
+                in: :query,
+                schema: %Schema{type: :string}
+              },
+              %OpenApiSpex.Parameter{
+                name: "id",
+                description: "Filter by collection ID",
+                in: :query,
+                schema: %Schema{type: :string}
+              }
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Self Ship Collection records",
+                  "application/json",
+                  list(Response.SelfShipCollection),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Self Ship Collection",
+            description:
+              "Schedule a new Self Ship Collection pickup.\n\nThis endpoint requires the `self_ship_collections_api` feature flag.\n\nSupported countries: US and GB.\n\nSupported carrier: FedEx.",
+            tags: [
+              "self_ship_collections"
+            ],
+            operationId: "selfShipCollections/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: SelfShipCollectionCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created Self Ship Collection",
+                  "application/json",
+                  Response.SelfShipCollection,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build(),
+              422 =>
+                Operation.response(
+                  "Unprocessable entity",
+                  "application/json",
+                  Response.Error
+                )
+            }
+          }
+        },
+        "/self_ship_collections/{self_ship_collection_id}" => %PathItem{
+          get: %Operation{
+            summary: "Retrieve a Self Ship Collection",
+            description:
+              "Retrieve an existing Self Ship Collection record.\n\nThis endpoint requires the `self_ship_collections_api` feature flag.",
+            tags: [
+              "self_ship_collections"
+            ],
+            operationId: "selfShipCollections/get",
+            parameters: [
+              Authorization.parameter(),
+              Parameters.SelfShipCollectionID.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Self Ship Collection get response",
+                  "application/json",
+                  Response.SelfShipCollection,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
+        "/self_ship_collections/pickup_availability" => %PathItem{
+          post: %Operation{
+            summary: "Check Pickup Availability",
+            description:
+              "Check pickup availability for a self ship collection at a given address and date.\n\nThis endpoint requires the `self_ship_collections_api` feature flag.\n\nSupported countries: US and GB.\n\nSupported carrier: FedEx.",
+            tags: [
+              "self_ship_collections"
+            ],
+            operationId: "selfShipCollections/pickupAvailability",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: SelfShipCollectionPickupAvailability
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Pickup availability results",
+                  "application/json",
+                  Response.SelfShipCollectionPickupAvailabilityResponse,
+                  headers: default_headers()
+                )
             }
           }
         }
