@@ -72,11 +72,16 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
         nullable: true,
         example: "2125551234"
       },
-      ready_at: %Schema{
+      collection_date: %Schema{
         type: :string,
-        format: "date-time",
-        description: "The date and time of the collection pickup in ISO-8601 format",
-        example: "2024-03-15T10:00:00"
+        format: :date,
+        description: "The calendar date of the collection pickup in YYYY-MM-DD format",
+        example: "2024-03-15"
+      },
+      collection_time: %Schema{
+        type: :string,
+        description: "The start of the collection pickup window in HH:MM:SS format",
+        example: "10:00:00"
       },
       customer_close_time: %Schema{
         type: :string,
@@ -86,7 +91,7 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
       status: %Schema{
         type: :string,
         description: "The status of the collection",
-        enum: ["scheduled", "closed", "cancelled", "incomplete"],
+        enum: ["scheduled", "closed"],
         example: "scheduled"
       },
       service_level: %Schema{
@@ -114,29 +119,10 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
         enum: ["front", "none", "rear", "side"],
         example: "front"
       },
-      scheduled_at: %Schema{
-        type: :string,
-        format: "date-time",
-        description: "The timestamp when the collection was scheduled",
-        nullable: true,
-        example: "2024-03-15T09:00:00"
-      },
-      cancelled_at: %Schema{
-        type: :string,
-        format: "date-time",
-        description: "The timestamp when the collection was cancelled",
-        nullable: true
-      },
       closed_at: %Schema{
         type: :string,
         format: "date-time",
         description: "The timestamp when the collection was closed",
-        nullable: true
-      },
-      incomplete_at: %Schema{
-        type: :string,
-        format: "date-time",
-        description: "The timestamp when the collection was marked incomplete",
         nullable: true
       },
       created_by: %Schema{
@@ -179,17 +165,15 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
       "contact_name" => "Jane Doe",
       "contact_email" => "jane@example.com",
       "contact_phone" => "2125551234",
-      "ready_at" => "2024-03-15T10:00:00",
+      "collection_date" => "2024-03-15",
+      "collection_time" => "10:00:00",
       "customer_close_time" => "17:00:00",
       "status" => "scheduled",
       "service_level" => "express",
       "country_relationships" => "domestic",
       "product_type" => "fedex_collection",
       "package_location" => "front",
-      "scheduled_at" => "2024-03-15T09:00:00",
-      "cancelled_at" => nil,
       "closed_at" => nil,
-      "incomplete_at" => nil,
       "created_by" => 1234,
       "error" => nil,
       "created_at" => "2024-03-15T08:00:00.000000",

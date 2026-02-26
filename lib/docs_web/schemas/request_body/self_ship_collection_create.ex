@@ -20,7 +20,8 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreate do
           "customer_close_time",
           "package_location",
           "postal_code",
-          "ready_at",
+          "collection_date",
+          "collection_time",
           "region",
           "service_level"
         ],
@@ -80,15 +81,20 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreate do
             nullable: true,
             example: "2125551234"
           },
-          ready_at: %Schema{
+          collection_date: %Schema{
             type: :string,
-            format: "date-time",
-            description: "The date and time of the collection pickup in ISO-8601 format",
-            example: "2024-03-15T10:00:00"
+            format: :date,
+            description: "The calendar date of the collection pickup in YYYY-MM-DD format",
+            example: "2024-03-15"
+          },
+          collection_time: %Schema{
+            type: :string,
+            description: "The start of the collection pickup window in HH:MM:SS format",
+            example: "10:00:00"
           },
           customer_close_time: %Schema{
             type: :string,
-            description: "The cutoff time for the collection in HH:MM:SS format. Must be after the ready_at time",
+            description: "The cutoff time for the collection in HH:MM:SS format. Must be after the collection_time",
             example: "17:00:00"
           },
           service_level: %Schema{

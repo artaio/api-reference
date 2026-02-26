@@ -2074,7 +2074,7 @@ Use the private url in the successful hosted session response to direct your use
                 in: :query,
                 schema: %Schema{
                   type: :string,
-                  enum: ["scheduled", "closed", "cancelled", "incomplete"]
+                  enum: ["scheduled", "closed"]
                 }
               },
               %OpenApiSpex.Parameter{

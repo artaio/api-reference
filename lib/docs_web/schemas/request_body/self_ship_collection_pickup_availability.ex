@@ -9,7 +9,7 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionPickupAvailability do
     required: [
       "address_line_1",
       "city",
-      "state",
+      "region",
       "postal_code",
       "country",
       "collection_date",
@@ -34,7 +34,7 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionPickupAvailability do
         description: "The city of the pickup address",
         example: "New York"
       },
-      state: %Schema{
+      region: %Schema{
         type: :string,
         description: "The state or region of the pickup address",
         example: "NY"
@@ -51,8 +51,9 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionPickupAvailability do
       },
       collection_date: %Schema{
         type: :string,
-        description: "The desired collection date in MM/DD/YYYY format",
-        example: "03/15/2024"
+        format: :date,
+        description: "The desired collection date in YYYY-MM-DD format",
+        example: "2024-03-15"
       },
       customer_close_time: %Schema{
         type: :string,
@@ -61,8 +62,9 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionPickupAvailability do
       },
       country_relationships: %Schema{
         type: :string,
-        description: "The country relationship. Use DOMESTIC or INTERNATIONAL",
-        example: "DOMESTIC"
+        description: "The country relationship for the collection",
+        enum: ["domestic", "international"],
+        example: "domestic"
       },
       service_level: %Schema{
         type: :string,
