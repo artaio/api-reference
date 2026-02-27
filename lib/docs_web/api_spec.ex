@@ -7,6 +7,8 @@ defmodule DocsWeb.ApiSpec do
   alias DocsWeb.Schemas.RequestBody.RequestUpdateCustom
   alias DocsWeb.Schemas.RequestBody.RequestUpdateContacts
   alias DocsWeb.Schemas.RequestBody.RequestCreate
+  alias DocsWeb.Schemas.RequestBody.SelfShipCollectionAvailabilityCheckCreate
+  alias DocsWeb.Schemas.RequestBody.SelfShipCollectionCreate
   alias DocsWeb.Schemas.RequestBody.AddressVerificationCreate
   alias DocsWeb.Parameters.ArtaQuoteTimeout
   alias DocsWeb.Parameters.Search
@@ -1553,6 +1555,125 @@ Use the private url in the successful hosted session response to direct your use
                   headers: default_headers()
                 ),
               404 => Response.NotFound.build()
+            }
+          }
+        },
+        "/self_ship_collections" => %PathItem{
+          get: %Operation{
+            summary: "List Self-Ship Collections",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve a paginated collection of self-ship collection records belonging to your organization, sorted by most recent first",
+            tags: ["self_ship_collections"],
+            operationId: "selfShipCollections/list",
+            parameters: [
+              Authorization.parameter(),
+              Page.parameter(),
+              PageSize.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Self-Ship Collection records",
+                  "application/json",
+                  list(Response.SelfShipCollection),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Self-Ship Collection",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nSchedule a carrier pickup for a self-ship shipment",
+            tags: ["self_ship_collections"],
+            operationId: "selfShipCollections/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: SelfShipCollectionCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created self-ship collection",
+                  "application/json",
+                  Response.SelfShipCollection,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build(),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              422 =>
+                Operation.response(
+                  "Unprocessable entity",
+                  "application/json",
+                  Response.Error
+                )
+            }
+          }
+        },
+        "/self_ship_collections/{self_ship_collection_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Self-Ship Collection",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve an existing self-ship collection by its ID",
+            tags: ["self_ship_collections"],
+            operationId: "selfShipCollections/get",
+            parameters: [Authorization.parameter(), Parameters.SelfShipCollectionID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Self-Ship Collection response",
+                  "application/json",
+                  Response.SelfShipCollection,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
+        "/self_ship_collection_availability_checks" => %PathItem{
+          post: %Operation{
+            summary: "Check Self-Ship Collection Availability",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCheck carrier pickup availability for a given location, service, and date",
+            tags: ["self_ship_collections"],
+            operationId: "selfShipCollectionAvailabilityChecks/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: SelfShipCollectionAvailabilityCheckCreate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Available pickup slots for the given parameters",
+                  "application/json",
+                  Response.SelfShipCollectionAvailabilityCheck,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build(),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              422 =>
+                Operation.response(
+                  "Unprocessable entity",
+                  "application/json",
+                  Response.Error
+                )
             }
           }
         },
