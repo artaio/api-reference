@@ -20,8 +20,10 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
       },
       shortcode: %Schema{
         type: :string,
-        description: "A human-readable identifier for the collection",
-        example: "SSC123"
+        description:
+          "A human-readable identifier for the collection, formatted as the organization's shortcode followed by a hyphen and six alphanumeric characters",
+        example: "ACME-S3GP24",
+        pattern: "^[A-Z]+-[A-Z0-9]{6}$"
       },
       created_at: %Schema{
         type: :string,
@@ -138,7 +140,7 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
     example: %{
       "id" => "550e8400-e29b-41d4-a716-446655440000",
       "status" => "scheduled",
-      "shortcode" => "SSC123",
+      "shortcode" => "ACME-S3GP24",
       "created_at" => "2026-03-01T12:00:00.000000",
       "updated_at" => "2026-03-01T12:00:00.000000",
       "closed_at" => nil,
