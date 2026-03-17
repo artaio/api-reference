@@ -49,8 +49,7 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
     },
     cancel_url: %Schema{
       type: "string",
-      description:
-        "The URL the user will be redirected to after a Arta Booking session is cancelled",
+      description: "The URL the user will be redirected to after a Arta Booking session is cancelled",
       example: "http://example.com/cancelled"
     },
     destination: Location.call(),
@@ -139,8 +138,7 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
     },
     success_url: %Schema{
       type: "string",
-      description:
-        "The URL the user will be redirected to after a Arta Booking session is completed",
+      description: "The URL the user will be redirected to after a Arta Booking session is completed",
       example: "http://example.com/success"
     },
     type: %Schema{
@@ -174,8 +172,7 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
                                 public_instructions_object_details: %Schema{
                                   type: "string",
                                   description: @public_instructions_object_details_description,
-                                  example:
-                                    "Please confirm the dimensions of the objects you are shipping."
+                                  example: "Please confirm the dimensions of the objects you are shipping."
                                 },
                                 type: %Schema{
                                   type: "string",

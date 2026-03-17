@@ -80,8 +80,7 @@ defmodule DocsWeb.Schemas.Response.Request do
       },
       insurance: %Schema{
         type: "string",
-        description:
-          "The id of an insurance type. If requesting Arta insurance, object values must be provided.",
+        description: "The id of an insurance type. If requesting Arta insurance, object values must be provided.",
         example: "arta_transit_insurance",
         nullable: true
       },
@@ -146,8 +145,7 @@ defmodule DocsWeb.Schemas.Response.Request do
       },
       quote_types: %Schema{
         type: "array",
-        description:
-          "The list of quote types returned as part of the quotes in this quote request",
+        description: "The list of quote types returned as part of the quotes in this quote request",
         items: %Schema{
           type: "string",
           description: "The id of a quote type",
@@ -323,7 +321,7 @@ defmodule DocsWeb.Schemas.Response.Request do
       },
       shortcode: %Schema{
         type: "string",
-        description: "A brief and unique string identifier for the request resource",
+        description: "A brief and unique string identifier for the resource",
         example: "DEMO-B8FIRV"
       },
       status: %Schema{
@@ -338,6 +336,11 @@ defmodule DocsWeb.Schemas.Response.Request do
           "expired",
           "pending"
         ]
+      },
+      tags: %Schema{
+        type: :array,
+        description: "A list of tags associated with this request",
+        items: DocsWeb.Schemas.Response.Tag
       },
       updated_at: %Schema{
         type: "string",

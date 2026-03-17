@@ -27,8 +27,7 @@ defmodule DocsWeb.Schemas.Fields do
         type: "object",
         properties: %{
           country_of_origin: %Schema{
-            description:
-              "The ISO 3166-1 alpha-2 country code where the object was made or manufactured",
+            description: "The ISO 3166-1 alpha-2 country code where the object was made or manufactured",
             type: "string",
             maxLength: 2,
             minLength: 2,
@@ -74,8 +73,7 @@ defmodule DocsWeb.Schemas.Fields do
           },
           is_fragile: %Schema{
             type: "boolean",
-            description:
-              "Set this flag to true is the item is fragile. This may effect packing and handling costs",
+            description: "Set this flag to true is the item is fragile. This may effect packing and handling costs",
             default: false
           },
           is_cites: %Schema{
@@ -134,8 +132,7 @@ defmodule DocsWeb.Schemas.Fields do
         example: "Round Smithson work"
       },
       subtype: %Schema{
-        description:
-          "The object subtype ID. Options are defined in the Object types metadata endpoint",
+        description: "The object subtype ID. Options are defined in the Object types metadata endpoint",
         type: "string",
         pattern: "^[0-9a-z_]{1,56}$",
         example: "painting_unframed"
@@ -200,8 +197,7 @@ defmodule DocsWeb.Schemas.Fields do
         type: "object",
         properties: %{
           country_of_origin: %Schema{
-            description:
-              "The ISO 3166-1 alpha-2 country code where the object was made or manufactured",
+            description: "The ISO 3166-1 alpha-2 country code where the object was made or manufactured",
             type: "string",
             maxLength: 2,
             minLength: 2,
@@ -423,8 +419,7 @@ defmodule DocsWeb.Schemas.Fields do
         type: :string,
         maxLength: 2,
         minLength: 2,
-        description:
-          "The ISO 3166-1 alpha-2 country code of the current or last known location if available",
+        description: "The ISO 3166-1 alpha-2 country code of the current or last known location if available",
         required: true,
         example: "US"
       },
@@ -435,8 +430,7 @@ defmodule DocsWeb.Schemas.Fields do
       },
       region: %Schema{
         type: :string,
-        description:
-          "Political region name, for US states and Canada provinces, use 2 letter abbreviations",
+        description: "Political region name, for US states and Canada provinces, use 2 letter abbreviations",
         example: "NY"
       },
       title: %Schema{

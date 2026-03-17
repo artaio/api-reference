@@ -11,8 +11,7 @@ defmodule DocsWeb.Schemas.Response.Metadata.Currency do
       properties: %{
         symbol: %Schema{
           type: :string,
-          description:
-            "The symbol used to denote that a number is a monetary value in a particular currency",
+          description: "The symbol used to denote that a number is a monetary value in a particular currency",
           example: "$"
         },
         id: %Schema{

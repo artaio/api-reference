@@ -72,8 +72,7 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
               },
               region: %Schema{
                 type: :string,
-                description:
-                  "Political region name, for US states and Canada provinces, use 2 letter abbreviations",
+                description: "Political region name, for US states and Canada provinces, use 2 letter abbreviations",
                 maxLength: 255,
                 example: "NY"
               },
@@ -178,8 +177,7 @@ defmodule DocsWeb.Schemas.RequestBody.RequestCreate do
               },
               region: %Schema{
                 type: :string,
-                description:
-                  "Political region name, for US states and Canada provinces, use 2 letter abbreviations",
+                description: "Political region name, for US states and Canada provinces, use 2 letter abbreviations",
                 maxLength: 255,
                 example: "NY"
               },

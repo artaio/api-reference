@@ -12,8 +12,7 @@ defmodule DocsWeb.Schemas.Response.Metadata.Quote do
         description: %Schema{
           type: :string,
           description: "A long form description",
-          example:
-            "Specialized climate-controlled transportation operated by trained technicians from wall-to-wall"
+          example: "Specialized climate-controlled transportation operated by trained technicians from wall-to-wall"
         },
         id: %Schema{
           type: :string,

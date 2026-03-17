@@ -7,6 +7,9 @@ defmodule DocsWeb.ApiSpec do
   alias DocsWeb.Schemas.RequestBody.RequestUpdateCustom
   alias DocsWeb.Schemas.RequestBody.RequestUpdateContacts
   alias DocsWeb.Schemas.RequestBody.RequestCreate
+  alias DocsWeb.Schemas.RequestBody.SelfShipCollectionAvailabilityCheckCreate
+  alias DocsWeb.Schemas.RequestBody.SelfShipCollectionCreate
+  alias DocsWeb.Schemas.RequestBody.AddressVerificationCreate
   alias DocsWeb.Parameters.ArtaQuoteTimeout
   alias DocsWeb.Parameters.Search
   alias DocsWeb.Parameters.{ShippingProtectionEstimateID, ShippingProtectionPolicyID}
@@ -87,8 +90,7 @@ defmodule DocsWeb.ApiSpec do
       paths: %{
         "/api_keys" => %PathItem{
           get: %Operation{
-            description:
-              "Retrieve a paginated collection of API Keys belonging to your Organization",
+            description: "Retrieve a paginated collection of API Keys belonging to your Organization",
             operationId: "apiKeys/list",
             summary: "List API Keys",
             tags: [
@@ -173,11 +175,90 @@ defmodule DocsWeb.ApiSpec do
             }
           }
         },
+        "/address_verifications" => %PathItem{
+          get: %Operation{
+            summary: "List Address Verifications",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve a paginated collection of address verifications belonging to your organization, sorted by creation date descending",
+            tags: ["address_verifications"],
+            operationId: "addressVerifications/list",
+            parameters: [
+              Authorization.parameter(),
+              Page.parameter(),
+              PageSize.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Address Verification records",
+                  "application/json",
+                  list(Response.AddressVerification),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create an Address Verification",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nVerify an address and receive a corrected recommendation.",
+            tags: ["address_verifications"],
+            operationId: "addressVerifications/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: AddressVerificationCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created address verification",
+                  "application/json",
+                  Response.AddressVerification,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build(),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              422 =>
+                Operation.response(
+                  "Unprocessible entity",
+                  "application/json",
+                  Response.Error
+                )
+            }
+          }
+        },
+        "/address_verifications/{address_verification_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get an Address Verification",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve an existing address verification by its ID",
+            tags: ["address_verifications"],
+            operationId: "addressVerifications/get",
+            parameters: [Authorization.parameter(), Parameters.AddressVerificationID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Address Verification response",
+                  "application/json",
+                  Response.AddressVerification,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
         "/attachments" => %PathItem{
           get: %Operation{
             summary: "List Attachments",
-            description:
-              "Retrieve a paginated collection of Attachment records belonging to your Organization",
+            description: "Retrieve a paginated collection of Attachment records belonging to your Organization",
             tags: [
               "attachments"
             ],
@@ -264,8 +345,7 @@ defmodule DocsWeb.ApiSpec do
         "/email_rules" => %PathItem{
           get: %Operation{
             summary: "List Email Rules",
-            description:
-              "Retrieve a paginated collection of Email Rules belonging to your Organization",
+            description: "Retrieve a paginated collection of Email Rules belonging to your Organization",
             tags: ["email_rules"],
             operationId: "emailRules/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -281,8 +361,7 @@ defmodule DocsWeb.ApiSpec do
           },
           post: %Operation{
             summary: "Create an Email Rule",
-            description:
-              "Create an email rule to configure email notifications for your organization.",
+            description: "Create an email rule to configure email notifications for your organization.",
             tags: ["email_rules"],
             operationId: "emailRules/create",
             parameters: [Authorization.parameter()],
@@ -367,8 +446,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/email_subscriptions" => %PathItem{
           get: %Operation{
-            description:
-              "Retrieve a paginated collection of Email Subscriptions belonging to your Organization",
+            description: "Retrieve a paginated collection of Email Subscriptions belonging to your Organization",
             operationId: "emailSubscriptions/list",
             summary: "List Email Subscriptions",
             tags: [
@@ -387,8 +465,7 @@ defmodule DocsWeb.ApiSpec do
           },
           post: %Operation{
             summary: "Create an Email Subscription",
-            description:
-              "Create an email subscription to configure email notifications for your organization.",
+            description: "Create an email subscription to configure email notifications for your organization.",
             tags: [
               "email_subscriptions"
             ],
@@ -475,8 +552,7 @@ defmodule DocsWeb.ApiSpec do
         },
         "/hosted_sessions" => %PathItem{
           get: %Operation{
-            description:
-              "Retrieve a paginated collection of hosted sessions belonging to your organization",
+            description: "Retrieve a paginated collection of hosted sessions belonging to your organization",
             operationId: "hostedSessions/list",
             summary: "List Hosted Sessions",
             tags: [
@@ -644,8 +720,7 @@ Use the private url in the successful hosted session response to direct your use
         "/invoice_payments" => %PathItem{
           get: %Operation{
             summary: "List Invoice Payment",
-            description:
-              "Retrieve a paginated collection of Invoice Payments belonging to your Organization",
+            description: "Retrieve a paginated collection of Invoice Payments belonging to your Organization",
             tags: [
               "invoice_payments"
             ],
@@ -684,8 +759,7 @@ Use the private url in the successful hosted session response to direct your use
         "/invoices" => %PathItem{
           get: %Operation{
             summary: "List Invoices",
-            description:
-              "Retrieve a paginated collection of Invoices belonging to your Organization",
+            description: "Retrieve a paginated collection of Invoices belonging to your Organization",
             tags: [
               "invoices"
             ],
@@ -724,8 +798,7 @@ Use the private url in the successful hosted session response to direct your use
         "/logs" => %PathItem{
           get: %Operation{
             summary: "List Logs",
-            description:
-              "Retrieve a paginated collection of Log records belonging to your Organization",
+            description: "Retrieve a paginated collection of Log records belonging to your Organization",
             tags: [
               "logs"
             ],
@@ -1325,8 +1398,7 @@ Use the private url in the successful hosted session response to direct your use
         "/organization" => %PathItem{
           get: %Operation{
             summary: "Get an Organization",
-            description:
-              "Retrieve the Organization associated with the API Key in the Authorization header",
+            description: "Retrieve the Organization associated with the API Key in the Authorization header",
             tags: ["organization"],
             operationId: "organization-get",
             parameters: [Authorization.parameter()],
@@ -1343,8 +1415,7 @@ Use the private url in the successful hosted session response to direct your use
           },
           patch: %Operation{
             summary: "Update an Organization",
-            description:
-              "Update the Organization associated with the API Key in the Authorization header",
+            description: "Update the Organization associated with the API Key in the Authorization header",
             tags: ["organization"],
             operationId: "organization-patch",
             parameters: [Authorization.parameter()],
@@ -1370,8 +1441,7 @@ Use the private url in the successful hosted session response to direct your use
         "/payments" => %PathItem{
           get: %Operation{
             summary: "List Payments",
-            description:
-              "Retrieve a paginated collection of Payments belonging to your Organization",
+            description: "Retrieve a paginated collection of Payments belonging to your Organization",
             tags: [
               "payments"
             ],
@@ -1410,8 +1480,7 @@ Use the private url in the successful hosted session response to direct your use
         "/requests" => %PathItem{
           get: %Operation{
             summary: "List Quote Requests",
-            description:
-              "Retrieve a paginated collection of Quote Request records belonging to your Organization",
+            description: "Retrieve a paginated collection of Quote Request records belonging to your Organization",
             tags: ["requests"],
             operationId: "requests/list",
             parameters: [
@@ -1551,8 +1620,7 @@ Use the private url in the successful hosted session response to direct your use
         "/shipment_exceptions" => %PathItem{
           get: %Operation{
             summary: "List Shipment Exceptions",
-            description:
-              "Retrieve a paginated collection of Shipment Exceptions belonging to your Organization",
+            description: "Retrieve a paginated collection of Shipment Exceptions belonging to your Organization",
             tags: ["shipment_exceptions"],
             operationId: "shipmentExceptions/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -1634,11 +1702,129 @@ Use the private url in the successful hosted session response to direct your use
             }
           }
         },
+        "/self_ship_collections" => %PathItem{
+          get: %Operation{
+            summary: "List Self-Ship Collections",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve a paginated collection of self-ship collection records belonging to your organization, sorted by most recent first",
+            tags: ["self_ship_collections"],
+            operationId: "selfShipCollections/list",
+            parameters: [
+              Authorization.parameter(),
+              Page.parameter(),
+              PageSize.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Self-Ship Collection records",
+                  "application/json",
+                  list(Response.SelfShipCollection),
+                  headers: default_headers()
+                )
+            }
+          },
+          post: %Operation{
+            summary: "Create a Self-Ship Collection",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nSchedule a carrier pickup for a self-ship shipment",
+            tags: ["self_ship_collections"],
+            operationId: "selfShipCollections/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: SelfShipCollectionCreate
+                }
+              }
+            },
+            responses: %{
+              201 =>
+                Operation.response(
+                  "The created self-ship collection",
+                  "application/json",
+                  Response.SelfShipCollection,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build(),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              422 =>
+                Operation.response(
+                  "Unprocessable entity",
+                  "application/json",
+                  Response.Error
+                )
+            }
+          }
+        },
+        "/self_ship_collections/{self_ship_collection_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Self-Ship Collection",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nRetrieve an existing self-ship collection by its ID",
+            tags: ["self_ship_collections"],
+            operationId: "selfShipCollections/get",
+            parameters: [Authorization.parameter(), Parameters.SelfShipCollectionID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Self-Ship Collection response",
+                  "application/json",
+                  Response.SelfShipCollection,
+                  headers: default_headers()
+                ),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
+        "/self_ship_collection_availability_checks" => %PathItem{
+          post: %Operation{
+            summary: "Check Self-Ship Collection Availability",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCheck carrier pickup availability for a given location, service, and date",
+            tags: ["self_ship_collections"],
+            operationId: "selfShipCollectionAvailabilityChecks/create",
+            parameters: [Authorization.parameter()],
+            requestBody: %RequestBody{
+              content: %{
+                "application/json" => %MediaType{
+                  schema: SelfShipCollectionAvailabilityCheckCreate
+                }
+              }
+            },
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Available pickup slots for the given parameters",
+                  "application/json",
+                  Response.SelfShipCollectionAvailabilityCheck,
+                  headers: default_headers()
+                ),
+              400 => Response.BadRequest.build(),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              422 =>
+                Operation.response(
+                  "Unprocessable entity",
+                  "application/json",
+                  Response.Error
+                )
+            }
+          }
+        },
         "/shipments" => %PathItem{
           get: %Operation{
             summary: "List Shipments",
-            description:
-              "Retrieve a paginated collection of Shipment records belonging to your Organization",
+            description: "Retrieve a paginated collection of Shipment records belonging to your Organization",
             tags: [
               "shipments"
             ],
@@ -1850,8 +2036,7 @@ Use the private url in the successful hosted session response to direct your use
         "/uploads" => %PathItem{
           get: %Operation{
             summary: "List Uploads",
-            description:
-              "Retrieve a paginated collection of Uploads belonging to your Organization",
+            description: "Retrieve a paginated collection of Uploads belonging to your Organization",
             tags: ["uploads"],
             operationId: "uploads/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -1929,8 +2114,7 @@ Use the private url in the successful hosted session response to direct your use
         "/webhook_deliveries" => %PathItem{
           get: %Operation{
             summary: "List Webhook Deliveries",
-            description:
-              "Retrieve a paginated collection of Webhook Deliveries belonging to your Organization",
+            description: "Retrieve a paginated collection of Webhook Deliveries belonging to your Organization",
             tags: ["webhook_deliveries"],
             operationId: "webhookDeliveries/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -1967,8 +2151,7 @@ Use the private url in the successful hosted session response to direct your use
         "/webhooks" => %PathItem{
           get: %Operation{
             summary: "List Webhooks",
-            description:
-              "Retrieve a paginated collection of Webhooks belonging to your Organization",
+            description: "Retrieve a paginated collection of Webhooks belonging to your Organization",
             tags: ["webhooks"],
             operationId: "webhooks/list",
             parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
@@ -2112,8 +2295,7 @@ Use the private url in the successful hosted session response to direct your use
         "/webhooks/{webhook_id}/secret_token/reset" => %PathItem{
           patch: %Operation{
             summary: "Reset a Web Hook Secret Token",
-            description:
-              "Regenerate the secret token associated with a webhook endpoint resource",
+            description: "Regenerate the secret token associated with a webhook endpoint resource",
             tags: ["webhooks"],
             operationId: "webhooks-secret-token-reset-patch",
             parameters: [Authorization.parameter(), Parameters.WebhookID.parameter()],
