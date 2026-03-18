@@ -538,8 +538,7 @@ defmodule DocsWeb.Schemas.Fields do
       currency: Currency,
       objects: %Schema{
         type: "array",
-        description:
-          "One or more items to insure. All objects must be valid - request fails if any object is invalid.",
+        description: "One or more items to insure. All objects must be valid - request fails if any object is invalid.",
         items: %Schema{
           type: :object,
           properties: shipping_protection_object_fields(),
@@ -548,8 +547,7 @@ defmodule DocsWeb.Schemas.Fields do
       },
       tags: %Schema{
         type: "array",
-        description:
-          "Tag names to associate with this estimate. Example: `[ \"artwork\", \"fragile\" ]`.",
+        description: "Tag names to associate with this estimate. Example: `[ \"artwork\", \"fragile\" ]`.",
         items: %Schema{type: "string"},
         example: ["premium"]
       }
@@ -566,8 +564,7 @@ defmodule DocsWeb.Schemas.Fields do
       },
       shortcode: %Schema{
         type: "string",
-        description:
-          "Human-readable unique identifier code containing `ORG-EST` prefix for tracking this estimate",
+        description: "Human-readable unique identifier code containing `ORG-EST` prefix for tracking this estimate",
         example: "ORG-ESTABCDEFG"
       },
       created_at: %Schema{
@@ -628,8 +625,7 @@ defmodule DocsWeb.Schemas.Fields do
       },
       packages: %Schema{
         type: "array",
-        description:
-          "One or more packages. All objects must be valid - request fails if any object is invalid.",
+        description: "One or more packages. All objects must be valid - request fails if any object is invalid.",
         items: %Schema{
           type: :object,
           properties: shipping_protection_package_fields(),
@@ -655,8 +651,7 @@ defmodule DocsWeb.Schemas.Fields do
       },
       shortcode: %Schema{
         type: "string",
-        description:
-          "Human-readable unique identifier code containing `ORG-SP` prefix for tracking this policy",
+        description: "Human-readable unique identifier code containing `ORG-SP` prefix for tracking this policy",
         example: "ORG-SPABCDEFG"
       },
       created_at: %Schema{
@@ -760,11 +755,25 @@ defmodule DocsWeb.Schemas.Fields do
         type: "object",
         description: "Descriptive metadata for the object.",
         properties: %{
-          title: %Schema{type: "string", description: "Item title/description.", nullable: true, example: "Test Painting"},
+          title: %Schema{
+            type: "string",
+            description: "Item title/description.",
+            nullable: true,
+            example: "Test Painting"
+          },
           creator: %Schema{type: "string", description: "Artist/maker name.", nullable: true, example: "Artist A"},
-          creation_date: %Schema{type: "string", description: "Date when the artwork was created.", nullable: true, example: "1985"},
+          creation_date: %Schema{
+            type: "string",
+            description: "Date when the artwork was created.",
+            nullable: true,
+            example: "1985"
+          },
           notes: %Schema{type: "string", description: "Additional notes about the object.", nullable: true},
-          is_cites: %Schema{type: "boolean", description: "Whether the object is subject to CITES regulations.", nullable: true},
+          is_cites: %Schema{
+            type: "boolean",
+            description: "Whether the object is subject to CITES regulations.",
+            nullable: true
+          },
           is_fragile: %Schema{type: "boolean", description: "Whether the object is fragile.", nullable: true}
         }
       }
@@ -876,8 +885,7 @@ defmodule DocsWeb.Schemas.Fields do
       },
       insurance_policy_requirements: %Schema{
         type: "object",
-        description:
-          "Package-level `services` and `transports`, plus aggregated object `packaging`.",
+        description: "Package-level `services` and `transports`, plus aggregated object `packaging`.",
         properties: insurance_policy_requirements_fields()
       }
     }
@@ -924,11 +932,25 @@ defmodule DocsWeb.Schemas.Fields do
         type: "object",
         description: "Descriptive metadata for the object.",
         properties: %{
-          title: %Schema{type: "string", description: "Item title/description.", nullable: true, example: "Test Painting"},
+          title: %Schema{
+            type: "string",
+            description: "Item title/description.",
+            nullable: true,
+            example: "Test Painting"
+          },
           creator: %Schema{type: "string", description: "Artist/maker name.", nullable: true, example: "Artist A"},
-          creation_date: %Schema{type: "string", description: "Date when the artwork was created.", nullable: true, example: "1985"},
+          creation_date: %Schema{
+            type: "string",
+            description: "Date when the artwork was created.",
+            nullable: true,
+            example: "1985"
+          },
           notes: %Schema{type: "string", description: "Additional notes about the object.", nullable: true},
-          is_cites: %Schema{type: "boolean", description: "Whether the object is subject to CITES regulations.", nullable: true},
+          is_cites: %Schema{
+            type: "boolean",
+            description: "Whether the object is subject to CITES regulations.",
+            nullable: true
+          },
           is_fragile: %Schema{type: "boolean", description: "Whether the object is fragile.", nullable: true}
         }
       }
@@ -1009,8 +1031,7 @@ defmodule DocsWeb.Schemas.Fields do
     %{
       coverage_type: %Schema{
         type: "string",
-        description:
-          "Type of insurance coverage indicating whether shipping is handled by Arta or the client",
+        description: "Type of insurance coverage indicating whether shipping is handled by Arta or the client",
         example: "client_shipping"
       },
       insured_value: MonetaryAmount,
@@ -1103,8 +1124,7 @@ defmodule DocsWeb.Schemas.Fields do
       },
       region: %Schema{
         type: "string",
-        description:
-          "State or region code (use 2-letter abbreviations for US states and Canadian provinces)",
+        description: "State or region code (use 2-letter abbreviations for US states and Canadian provinces)",
         example: "NY"
       },
       contacts: %Schema{
@@ -1227,8 +1247,7 @@ defmodule DocsWeb.Schemas.Fields do
         properties: %{
           status: %Schema{
             type: "string",
-            description:
-              "Status to set for the insurance policy. Must be 'confirmed' to purchase coverage.",
+            description: "Status to set for the insurance policy. Must be 'confirmed' to purchase coverage.",
             example: "confirmed",
             enum: ["confirmed"]
           }

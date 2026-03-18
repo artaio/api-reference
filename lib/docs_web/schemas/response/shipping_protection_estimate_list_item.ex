@@ -20,8 +20,7 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimateListItem do
       },
       shortcode: %Schema{
         type: "string",
-        description:
-          "Human-readable unique identifier code containing `ORG-EST` prefix for tracking this estimate",
+        description: "Human-readable unique identifier code containing `ORG-EST` prefix for tracking this estimate",
         example: "ORG-ESTABCDEFG"
       },
       created_at: %Schema{

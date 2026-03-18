@@ -1052,8 +1052,7 @@ Use the private url in the successful hosted session response to direct your use
                     properties: %{
                       description: %Schema{
                         type: :string,
-                        description:
-                          "A detailed description of the insurance policy coverage type",
+                        description: "A detailed description of the insurance policy coverage type",
                         example: "Coverage for shipments handled through Arta's shipping services"
                       },
                       id: %Schema{
