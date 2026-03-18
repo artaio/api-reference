@@ -680,15 +680,6 @@ defmodule DocsWeb.Schemas.Fields do
         example: "INTERNAL_REF_456",
         nullable: true
       },
-      exceptions: %Schema{
-        type: "array",
-        description:
-          "List of exceptions of type prepayment_required that must be resolved before the policy can proceed.",
-        items: %Schema{
-          type: :object,
-          properties: shipment_exception_base_fields()
-        }
-      },
       origin: %Schema{
         type: "object",
         description: "Normalized `Location` with contact details.",
@@ -717,17 +708,18 @@ defmodule DocsWeb.Schemas.Fields do
           properties: shipping_protection_package_response_fields()
         }
       },
-      shipment: %Schema{
-        type: "object",
+      shipment_id: %Schema{
+        type: "string",
+        format: :uuid,
         description:
-          "Associated shipment information (id, shortcode, status) or null if no shipment.",
-        properties: shipment_reference_fields(),
+          "UUID of the associated shipment, or null if no shipment is associated. Clients should retrieve full shipment details from the shipment endpoint.",
+        example: "37b972c1-deb7-43f8-8ccc-9138a35278f0",
         nullable: true
       }
     }
   end
 
-  # Supporting field definitions
+  # Supporting field definitions for shipping protection policy request objects
   def shipping_protection_object_fields() do
     %{
       subtype: %Schema{
@@ -735,46 +727,46 @@ defmodule DocsWeb.Schemas.Fields do
         description: "Item subtype slug. Examples: `painting_unframed`, `sculpture`, `ring`, ...",
         example: "painting_unframed"
       },
-      value: MonetaryAmount,
-      value_currency: Currency,
-      title: %Schema{
-        type: "string",
-        description: "The object title",
-        example: "Black Rectangle"
+      value: %Schema{
+        description: "Monetary value as decimal string or number (e.g., `\"1000.00\"` or `1000`).",
+        oneOf: [
+          %Schema{type: "string", pattern: "^\\d+(\\.\\d{1,2})?$"},
+          %Schema{type: "number", multipleOf: 0.01}
+        ],
+        example: "1000.00"
       },
-      creator: %Schema{
+      value_currency: %Schema{
         type: "string",
-        description: "The creator of the object",
-        example: "Artist A"
-      },
-      creation_date: %Schema{
-        type: "string",
-        description: "Details about the timing in which an object was created",
-        example: "1985"
+        description: "ISO-4217 currency code for value. Defaults to `USD` if not provided.",
+        example: "USD"
       },
       images: %Schema{
         type: "array",
-        description: "A list image urls of the object",
-        items: %Schema{
-          type: "string",
-          format: "uri",
-          example: "http://example.com/image.jpg"
-        }
+        description: "A list of image URLs of the object.",
+        items: %Schema{type: "string", format: "uri"},
+        nullable: true
       },
       internal_reference: %Schema{
         type: "string",
         description: "Internal reference for the object.",
         example: "INT-PAINT-001"
       },
-      notes: %Schema{
-        type: "string",
-        description: "Additional notes about the object.",
-        example: "Delicate watercolor, requires climate control"
-      },
       public_reference: %Schema{
         type: "string",
         description: "Public-facing reference for the object.",
         example: "PUB-PAINT-001"
+      },
+      details: %Schema{
+        type: "object",
+        description: "Descriptive metadata for the object.",
+        properties: %{
+          title: %Schema{type: "string", description: "Item title/description.", nullable: true, example: "Test Painting"},
+          creator: %Schema{type: "string", description: "Artist/maker name.", nullable: true, example: "Artist A"},
+          creation_date: %Schema{type: "string", description: "Date when the artwork was created.", nullable: true, example: "1985"},
+          notes: %Schema{type: "string", description: "Additional notes about the object.", nullable: true},
+          is_cites: %Schema{type: "boolean", description: "Whether the object is subject to CITES regulations.", nullable: true},
+          is_fragile: %Schema{type: "boolean", description: "Whether the object is fragile.", nullable: true}
+        }
       }
     }
   end
@@ -792,21 +784,22 @@ defmodule DocsWeb.Schemas.Fields do
         items: %Schema{
           type: :object,
           properties: shipping_protection_object_fields(),
-          required: ["subtype", "value", "value_currency"],
+          required: ["subtype", "value"],
           example: %{
             subtype: "painting_unframed",
             value: "1000.00",
             value_currency: "USD",
-            title: "Test Painting",
-            creator: "Artist A",
-            creation_date: "1985",
-            images: [
-              "https://example.com/painting1.jpg",
-              "https://example.com/painting2.jpg"
-            ],
+            images: ["https://example.com/painting1.jpg"],
             internal_reference: "INT-PAINT-001",
-            notes: "Delicate watercolor, requires climate control",
-            public_reference: "PUB-PAINT-001"
+            public_reference: "PUB-PAINT-001",
+            details: %{
+              title: "Test Painting",
+              creator: "Artist A",
+              creation_date: "1985",
+              notes: "Delicate watercolor, requires climate control",
+              is_cites: false,
+              is_fragile: true
+            }
           }
         }
       }
@@ -830,12 +823,6 @@ defmodule DocsWeb.Schemas.Fields do
         type: "string",
         description: "Object subtype slug (e.g. `\"painting_unframed\"`, `\"sculpture\"`).",
         example: "painting_unframed"
-      },
-      title: %Schema{
-        type: "string",
-        description: "The object title",
-        example: "Black Rectangle",
-        nullable: true
       },
       value: MonetaryAmount,
       value_currency: Currency,
@@ -897,16 +884,55 @@ defmodule DocsWeb.Schemas.Fields do
   end
 
   def shipping_protection_policy_object_response_fields() do
-    shipping_protection_object_fields()
-    |> Map.put(:id, %Schema{
-      type: :integer,
-      description: "Internal object ID."
-    })
-    |> Map.put(:type, %Schema{
-      type: "string",
-      description: "Object type slug (e.g., `art`).",
-      example: "art"
-    })
+    %{
+      id: %Schema{
+        type: :integer,
+        description: "Internal object ID.",
+        example: 409
+      },
+      type: %Schema{
+        type: "string",
+        description: "Object type slug (e.g., `art`).",
+        example: "art"
+      },
+      subtype: %Schema{
+        type: "string",
+        description: "Object subtype slug (e.g., `painting_unframed`, `sculpture`).",
+        example: "painting_unframed"
+      },
+      value: MonetaryAmount,
+      value_currency: Currency,
+      images: %Schema{
+        type: "array",
+        description: "A list of image URLs of the object.",
+        items: %Schema{type: "string", format: "uri"},
+        nullable: true
+      },
+      internal_reference: %Schema{
+        type: "string",
+        description: "Internal reference for the object.",
+        example: "INT-PAINT-001",
+        nullable: true
+      },
+      public_reference: %Schema{
+        type: "string",
+        description: "Public-facing reference for the object.",
+        example: "PUB-PAINT-001",
+        nullable: true
+      },
+      details: %Schema{
+        type: "object",
+        description: "Descriptive metadata for the object.",
+        properties: %{
+          title: %Schema{type: "string", description: "Item title/description.", nullable: true, example: "Test Painting"},
+          creator: %Schema{type: "string", description: "Artist/maker name.", nullable: true, example: "Artist A"},
+          creation_date: %Schema{type: "string", description: "Date when the artwork was created.", nullable: true, example: "1985"},
+          notes: %Schema{type: "string", description: "Additional notes about the object.", nullable: true},
+          is_cites: %Schema{type: "boolean", description: "Whether the object is subject to CITES regulations.", nullable: true},
+          is_fragile: %Schema{type: "boolean", description: "Whether the object is fragile.", nullable: true}
+        }
+      }
+    }
   end
 
   def insurance_policy_requirements_fields() do

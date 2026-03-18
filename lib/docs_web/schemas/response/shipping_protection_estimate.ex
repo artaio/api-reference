@@ -146,7 +146,6 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
             }
           },
           "subtype" => "painting_unframed",
-          "title" => "Test Painting",
           "type" => "art",
           "value" => "1000.00",
           "value_currency" => "USD"
@@ -271,7 +270,6 @@ defmodule DocsWeb.Schemas.Response.ShippingProtectionEstimate do
             }
           },
           "subtype" => "sculpture",
-          "title" => "Test Sculpture",
           "type" => "art",
           "value" => "2500.00",
           "value_currency" => "EUR"
