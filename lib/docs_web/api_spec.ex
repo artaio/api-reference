@@ -28,6 +28,7 @@ defmodule DocsWeb.ApiSpec do
   alias DocsWeb.Parameters
   alias DocsWeb.Schemas.{APIKey, Response}
   alias DocsWeb.Schemas.Response.ShippingProtectionEstimateListItem
+  alias DocsWeb.Schemas.Response.ShippingProtectionPolicyListItem
   alias DocsWeb.Parameters.{Authorization, Page, PageSize}
 
   alias DocsWeb.Schemas.RequestBody.{
@@ -2386,7 +2387,7 @@ Use the private url in the successful hosted session response to direct your use
                 Operation.response(
                   "A collection of Shipping Protection Policies",
                   "application/json",
-                  list(Response.ShippingProtectionPolicy),
+                  list(ShippingProtectionPolicyListItem),
                   headers: default_headers()
                 )
             }
@@ -2434,9 +2435,7 @@ Use the private url in the successful hosted session response to direct your use
                 ),
               404 => Response.NotFound.build()
             }
-          }
-        },
-        "/shipping_protection_policies/{id}/purchase_coverage" => %PathItem{
+          },
           patch: %Operation{
             summary: "Purchase Shipping Protection Coverage",
             description:
@@ -2452,7 +2451,7 @@ Use the private url in the successful hosted session response to direct your use
               }
             },
             responses: %{
-              201 =>
+              200 =>
                 Operation.response(
                   "The updated shipping protection policy with confirmed insurance policy and current requirements",
                   "application/json",

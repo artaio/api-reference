@@ -541,7 +541,7 @@ defmodule DocsWeb.Schemas.Fields do
         description: "One or more items to insure. All objects must be valid - request fails if any object is invalid.",
         items: %Schema{
           type: :object,
-          properties: shipping_protection_object_fields(),
+          properties: shipping_protection_estimate_object_request_fields(),
           required: ["subtype", "value", "value_currency"]
         }
       },
@@ -550,6 +550,33 @@ defmodule DocsWeb.Schemas.Fields do
         description: "Tag names to associate with this estimate. Example: `[ \"artwork\", \"fragile\" ]`.",
         items: %Schema{type: "string"},
         example: ["premium"]
+      }
+    }
+  end
+
+  @doc """
+  Object fields accepted for estimate creation.
+  Only subtype, value, and value_currency are used by the API.
+  """
+  def shipping_protection_estimate_object_request_fields() do
+    %{
+      subtype: %Schema{
+        type: "string",
+        description: "Item subtype slug. Examples: `painting_unframed`, `sculpture`, `ring`, ...",
+        example: "painting_unframed"
+      },
+      value: %Schema{
+        description: "Monetary value as decimal string or number (e.g., `\"1000.00\"` or `1000`).",
+        oneOf: [
+          %Schema{type: "string", pattern: "^\\d+(\\.\\d{1,2})?$"},
+          %Schema{type: "number", multipleOf: 0.01}
+        ],
+        example: "1000.00"
+      },
+      value_currency: %Schema{
+        type: "string",
+        description: "ISO-4217 currency code for value.",
+        example: "USD"
       }
     }
   end
@@ -751,32 +778,7 @@ defmodule DocsWeb.Schemas.Fields do
         description: "Public-facing reference for the object.",
         example: "PUB-PAINT-001"
       },
-      details: %Schema{
-        type: "object",
-        description: "Descriptive metadata for the object.",
-        properties: %{
-          title: %Schema{
-            type: "string",
-            description: "Item title/description.",
-            nullable: true,
-            example: "Test Painting"
-          },
-          creator: %Schema{type: "string", description: "Artist/maker name.", nullable: true, example: "Artist A"},
-          creation_date: %Schema{
-            type: "string",
-            description: "Date when the artwork was created.",
-            nullable: true,
-            example: "1985"
-          },
-          notes: %Schema{type: "string", description: "Additional notes about the object.", nullable: true},
-          is_cites: %Schema{
-            type: "boolean",
-            description: "Whether the object is subject to CITES regulations.",
-            nullable: true
-          },
-          is_fragile: %Schema{type: "boolean", description: "Whether the object is fragile.", nullable: true}
-        }
-      }
+      details: shipping_protection_object_details_schema()
     }
   end
 
@@ -928,31 +930,36 @@ defmodule DocsWeb.Schemas.Fields do
         example: "PUB-PAINT-001",
         nullable: true
       },
-      details: %Schema{
-        type: "object",
-        description: "Descriptive metadata for the object.",
-        properties: %{
-          title: %Schema{
-            type: "string",
-            description: "Item title/description.",
-            nullable: true,
-            example: "Test Painting"
-          },
-          creator: %Schema{type: "string", description: "Artist/maker name.", nullable: true, example: "Artist A"},
-          creation_date: %Schema{
-            type: "string",
-            description: "Date when the artwork was created.",
-            nullable: true,
-            example: "1985"
-          },
-          notes: %Schema{type: "string", description: "Additional notes about the object.", nullable: true},
-          is_cites: %Schema{
-            type: "boolean",
-            description: "Whether the object is subject to CITES regulations.",
-            nullable: true
-          },
-          is_fragile: %Schema{type: "boolean", description: "Whether the object is fragile.", nullable: true}
-        }
+      details: shipping_protection_object_details_schema()
+    }
+  end
+
+  # Shared details schema for shipping protection objects (used in both request and response)
+  def shipping_protection_object_details_schema() do
+    %Schema{
+      type: "object",
+      description: "Descriptive metadata for the object.",
+      properties: %{
+        title: %Schema{
+          type: "string",
+          description: "Item title/description.",
+          nullable: true,
+          example: "Test Painting"
+        },
+        creator: %Schema{type: "string", description: "Artist/maker name.", nullable: true, example: "Artist A"},
+        creation_date: %Schema{
+          type: "string",
+          description: "Date when the artwork was created.",
+          nullable: true,
+          example: "1985"
+        },
+        notes: %Schema{type: "string", description: "Additional notes about the object.", nullable: true},
+        is_cites: %Schema{
+          type: "boolean",
+          description: "Whether the object is subject to CITES regulations.",
+          nullable: true
+        },
+        is_fragile: %Schema{type: "boolean", description: "Whether the object is fragile.", nullable: true}
       }
     }
   end
