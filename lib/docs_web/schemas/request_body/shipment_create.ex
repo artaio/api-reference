@@ -51,6 +51,24 @@ defmodule DocsWeb.Schemas.RequestBody.ShipmentCreate do
                   description: "The name of an active tag belonging to your organization.",
                   example: "vip"
                 }
+              },
+              exceptions: %Schema{
+                type: :array,
+                description:
+                  "An optional list of exceptions to apply at booking time. Only supported for self-ship shipments. Pass an item with `type: \"label_hold\"` to defer automatic label purchase until the exception is resolved.",
+                items: %Schema{
+                  type: :object,
+                  properties: %{
+                    type: %Schema{
+                      type: :string,
+                      description:
+                        "The exception type to create at booking. Currently the only accepted value is `label_hold`.",
+                      enum: ["label_hold"],
+                      example: "label_hold"
+                    }
+                  },
+                  required: ["type"]
+                }
               }
             },
             required: ["quote_id"]

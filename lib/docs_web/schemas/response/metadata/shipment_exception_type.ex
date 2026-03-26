@@ -99,6 +99,13 @@ defmodule DocsWeb.Schemas.Response.Metadata.ShipmentExceptionType do
       },
       %{
         "can_create" => false,
+        "category" => "Shipment Hold",
+        "id" => "label_hold",
+        "name" => "Label Hold",
+        "resolutions" => ["Cancelled Shipment", "Labels Released"]
+      },
+      %{
+        "can_create" => false,
         "category" => "Alert",
         "id" => "lost_in_transit",
         "name" => "Lost in Transit",
