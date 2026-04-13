@@ -52,6 +52,21 @@ defmodule DocsWeb.Schemas.RequestBody.HostedSessionCreate do
       description: "The URL the user will be redirected to after a Arta Booking session is cancelled",
       example: "http://example.com/cancelled"
     },
+    customs_end_use: %Schema{
+      type: "string",
+      description: "The intended end use of the items being shipped for customs purposes",
+      example: "not_for_resale",
+      enum: ["for_resale", "not_for_resale"],
+      default: "not_for_resale"
+    },
+    customs_process: %Schema{
+      type: "string",
+      description:
+        "The customs process for the shipment. \"ddu\" (Delivery Duties Unpaid) means the receiver is responsible for paying duties and taxes. \"ddp\" (Delivery Duties Paid) means the sender prepays duties and taxes. \"ddp_optional\" means the receiver will decide whether to pay estimated duties, fees, and taxes prior to fulfillment",
+      example: "ddu",
+      enum: ["ddu", "ddp", "ddp_optional"],
+      default: "ddu"
+    },
     destination: Location.call(),
     insurance: %Schema{
       type: "string",

@@ -15,6 +15,14 @@ defmodule DocsWeb.Schemas.RequestBody.ShipmentCreate do
           shipment: %Schema{
             type: :object,
             properties: %{
+              customs_process: %Schema{
+                type: :string,
+                description:
+                  "The customs process for the shipment. \"ddu\" (Delivery Duties Unpaid) means the receiver is responsible for paying duties and taxes. \"ddp\" (Delivery Duties Paid) means the sender prepays duties and taxes. \"ddp_optional\" means the receiver will decide whether to pay estimated duties, fees, and taxes prior to fulfillment",
+                example: "ddu",
+                enum: ["ddu", "ddp", "ddp_optional"],
+                default: "ddu"
+              },
               internal_reference: %Schema{
                 type: :string,
                 description:
