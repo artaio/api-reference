@@ -61,6 +61,19 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       created_at: %Schema{
         type: :string
       },
+      customs_end_use: %Schema{
+        type: :string,
+        description: "The intended end use of the items being shipped for customs purposes",
+        example: "not_for_resale",
+        enum: ["for_resale", "not_for_resale"]
+      },
+      customs_process: %Schema{
+        type: :string,
+        description:
+          "The customs process for the shipment. \"ddu\" (Delivery Duties Unpaid) means the receiver is responsible for paying duties and taxes. \"ddp\" (Delivery Duties Paid) means the sender prepays duties and taxes. \"ddp_optional\" means the receiver will decide whether to pay estimated duties, fees, and taxes prior to fulfillment",
+        example: "ddu",
+        enum: ["ddu", "ddp", "ddp_optional"]
+      },
       destination: Response.NullableLocation,
       id: %Schema{
         type: :integer,
@@ -200,6 +213,8 @@ defmodule DocsWeb.Schemas.Response.HostedSession do
       "cancel_url" => "http://example.com/cancel",
       "can_user_confirm_object_dimensions" => false,
       "created_at" => "2021-01-21T17:22:08.818747",
+      "customs_end_use" => "not_for_resale",
+      "customs_process" => "ddu",
       "destination" => nil,
       "id" => 42,
       "insurance" => nil,

@@ -42,6 +42,19 @@ defmodule DocsWeb.Schemas.Response.Request do
         example: "2021-01-21T21:00:58.403150"
       },
       currency: Currency.schema(),
+      customs_end_use: %Schema{
+        type: "string",
+        description: "The intended end use of the items being shipped for customs purposes",
+        example: "not_for_resale",
+        enum: ["for_resale", "not_for_resale"]
+      },
+      customs_process: %Schema{
+        type: "string",
+        description:
+          "The customs process for the shipment. \"ddu\" (Delivery Duties Unpaid) means the receiver is responsible for paying duties and taxes. \"ddp\" (Delivery Duties Paid) means the sender prepays duties and taxes. \"ddp_optional\" means the receiver will decide whether to pay estimated duties, fees, and taxes prior to fulfillment",
+        example: "ddu",
+        enum: ["ddu", "ddp", "ddp_optional"]
+      },
       destination: Location.schema(),
       disqualifications: %Schema{
         type: "array",
@@ -356,6 +369,8 @@ defmodule DocsWeb.Schemas.Response.Request do
         "ready" => true
       },
       "created_at" => "2021-01-21T17:22:08.818747",
+      "customs_end_use" => "not_for_resale",
+      "customs_process" => "ddu",
       "currency" => "USD",
       "destination" => %{
         "access_restrictions" => [],

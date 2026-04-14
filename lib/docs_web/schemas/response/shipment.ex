@@ -22,6 +22,21 @@ defmodule DocsWeb.Schemas.Response.Shipment do
         description:
           "A NaiveDatetime-formatted timestamp describing when the resource was created with microsecond precision"
       },
+      customs_end_use: %Schema{
+        type: :string,
+        description: "The intended end use of the items being shipped for customs purposes",
+        example: "not_for_resale",
+        enum: ["for_resale", "not_for_resale"],
+        nullable: true
+      },
+      customs_process: %Schema{
+        type: :string,
+        description:
+          "The customs process for the shipment. \"ddu\" (Delivery Duties Unpaid) means the receiver is responsible for paying duties and taxes. \"ddp\" (Delivery Duties Paid) means the sender prepays duties and taxes. \"ddp_optional\" means the receiver will decide whether to pay estimated duties, fees, and taxes prior to fulfillment",
+        example: "ddu",
+        enum: ["ddu", "ddp", "ddp_optional"],
+        nullable: true
+      },
       destination: Response.Location,
       eei_form_status: %Schema{
         type: :string,
@@ -326,6 +341,8 @@ defmodule DocsWeb.Schemas.Response.Shipment do
     },
     example: %{
       "created_at" => "2021-01-21T21:00:58.403150",
+      "customs_end_use" => "not_for_resale",
+      "customs_process" => "ddu",
       "destination" => %{
         "access_restrictions" => [],
         "address_line_1" => "87 Richardson St",
