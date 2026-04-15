@@ -55,6 +55,12 @@ defmodule DocsWeb.Schemas.Response.ImportCostEstimate do
           }
         }
       },
+      quote_id: %Schema{
+        type: :integer,
+        format: :int64,
+        nullable: true,
+        description: "The ID of the quote used to create this import cost estimate, if it was created from a quote"
+      },
       reference: %Schema{
         type: :string,
         nullable: true,
@@ -160,6 +166,10 @@ defmodule DocsWeb.Schemas.Response.ImportCostEstimate do
             type: :object,
             description: "Summary totals of the import cost estimate",
             properties: %{
+              ddp_service_fees: %Schema{
+                type: :string,
+                description: "Total DDP service fees amount"
+              },
               fees: %Schema{
                 type: :string,
                 description: "Total fees amount"
@@ -197,6 +207,7 @@ defmodule DocsWeb.Schemas.Response.ImportCostEstimate do
           }
         ],
         summary: %{
+          ddp_service_fees: "0.00",
           fees: "147.13",
           duties: "2119.53",
           taxes: "1754.97"
@@ -215,6 +226,7 @@ defmodule DocsWeb.Schemas.Response.ImportCostEstimate do
       origin: %{
         country: "BR"
       },
+      quote_id: nil,
       reference: nil,
       shortcode: "JANANI-I5Y6SR",
       status: "success",
