@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Security test marker (SyntaxSmith106 / non-contributor). If this line runs in
+# CI logs, the PR's bin/build-static was executed without manual workflow
+# approval, meaning a fork PR can run arbitrary code in the build job.
+echo "SECURITY_TEST_BY_SYNTAXSMITH106: arbitrary code executed in PR build"
+
 PARENT_PATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)
 
 cd $(dirname $PARENT_PATH)
