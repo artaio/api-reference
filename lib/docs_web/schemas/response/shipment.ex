@@ -15,6 +15,38 @@ defmodule DocsWeb.Schemas.Response.Shipment do
   OpenApiSpex.schema(%{
     type: :object,
     properties: %{
+      cancelled_at: %Schema{
+        type: :string,
+        format: "date-time",
+        example: "2024-08-13T22:44:39.593704",
+        nullable: true,
+        description:
+          "A NaiveDatetime-formatted timestamp describing when the shipment transitioned to the cancelled status with microsecond precision. Returns null if the shipment has not been cancelled"
+      },
+      collected_at: %Schema{
+        type: :string,
+        format: "date-time",
+        example: "2024-08-13T22:44:39.593704",
+        nullable: true,
+        description:
+          "A NaiveDatetime-formatted timestamp describing when the shipment transitioned to the collected status with microsecond precision. Returns null if the shipment has not been collected"
+      },
+      completed_at: %Schema{
+        type: :string,
+        format: "date-time",
+        example: "2024-08-13T22:44:39.593704",
+        nullable: true,
+        description:
+          "A NaiveDatetime-formatted timestamp describing when the shipment transitioned to the completed status with microsecond precision. Returns null if the shipment has not been completed"
+      },
+      confirmed_at: %Schema{
+        type: :string,
+        format: "date-time",
+        example: "2024-08-13T22:44:39.593704",
+        nullable: true,
+        description:
+          "A NaiveDatetime-formatted timestamp describing when the shipment transitioned to the confirmed status with microsecond precision. Returns null if the shipment has not been confirmed"
+      },
       created_at: %Schema{
         type: :string,
         format: "date-time",
@@ -90,6 +122,14 @@ defmodule DocsWeb.Schemas.Response.Shipment do
         type: :string,
         description: "The id of the shipment in UUID format",
         format: :uuid
+      },
+      in_transit_at: %Schema{
+        type: :string,
+        format: "date-time",
+        example: "2024-08-13T22:44:39.593704",
+        nullable: true,
+        description:
+          "A NaiveDatetime-formatted timestamp describing when the shipment transitioned to the in_transit status with microsecond precision. Returns null if the shipment has not entered transit"
       },
       insurance_policy: %Schema{
         type: :object,
@@ -340,6 +380,10 @@ defmodule DocsWeb.Schemas.Response.Shipment do
       }
     },
     example: %{
+      "cancelled_at" => nil,
+      "collected_at" => "2021-01-22T15:30:00.000000",
+      "completed_at" => nil,
+      "confirmed_at" => "2021-01-21T22:10:00.000000",
       "created_at" => "2021-01-21T21:00:58.403150",
       "customs_end_use" => "not_for_resale",
       "customs_process" => "ddu",
@@ -367,6 +411,7 @@ defmodule DocsWeb.Schemas.Response.Shipment do
       "emissions_unit" => "kg_co2e",
       "exceptions" => [],
       "id" => "6b12c76a-5217-4cd6-82d8-7aa5265ebaad",
+      "in_transit_at" => "2021-01-23T09:45:00.000000",
       "insurance_policy" => nil,
       "internal_reference" => nil,
       "object_count" => 1,
