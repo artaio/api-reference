@@ -487,6 +487,13 @@ defmodule DocsWeb.Schemas.Fields do
         description: "The id of the exception in UUID format",
         format: :uuid
       },
+      object_id: %Schema{
+        type: :integer,
+        format: :int64,
+        description: "The object associated with this exception (optional)",
+        example: nil,
+        nullable: true
+      },
       package_id: %Schema{
         type: :integer,
         format: :int64,
@@ -522,6 +529,736 @@ defmodule DocsWeb.Schemas.Fields do
         example: "2024-08-13T22:44:39.593704",
         description:
           "A NaiveDatetime-formatted timestamp describing when the exception was last updated with microsecond precision"
+      }
+    }
+  end
+
+  def shipping_protection_estimate_request_fields() do
+    %{
+      currency: Currency,
+      objects: %Schema{
+        type: "array",
+        description: "One or more items to insure. All objects must be valid - request fails if any object is invalid.",
+        items: %Schema{
+          type: :object,
+          properties: shipping_protection_estimate_object_request_fields(),
+          required: ["subtype", "value", "value_currency"]
+        }
+      },
+      tags: %Schema{
+        type: "array",
+        description: "Tag names to associate with this estimate. Example: `[ \"artwork\", \"fragile\" ]`.",
+        items: %Schema{type: "string"},
+        example: ["premium"]
+      }
+    }
+  end
+
+  @doc """
+  Object fields accepted for estimate creation.
+  Only subtype, value, and value_currency are used by the API.
+  """
+  def shipping_protection_estimate_object_request_fields() do
+    %{
+      subtype: %Schema{
+        type: "string",
+        description: "Item subtype slug. Examples: `painting_unframed`, `sculpture`, `ring`, ...",
+        example: "painting_unframed"
+      },
+      value: %Schema{
+        description: "Monetary value as decimal string or number (e.g., `\"1000.00\"` or `1000`).",
+        oneOf: [
+          %Schema{type: "string", pattern: "^\\d+(\\.\\d{1,2})?$"},
+          %Schema{type: "number", multipleOf: 0.01}
+        ],
+        example: "1000.00"
+      },
+      value_currency: %Schema{
+        type: "string",
+        description: "ISO-4217 currency code for value.",
+        example: "USD"
+      }
+    }
+  end
+
+  def shipping_protection_estimate_response_fields() do
+    %{
+      id: %Schema{
+        type: "string",
+        format: :uuid,
+        example: "4da6d140-d33b-43c4-abe1-b04389fe6782",
+        description: "The id of the shipping protection estimate in UUID format"
+      },
+      shortcode: %Schema{
+        type: "string",
+        description: "Human-readable unique identifier code containing `ORG-EST` prefix for tracking this estimate",
+        example: "ORG-ESTABCDEFG"
+      },
+      created_at: %Schema{
+        type: "string",
+        format: "date-time",
+        example: "2024-08-13T22:44:39.593704",
+        description:
+          "A NaiveDatetime-formatted timestamp describing when the estimate was created with microsecond precision"
+      },
+      objects: %Schema{
+        type: "array",
+        description: "Accepted objects with requirements.",
+        items: %Schema{
+          type: :object,
+          properties: shipping_protection_estimate_object_response_fields()
+        }
+      },
+      insurance_policy: %Schema{
+        type: "object",
+        description: "Calculated coverage and premium.",
+        properties: insurance_policy_fields()
+      },
+      tags: %Schema{
+        type: "array",
+        description: "A list of tags associated with this estimate",
+        items: DocsWeb.Schemas.Response.Tag
+      }
+    }
+  end
+
+  # Shipping Protection Policy fields
+  def shipping_protection_policy_request_fields() do
+    %{
+      public_reference: %Schema{
+        type: "string",
+        description:
+          "External reference identifier visible to customers and used in public-facing communications about this policy",
+        example: "PUBLIC_REF_123"
+      },
+      internal_reference: %Schema{
+        type: "string",
+        description:
+          "Internal reference that can be used to pass through any data that you may want returned unaltered for your own later usage",
+        example: "INTERNAL_REF_456"
+      },
+      currency: Currency,
+      origin: %Schema{
+        type: "object",
+        description: "Shipment origin.",
+        properties: shipping_protection_location_request_fields(),
+        required: ["country", "address_line_1", "city", "contacts"]
+      },
+      destination: %Schema{
+        type: "object",
+        description: "Shipment destination.",
+        properties: shipping_protection_location_request_fields(),
+        required: ["country", "address_line_1", "city", "contacts"]
+      },
+      packages: %Schema{
+        type: "array",
+        description: "One or more packages. All objects must be valid - request fails if any object is invalid.",
+        items: %Schema{
+          type: :object,
+          properties: shipping_protection_package_fields(),
+          required: ["tracking_number", "objects"]
+        }
+      },
+      tags: %Schema{
+        type: "array",
+        description: "Tag names to apply (e.g., `[ \"premium\", \"fragile\" ]`).",
+        items: %Schema{type: "string"},
+        example: ["premium", "urgent"]
+      }
+    }
+  end
+
+  def shipping_protection_policy_response_fields() do
+    %{
+      id: %Schema{
+        type: "string",
+        format: :uuid,
+        example: "9f231559-a457-44b7-868f-d2554e147fda",
+        description: "The id of the shipping protection policy in UUID format"
+      },
+      shortcode: %Schema{
+        type: "string",
+        description: "Human-readable unique identifier code containing `ORG-SP` prefix for tracking this policy",
+        example: "ORG-SPABCDEFG"
+      },
+      created_at: %Schema{
+        type: "string",
+        format: "date-time",
+        example: "2024-08-13T22:44:39.593704",
+        description:
+          "A NaiveDatetime-formatted timestamp describing when the policy was created with microsecond precision"
+      },
+      public_reference: %Schema{
+        type: "string",
+        description:
+          "External reference identifier visible to customers and used in public-facing communications about this policy",
+        example: "PUBLIC_REF_123",
+        nullable: true
+      },
+      internal_reference: %Schema{
+        type: "string",
+        description:
+          "This field can be used to pass through any data that you may want returned unaltered for your own later usage",
+        example: "INTERNAL_REF_456",
+        nullable: true
+      },
+      origin: %Schema{
+        type: "object",
+        description: "Normalized `Location` with contact details.",
+        properties: location_response_fields()
+      },
+      destination: %Schema{
+        type: "object",
+        description: "Normalized `Location` with contact details.",
+        properties: location_response_fields()
+      },
+      tags: %Schema{
+        type: "array",
+        description: "A list of tags associated with this policy",
+        items: DocsWeb.Schemas.Response.Tag
+      },
+      insurance_policy: %Schema{
+        type: "object",
+        description: "Calculated coverage and premium with status.",
+        properties: insurance_policy_response_fields()
+      },
+      packages: %Schema{
+        type: "array",
+        description: "Items with `objects` and `insurance_policy_requirements`.",
+        items: %Schema{
+          type: :object,
+          properties: shipping_protection_package_response_fields()
+        }
+      },
+      shipment_id: %Schema{
+        type: "string",
+        format: :uuid,
+        description:
+          "UUID of the associated shipment, or null if no shipment is associated. Clients should retrieve full shipment details from the shipment endpoint.",
+        example: "37b972c1-deb7-43f8-8ccc-9138a35278f0",
+        nullable: true
+      }
+    }
+  end
+
+  # Supporting field definitions for shipping protection policy request objects
+  def shipping_protection_object_fields() do
+    %{
+      subtype: %Schema{
+        type: "string",
+        description: "Item subtype slug. Examples: `painting_unframed`, `sculpture`, `ring`, ...",
+        example: "painting_unframed"
+      },
+      value: %Schema{
+        description: "Monetary value as decimal string or number (e.g., `\"1000.00\"` or `1000`).",
+        oneOf: [
+          %Schema{type: "string", pattern: "^\\d+(\\.\\d{1,2})?$"},
+          %Schema{type: "number", multipleOf: 0.01}
+        ],
+        example: "1000.00"
+      },
+      value_currency: %Schema{
+        type: "string",
+        description: "ISO-4217 currency code for value. Defaults to `USD` if not provided.",
+        example: "USD"
+      },
+      images: %Schema{
+        type: "array",
+        description: "A list of image URLs of the object.",
+        items: %Schema{type: "string", format: "uri"},
+        nullable: true
+      },
+      internal_reference: %Schema{
+        type: "string",
+        description: "Internal reference for the object.",
+        example: "INT-PAINT-001"
+      },
+      public_reference: %Schema{
+        type: "string",
+        description: "Public-facing reference for the object.",
+        example: "PUB-PAINT-001"
+      },
+      details: shipping_protection_object_details_schema()
+    }
+  end
+
+  def shipping_protection_package_fields() do
+    %{
+      tracking_number: %Schema{
+        type: "string",
+        description: "Carrier tracking number",
+        example: "TRACK001"
+      },
+      objects: %Schema{
+        type: "array",
+        description: "Items shipped in the package.",
+        items: %Schema{
+          type: :object,
+          properties: shipping_protection_object_fields(),
+          required: ["subtype", "value"],
+          example: %{
+            subtype: "painting_unframed",
+            value: "1000.00",
+            value_currency: "USD",
+            images: ["https://example.com/painting1.jpg"],
+            internal_reference: "INT-PAINT-001",
+            public_reference: "PUB-PAINT-001",
+            details: %{
+              title: "Test Painting",
+              creator: "Artist A",
+              creation_date: "1985",
+              notes: "Delicate watercolor, requires climate control",
+              is_cites: false,
+              is_fragile: true
+            }
+          }
+        }
+      }
+    }
+  end
+
+  def shipping_protection_estimate_object_response_fields() do
+    %{
+      id: %Schema{
+        type: :integer,
+        description:
+          "The internal object ID assigned by the system for tracking this specific item within the estimate",
+        example: 409
+      },
+      type: %Schema{
+        type: "string",
+        description: "Object type (e.g. `\"art\"`).",
+        example: "art"
+      },
+      subtype: %Schema{
+        type: "string",
+        description: "Object subtype slug (e.g. `\"painting_unframed\"`, `\"sculpture\"`).",
+        example: "painting_unframed"
+      },
+      value: MonetaryAmount,
+      value_currency: Currency,
+      insurance_policy_requirements: %Schema{
+        type: "object",
+        description: "Requirements for packaging, services, and transports.",
+        properties: insurance_policy_requirements_fields()
+      }
+    }
+  end
+
+  def shipping_protection_package_response_fields() do
+    %{
+      id: %Schema{
+        type: :integer,
+        description: "Internal package ID.",
+        example: 2030
+      },
+      status: %Schema{
+        type: "string",
+        description: "Package status (e.g., `pending`).",
+        example: "pending"
+      },
+      package_trackings: %Schema{
+        type: "array",
+        description: "Tracking information with `tracking_number` and `url` fields.",
+        items: %Schema{
+          type: :object,
+          properties: %{
+            tracking_number: %Schema{
+              type: "string",
+              description: "Package tracking number provided by commercial carrier",
+              example: "1ZXXXXXXXXXXXXXXXX"
+            },
+            url: %Schema{
+              type: "string",
+              description: "Direct URL to carrier tracking page (populated after carrier lookup)",
+              example: "https://tools.usps.com/go/TrackConfirmAction?tLabels=1234567890",
+              nullable: true
+            }
+          }
+        }
+      },
+      objects: %Schema{
+        type: "array",
+        description: "Objects contained in this package.",
+        items: %Schema{
+          type: :object,
+          properties: shipping_protection_policy_object_response_fields()
+        }
+      },
+      insurance_policy_requirements: %Schema{
+        type: "object",
+        description: "Package-level `services` and `transports`, plus aggregated object `packaging`.",
+        properties: insurance_policy_requirements_fields()
+      }
+    }
+  end
+
+  def shipping_protection_policy_object_response_fields() do
+    %{
+      id: %Schema{
+        type: :integer,
+        description: "Internal object ID.",
+        example: 409
+      },
+      type: %Schema{
+        type: "string",
+        description: "Object type slug (e.g., `art`).",
+        example: "art"
+      },
+      subtype: %Schema{
+        type: "string",
+        description: "Object subtype slug (e.g., `painting_unframed`, `sculpture`).",
+        example: "painting_unframed"
+      },
+      value: MonetaryAmount,
+      value_currency: Currency,
+      images: %Schema{
+        type: "array",
+        description: "A list of image URLs of the object.",
+        items: %Schema{type: "string", format: "uri"},
+        nullable: true
+      },
+      internal_reference: %Schema{
+        type: "string",
+        description: "Internal reference for the object.",
+        example: "INT-PAINT-001",
+        nullable: true
+      },
+      public_reference: %Schema{
+        type: "string",
+        description: "Public-facing reference for the object.",
+        example: "PUB-PAINT-001",
+        nullable: true
+      },
+      details: shipping_protection_object_details_schema()
+    }
+  end
+
+  # Shared details schema for shipping protection objects (used in both request and response)
+  def shipping_protection_object_details_schema() do
+    %Schema{
+      type: "object",
+      description: "Descriptive metadata for the object.",
+      properties: %{
+        title: %Schema{
+          type: "string",
+          description: "Item title/description.",
+          nullable: true,
+          example: "Test Painting"
+        },
+        creator: %Schema{type: "string", description: "Artist/maker name.", nullable: true, example: "Artist A"},
+        creation_date: %Schema{
+          type: "string",
+          description: "Date when the artwork was created.",
+          nullable: true,
+          example: "1985"
+        },
+        notes: %Schema{type: "string", description: "Additional notes about the object.", nullable: true},
+        is_cites: %Schema{
+          type: "boolean",
+          description: "Whether the object is subject to CITES regulations.",
+          nullable: true
+        },
+        is_fragile: %Schema{type: "boolean", description: "Whether the object is fragile.", nullable: true}
+      }
+    }
+  end
+
+  def insurance_policy_requirements_fields() do
+    %{
+      services: %Schema{
+        type: "array",
+        description: "Required delivery services that must be used for this insurance policy",
+        items: %Schema{type: "string"},
+        example: ["signature_delivery"]
+      },
+      packaging: %Schema{
+        type: "array",
+        description: "Allowed packaging types. Examples: `\"box\"`, `\"foam_lined_box\"`, ...",
+        items: %Schema{type: "string"},
+        example: ["box", "foam_lined_box"]
+      },
+      transports: %Schema{
+        type: "object",
+        description:
+          "Eligible shipping carriers and service levels organized by route type, with separate requirements for domestic and international shipments",
+        properties: %{
+          domestic: %Schema{
+            type: "array",
+            description: "List of allowed domestic carriers and their service levels",
+            items: %Schema{
+              type: :object,
+              properties: transport_carrier_fields()
+            }
+          },
+          international: %Schema{
+            type: "array",
+            description: "List of allowed international carriers and their service levels",
+            items: %Schema{
+              type: :object,
+              properties: transport_carrier_fields()
+            }
+          }
+        }
+      }
+    }
+  end
+
+  def transport_carrier_fields() do
+    %{
+      carrier: %Schema{
+        type: "string",
+        description:
+          "The id of a supported commercial carrier. These can be obtained via the GET /metadata/commercial_carriers endpoint",
+        example: "ups"
+      },
+      data: %Schema{
+        type: "array",
+        description: "List of methods.",
+        items: %Schema{
+          type: :object,
+          properties: %{
+            service_level: %Schema{
+              type: "string",
+              description:
+                "Service level for transport (e.g., fedex_express_saver, etc). Options are listed in the reference rate service levels metadata endpoint",
+              example: "fedex_express_saver"
+            },
+            min_value: MonetaryAmount,
+            min_value_currency: Currency,
+            max_value: MonetaryAmount,
+            max_value_currency: Currency
+          }
+        }
+      }
+    }
+  end
+
+  def insurance_policy_fields() do
+    %{
+      coverage_type: %Schema{
+        type: "string",
+        description: "Type of insurance coverage indicating whether shipping is handled by Arta or the client",
+        example: "client_shipping"
+      },
+      insured_value: MonetaryAmount,
+      insured_value_currency: Currency,
+      insurance_cost: MonetaryAmount,
+      insurance_cost_currency: Currency
+    }
+  end
+
+  def insurance_policy_response_fields() do
+    insurance_policy_fields()
+    |> Map.put(:created_by, %Schema{
+      type: "integer",
+      description: "User ID who created the policy (null for Customer API).",
+      example: 381,
+      nullable: true
+    })
+    |> Map.put(:status, %Schema{
+      type: "string",
+      description: "e.g., `new`, `confirmed`, `disqualified`.",
+      example: "new"
+    })
+    |> Map.put(:status_changed_at, %Schema{
+      type: "string",
+      format: "date-time",
+      example: "2024-08-13T22:44:39.593704",
+      description:
+        "A NaiveDatetime-formatted timestamp describing when the insurance policy status was last changed with microsecond precision"
+    })
+    |> Map.put(:disqualifications, %Schema{
+      type: "array",
+      description: "Array of disqualification reasons. Empty when policy is not disqualified.",
+      items: %Schema{
+        type: :object,
+        properties: %{
+          reason_code: %Schema{
+            type: "string",
+            description: "Machine-readable disqualification code for programmatic handling",
+            example: "transport_method_not_covered"
+          },
+          reason: %Schema{
+            type: "string",
+            description: "Human-readable explanation with actionable guidance",
+            example:
+              "The selected shipping service is not covered by this insurance policy. Coverage cannot be activated for this shipment."
+          }
+        }
+      },
+      example: [
+        %{
+          "reason_code" => "transport_method_not_covered",
+          "reason" =>
+            "The selected shipping service is not covered by this insurance policy. Coverage cannot be activated for this shipment."
+        }
+      ]
+    })
+  end
+
+  @doc """
+  Location request fields for Shipping Protection endpoints.
+  """
+  def shipping_protection_location_request_fields() do
+    %{
+      address_line_1: %Schema{
+        type: "string",
+        description: "First line of address",
+        example: "87 Richardson St"
+      },
+      address_line_2: %Schema{
+        type: "string",
+        description: "Second line of address",
+        nullable: true
+      },
+      city: %Schema{
+        type: "string",
+        description: "City name",
+        example: "Brooklyn"
+      },
+      country: %Schema{
+        type: "string",
+        maxLength: 2,
+        minLength: 2,
+        description: "ISO 3166-1 alpha-2 country code",
+        example: "US"
+      },
+      postal_code: %Schema{
+        type: "string",
+        description: "Postal/ZIP code",
+        example: "11211"
+      },
+      region: %Schema{
+        type: "string",
+        description: "State or region code (use 2-letter abbreviations for US states and Canadian provinces)",
+        example: "NY"
+      },
+      contacts: %Schema{
+        type: "array",
+        description: "Contact details (at least one contact required).",
+        items: %Schema{
+          type: :object,
+          required: ["name", "email_address", "phone_number"],
+          properties: %{
+            name: %Schema{
+              type: "string",
+              description: "Contact person name",
+              example: "Contact Name"
+            },
+            email_address: %Schema{
+              type: "string",
+              description: "Contact email address",
+              example: "docs@arta.io"
+            },
+            phone_number: %Schema{
+              type: "string",
+              description: "Contact phone number",
+              example: "646 828 7333"
+            }
+          }
+        }
+      }
+    }
+  end
+
+  def location_response_fields() do
+    %{
+      address_line_1: %Schema{
+        type: "string",
+        description: "First line of address",
+        example: "123 Main St"
+      },
+      address_line_2: %Schema{
+        type: "string",
+        description: "Second line of address",
+        example: "Suite 100",
+        nullable: true
+      },
+      address_line_3: %Schema{
+        type: "string",
+        description: "Third line of address",
+        example: "Building C",
+        nullable: true
+      },
+      city: %Schema{
+        type: "string",
+        description: "City name",
+        example: "New York"
+      },
+      country: %Schema{type: "string", description: "ISO-3166-1 alpha-2."},
+      postal_code: %Schema{
+        type: "string",
+        description: "Postal/ZIP code",
+        example: "10001"
+      },
+      region: %Schema{
+        type: "string",
+        description: "State or region code",
+        example: "NY"
+      },
+      contacts: %Schema{
+        type: "array",
+        description: "Contact details.",
+        items: %Schema{
+          type: :object,
+          properties: %{
+            name: %Schema{
+              type: "string",
+              description: "Contact person name",
+              example: "John Doe"
+            },
+            email_address: %Schema{
+              type: "string",
+              description: "Contact email address",
+              example: "john@example.com"
+            },
+            phone_number: %Schema{
+              type: "string",
+              description: "Contact phone number",
+              example: "+1 555-123-4567"
+            }
+          }
+        }
+      }
+    }
+  end
+
+  def shipment_reference_fields() do
+    %{
+      id: %Schema{
+        type: "string",
+        format: :uuid,
+        description: "ARTA shipment identifier (UUID format).",
+        example: "fa61548d-5a26-4983-8f16-1bcccdb5c4f8"
+      },
+      shortcode: %Schema{
+        type: "string",
+        description: "Human-readable shipment code.",
+        example: "ARTA-486257"
+      },
+      status: %Schema{
+        type: "string",
+        description: "Current shipment status (e.g., `pending`, `completed`).",
+        example: "pending"
+      }
+    }
+  end
+
+  def purchase_coverage_request_fields() do
+    %{
+      insurance_policy: %Schema{
+        type: :object,
+        description: "Insurance policy update object",
+        required: ["status"],
+        properties: %{
+          status: %Schema{
+            type: "string",
+            description: "Status to set for the insurance policy. Must be 'confirmed' to purchase coverage.",
+            example: "confirmed",
+            enum: ["confirmed"]
+          }
+        }
       }
     }
   end
