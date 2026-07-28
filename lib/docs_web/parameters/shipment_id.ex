@@ -1,6 +1,5 @@
 defmodule DocsWeb.Parameters.ShipmentID do
   alias OpenApiSpex.{Parameter, Schema}
-  require OpenApiSpex
 
   @spec parameter() :: Parameter.t()
   def parameter(),

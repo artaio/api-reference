@@ -1,6 +1,5 @@
 defmodule DocsWeb.Parameters.InvoicePaymentID do
   alias OpenApiSpex.{Parameter, Schema}
-  require OpenApiSpex
 
   @spec parameter() :: Parameter.t()
   def parameter(),
