@@ -1,6 +1,5 @@
 defmodule DocsWeb.Schemas.Currency do
   alias OpenApiSpex.Schema
-  require OpenApiSpex
 
   def schema(),
     do: %Schema{

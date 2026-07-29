@@ -1,8 +1,6 @@
 defmodule DocsWeb.Schemas.MonetaryAmount do
   alias OpenApiSpex.Schema
 
-  require OpenApiSpex
-
   def schema(),
     do: %Schema{
       title: "MonetaryAmount",

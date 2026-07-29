@@ -1,6 +1,5 @@
 defmodule DocsWeb.Schemas.MinimalLocation do
   alias OpenApiSpex.Schema
-  require OpenApiSpex
 
   def schema(),
     do: %Schema{
