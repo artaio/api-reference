@@ -1668,6 +1668,7 @@ Use the private url in the successful hosted session response to direct your use
                   %Schema{
                     title: "SelfShipCollectionCancelError",
                     type: :object,
+                    required: [:errors],
                     properties: %{
                       errors: %Schema{
                         type: :array,
