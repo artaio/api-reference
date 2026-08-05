@@ -1700,11 +1700,56 @@ Use the private url in the successful hosted session response to direct your use
             }
           }
         },
+        "/self_ship_collections/{self_ship_collection_id}/cancel" => %PathItem{
+          patch: %Operation{
+            summary: "Cancel a Self-Ship Collection",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCancel an existing self-ship collection. Cancellation is only supported for DHL collections; attempting to cancel a FedEx collection returns a `422` response with `{\"errors\": [\"Only DHL collections can be cancelled\"]}`.",
+            tags: ["self_ship_collections"],
+            operationId: "selfShipCollections/cancel",
+            parameters: [Authorization.parameter(), Parameters.SelfShipCollectionID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "The cancelled self-ship collection",
+                  "application/json",
+                  Response.SelfShipCollection,
+                  headers: default_headers()
+                ),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              404 => Response.NotFound.build(),
+              422 =>
+                Operation.response(
+                  "The collection cannot be cancelled. Only DHL collections can be cancelled via the API.",
+                  "application/json",
+                  %Schema{
+                    title: "SelfShipCollectionCancelError",
+                    type: :object,
+                    required: [:errors],
+                    properties: %{
+                      errors: %Schema{
+                        type: :array,
+                        description: "A list of human-readable error messages",
+                        items: %Schema{type: :string},
+                        example: ["Only DHL collections can be cancelled"]
+                      }
+                    }
+                  },
+                  headers: default_headers()
+                )
+            }
+          }
+        },
         "/self_ship_collection_availability_checks" => %PathItem{
           post: %Operation{
             summary: "Check Self-Ship Collection Availability",
             description:
-              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCheck carrier pickup availability for a given location, service, and date",
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCheck carrier pickup availability for a given location, service, and date.\n\nFor DHL, self-ship collections are supported in the US and UK. DHL pickups can be scheduled up to 10 days in advance, on business days only (Monday–Friday in the US, Monday–Saturday in the UK); the returned `availabilities` reflect these rules.",
             tags: ["self_ship_collections"],
             operationId: "selfShipCollectionAvailabilityChecks/create",
             parameters: [Authorization.parameter()],

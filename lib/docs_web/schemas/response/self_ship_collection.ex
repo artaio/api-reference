@@ -122,7 +122,7 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
           carrier: %Schema{
             type: :string,
             description: "Carrier identifier",
-            enum: ["fedex"]
+            enum: ["fedex", "dhl"]
           },
           code: %Schema{
             type: :string,
