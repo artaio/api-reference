@@ -66,8 +66,8 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionAvailabilityCheckCreate 
             properties: %{
               carrier: %Schema{
                 type: :string,
-                description: "Carrier identifier. `fedex` and `dhl` are supported.",
-                enum: ["fedex", "dhl"]
+                description: "Carrier identifier",
+                enum: ["fedex"]
               },
               code: %Schema{
                 type: :string,
