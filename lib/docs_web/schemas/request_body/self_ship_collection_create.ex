@@ -21,7 +21,6 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreate do
               "region",
               "postal_code",
               "close_time",
-              "package_location",
               "contact"
             ],
             properties: %{
@@ -50,7 +49,7 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreate do
               region: %Schema{
                 type: :string,
                 description:
-                  "State or territory code. Required and validated for `US` (must be a valid US state/territory code). Stripped to empty string for `GB`.",
+                  "State or territory code. Required and validated for `US` (must be a valid US state/territory code). May be an empty string for `GB`.",
                 example: "NY"
               },
               postal_code: %Schema{
@@ -67,7 +66,8 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreate do
               package_location: %Schema{
                 type: :string,
                 description: "Where packages are located at the pickup location",
-                enum: ["front", "none", "rear", "side"]
+                enum: ["front", "none", "rear", "side"],
+                default: "none"
               },
               contact: %Schema{
                 type: :object,
@@ -97,7 +97,7 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreate do
           service: %Schema{
             type: :object,
             description: "Carrier service details",
-            required: ["carrier", "code"],
+            required: ["carrier", "code", "route"],
             properties: %{
               carrier: %Schema{
                 type: :string,
@@ -106,14 +106,43 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreate do
               },
               code: %Schema{
                 type: :string,
-                description: "Service level code",
+                description: "Service level code. Selects the FedEx service for the collection.",
                 enum: ["express", "ground"]
               },
               route: %Schema{
                 type: :string,
-                description: "Route type",
-                enum: ["domestic", "international"],
-                nullable: true
+                description: "Route type. `international` for cross-border collections, `domestic` otherwise.",
+                enum: ["domestic", "international"]
+              },
+              package_details: %Schema{
+                title: "FedexPackageDetails",
+                type: :object,
+                description:
+                  "An optional summary of the packages to be collected. The summary applies to `express` collections only and is ignored for `ground` collections. A summary missing any of the three fields, or with values that cannot be parsed, is ignored.",
+                properties: %{
+                  package_count: %Schema{
+                    type: :integer,
+                    minimum: 0,
+                    description: "Total number of packages in the collection",
+                    example: 3
+                  },
+                  total_weight: %Schema{
+                    type: :string,
+                    description: "Combined weight of all packages",
+                    example: "15.5"
+                  },
+                  total_weight_unit: %Schema{
+                    type: :string,
+                    description: "Unit for `total_weight`",
+                    enum: ["lb", "kg"],
+                    example: "lb"
+                  }
+                },
+                example: %{
+                  "package_count" => 3,
+                  "total_weight" => "15.5",
+                  "total_weight_unit" => "lb"
+                }
               }
             }
           },

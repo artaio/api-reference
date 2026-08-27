@@ -42,8 +42,7 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionAvailabilityCheckCreate 
               },
               region: %Schema{
                 type: :string,
-                description: "State or province code",
-                nullable: true,
+                description: "State or territory code. Required for `US` addresses; may be omitted for `GB` addresses.",
                 example: "NY"
               },
               postal_code: %Schema{

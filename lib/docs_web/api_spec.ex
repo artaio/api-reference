@@ -973,8 +973,7 @@ Use the private url in the successful hosted session response to direct your use
         "/metadata/insurance_policy_booking_disqualifications" => %PathItem{
           get: %Operation{
             summary: "Insurance Policy Booking Disqualifications",
-            description:
-              "The list of reasons that may disqualify an insurance policy from being booked.",
+            description: "The list of reasons that may disqualify an insurance policy from being booked.",
             tags: [
               "metadata"
             ],
@@ -1645,7 +1644,7 @@ Use the private url in the successful hosted session response to direct your use
           post: %Operation{
             summary: "Create a Self-Ship Collection",
             description:
-              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nSchedule a carrier pickup for a self-ship shipment",
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nSchedule a carrier pickup for a self-ship shipment. Self-ship collections are available for pickup locations in the US and UK.",
             tags: ["self_ship_collections"],
             operationId: "selfShipCollections/create",
             parameters: [Authorization.parameter()],
@@ -1664,7 +1663,11 @@ Use the private url in the successful hosted session response to direct your use
                   Response.SelfShipCollection,
                   headers: default_headers()
                 ),
-              400 => Response.BadRequest.build(),
+              400 =>
+                Response.SelfShipCollectionError.error_list(
+                  "The collection could not be scheduled, for example because the pickup location is outside the supported countries or the carrier rejected the pickup",
+                  example: ["Only UK and US are supported for FedEx self-ship collections"]
+                ),
               403 =>
                 Operation.response(
                   "Forbidden",
@@ -1672,10 +1675,9 @@ Use the private url in the successful hosted session response to direct your use
                   nil
                 ),
               422 =>
-                Operation.response(
-                  "Unprocessable entity",
-                  "application/json",
-                  Response.Error
+                Response.SelfShipCollectionError.field_errors(
+                  "The request body failed validation",
+                  example: %{"location/close_time" => ["must be after collection_time"]}
                 )
             }
           }
@@ -1723,7 +1725,11 @@ Use the private url in the successful hosted session response to direct your use
                   Response.SelfShipCollectionAvailabilityCheck,
                   headers: default_headers()
                 ),
-              400 => Response.BadRequest.build(),
+              400 =>
+                Response.SelfShipCollectionError.error_list(
+                  "Availability could not be checked, for example because the pickup location is outside the supported countries or the carrier rejected the request",
+                  example: ["Only UK and US are supported for FedEx self-ship collections"]
+                ),
               403 =>
                 Operation.response(
                   "Forbidden",
@@ -1731,10 +1737,9 @@ Use the private url in the successful hosted session response to direct your use
                   nil
                 ),
               422 =>
-                Operation.response(
-                  "Unprocessable entity",
-                  "application/json",
-                  Response.Error
+                Response.SelfShipCollectionError.field_errors(
+                  "The request body failed validation",
+                  example: %{"service" => ["Required property route was not present."]}
                 )
             }
           }
