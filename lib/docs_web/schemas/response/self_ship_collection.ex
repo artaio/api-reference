@@ -92,7 +92,7 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
           },
           package_location: %Schema{
             type: :string,
-            description: "Where packages are located at the pickup location",
+            description: "Where packages are located at the pickup location. Always `none` for DHL collections.",
             enum: ["front", "none", "rear", "side"]
           },
           contact: %Schema{
@@ -122,7 +122,7 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
           carrier: %Schema{
             type: :string,
             description: "Carrier identifier",
-            enum: ["fedex"]
+            enum: ["fedex", "dhl"]
           },
           code: %Schema{
             type: :string,
@@ -133,6 +133,19 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
             type: :string,
             description: "Route type",
             enum: ["domestic", "international"]
+          },
+          declared_value: %Schema{
+            type: :string,
+            description:
+              "Declared value of the collected packages, as a decimal string in major currency units. `null` when no declared value was provided.",
+            nullable: true,
+            example: "500.00"
+          },
+          declared_value_currency: %Schema{
+            type: :string,
+            description:
+              "ISO 4217 three-letter code for `declared_value`. An empty string when no declared value was provided.",
+            example: "USD"
           }
         }
       }
@@ -154,7 +167,7 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
         "region" => "NY",
         "postal_code" => "10001",
         "close_time" => "17:00:00",
-        "package_location" => "front",
+        "package_location" => "none",
         "contact" => %{
           "email_address" => "john@example.com",
           "name" => "John Doe",
@@ -162,9 +175,11 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
         }
       },
       "service" => %{
-        "carrier" => "fedex",
+        "carrier" => "dhl",
         "code" => "express",
-        "route" => "domestic"
+        "route" => "international",
+        "declared_value" => "500.00",
+        "declared_value_currency" => "USD"
       }
     }
   })
