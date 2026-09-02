@@ -973,8 +973,7 @@ Use the private url in the successful hosted session response to direct your use
         "/metadata/insurance_policy_booking_disqualifications" => %PathItem{
           get: %Operation{
             summary: "Insurance Policy Booking Disqualifications",
-            description:
-              "The list of reasons that may disqualify an insurance policy from being booked.",
+            description: "The list of reasons that may disqualify an insurance policy from being booked.",
             tags: [
               "metadata"
             ],
@@ -1645,7 +1644,7 @@ Use the private url in the successful hosted session response to direct your use
           post: %Operation{
             summary: "Create a Self-Ship Collection",
             description:
-              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nSchedule a carrier pickup for a self-ship shipment",
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nSchedule a carrier pickup for a self-ship shipment with FedEx or DHL. Self-ship collections are available for pickup locations in the US and UK.\n\n**FedEx collections** (`service.carrier: \"fedex\"`) are scheduled as FedEx Ground or FedEx Express according to `service.code`. An optional package summary may be provided in `service.package_details` for `express` collections, and `location.package_location` tells the driver where to find the packages. FedEx collections cannot be cancelled through the API.\n\n**DHL collections** (`service.carrier: \"dhl\"`) are always scheduled with the DHL Express service. They require per-package dimensions and weight in `service.package_details`, and `location.close_time` must be at least 3 hours after `collection_time`. An `international` collection is subject to customs and requires `service.declared_value` and `service.declared_value_currency`; `domestic` collections may omit them. DHL collections can be cancelled with the cancel endpoint.",
             tags: ["self_ship_collections"],
             operationId: "selfShipCollections/create",
             parameters: [Authorization.parameter()],
@@ -1664,7 +1663,14 @@ Use the private url in the successful hosted session response to direct your use
                   Response.SelfShipCollection,
                   headers: default_headers()
                 ),
-              400 => Response.BadRequest.build(),
+              400 =>
+                Response.SelfShipCollectionError.error_list(
+                  "The collection could not be scheduled: the pickup location is outside the supported countries, a carrier-specific requirement was not met, or the carrier rejected the collection.",
+                  example: [
+                    "service.declared_value is required for international DHL collections",
+                    "service.declared_value_currency is required for international DHL collections"
+                  ]
+                ),
               403 =>
                 Operation.response(
                   "Forbidden",
@@ -1672,10 +1678,10 @@ Use the private url in the successful hosted session response to direct your use
                   nil
                 ),
               422 =>
-                Operation.response(
-                  "Unprocessable entity",
-                  "application/json",
-                  Response.Error
+                Response.SelfShipCollectionError.validation_errors(
+                  "The request body failed validation. Errors are keyed by the offending field path; invalid package measurement values are returned as a flat list.",
+                  field_example: %{"location/close_time" => ["must be at least 3 hours after collection_time"]},
+                  list_example: ["service.package_details.packages[0].weight must be a number"]
                 )
             }
           }
@@ -1700,11 +1706,47 @@ Use the private url in the successful hosted session response to direct your use
             }
           }
         },
+        "/self_ship_collections/{self_ship_collection_id}/cancel" => %PathItem{
+          patch: %Operation{
+            summary: "Cancel a Self-Ship Collection",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCancel a scheduled self-ship collection. The collection's `status` becomes `cancelled`.\n\nCancellation through the API is currently supported for DHL collections only; attempting to cancel a FedEx collection returns a `422` with `{\"errors\": {\"#\": [\"Only DHL collections can be cancelled\"]}}`. If the carrier rejects the cancellation, the carrier's error messages are returned in a `400` response under `#`.",
+            tags: ["self_ship_collections"],
+            operationId: "selfShipCollections/cancel",
+            parameters: [Authorization.parameter(), Parameters.SelfShipCollectionID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "The cancelled self-ship collection",
+                  "application/json",
+                  Response.SelfShipCollection,
+                  headers: default_headers()
+                ),
+              400 =>
+                Response.SelfShipCollectionError.field_errors(
+                  "The carrier rejected the cancellation. The carrier's messages are returned under `#`.",
+                  example: %{"#" => ["The carrier rejected the request (HTTP 400)"]}
+                ),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              404 => Response.NotFound.build(),
+              422 =>
+                Response.SelfShipCollectionError.field_errors(
+                  "The collection cannot be cancelled through the API. Only DHL collections can be cancelled.",
+                  example: %{"#" => ["Only DHL collections can be cancelled"]}
+                )
+            }
+          }
+        },
         "/self_ship_collection_availability_checks" => %PathItem{
           post: %Operation{
             summary: "Check Self-Ship Collection Availability",
             description:
-              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCheck carrier pickup availability for a given location, service, and date",
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCheck carrier pickup availability for a given location, service, and date.\n\nFor `fedex`, the response covers the requested date and may also include availability for up to two later dates.\n\nFor `dhl`, collections can be scheduled up to 10 days in advance, Monday through Friday, with hourly collection times from 09:00 to 15:00. Collection times that have already passed at the pickup location, or that leave less than 3 hours before `location.close_time`, are not returned.",
             tags: ["self_ship_collections"],
             operationId: "selfShipCollectionAvailabilityChecks/create",
             parameters: [Authorization.parameter()],
@@ -1723,7 +1765,11 @@ Use the private url in the successful hosted session response to direct your use
                   Response.SelfShipCollectionAvailabilityCheck,
                   headers: default_headers()
                 ),
-              400 => Response.BadRequest.build(),
+              400 =>
+                Response.SelfShipCollectionError.error_list(
+                  "Availability could not be checked, for example because the pickup location is outside the supported countries",
+                  example: ["Only UK and US are supported for DHL self-ship collections"]
+                ),
               403 =>
                 Operation.response(
                   "Forbidden",
@@ -1731,10 +1777,9 @@ Use the private url in the successful hosted session response to direct your use
                   nil
                 ),
               422 =>
-                Operation.response(
-                  "Unprocessable entity",
-                  "application/json",
-                  Response.Error
+                Response.SelfShipCollectionError.field_errors(
+                  "The request body failed validation",
+                  example: %{"service" => ["Required property route was not present."]}
                 )
             }
           }

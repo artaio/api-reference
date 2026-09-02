@@ -43,3 +43,5 @@ visualization/src/openapi.json
 
 api.yaml
 arta-openapi-source.json
+
+.worktrees
