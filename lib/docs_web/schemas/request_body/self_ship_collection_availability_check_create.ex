@@ -70,12 +70,12 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionAvailabilityCheckCreate 
               },
               code: %Schema{
                 type: :string,
-                description: "Service level code. Has no effect on DHL availability.",
+                description: "Service level code",
                 enum: ["ground", "express"]
               },
               route: %Schema{
                 type: :string,
-                description: "Route type. Has no effect on DHL availability.",
+                description: "Route type.",
                 enum: ["domestic", "international"]
               }
             }
