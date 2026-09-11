@@ -10,4 +10,4 @@ bin/run
 
 echo "[ARTA] Starting scalar server on watch mode"
 
-scalar serve openapi.json --watch
+scalar document serve openapi.json --watch
