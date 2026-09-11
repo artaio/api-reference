@@ -12,6 +12,7 @@ defmodule DocsWeb.ApiSpec do
   alias DocsWeb.Schemas.RequestBody.AddressVerificationCreate
   alias DocsWeb.Parameters.ArtaQuoteTimeout
   alias DocsWeb.Parameters.Search
+  alias DocsWeb.Parameters.Sort
 
   alias OpenApiSpex.{
     Info,
@@ -92,7 +93,7 @@ defmodule DocsWeb.ApiSpec do
             tags: [
               "api_keys"
             ],
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -259,7 +260,7 @@ defmodule DocsWeb.ApiSpec do
               "attachments"
             ],
             operationId: "attachments/list",
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -344,7 +345,7 @@ defmodule DocsWeb.ApiSpec do
             description: "Retrieve a paginated collection of Email Rules belonging to your Organization",
             tags: ["email_rules"],
             operationId: "emailRules/list",
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -448,7 +449,7 @@ defmodule DocsWeb.ApiSpec do
             tags: [
               "email_subscriptions"
             ],
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -554,7 +555,7 @@ defmodule DocsWeb.ApiSpec do
             tags: [
               "hosted_sessions"
             ],
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -654,7 +655,7 @@ Use the private url in the successful hosted session response to direct your use
               "import_cost_estimates"
             ],
             operationId: "importCostEstimates/list",
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -721,7 +722,7 @@ Use the private url in the successful hosted session response to direct your use
               "invoice_payments"
             ],
             operationId: "invoicePayments/list",
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -760,7 +761,7 @@ Use the private url in the successful hosted session response to direct your use
               "invoices"
             ],
             operationId: "invoices/list",
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -1364,7 +1365,7 @@ Use the private url in the successful hosted session response to direct your use
               "payments"
             ],
             operationId: "payments/list",
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -1405,6 +1406,7 @@ Use the private url in the successful hosted session response to direct your use
               Authorization.parameter(),
               Page.parameter(),
               PageSize.parameter(),
+              Sort.parameter(searchable: true),
               Search.parameter()
             ],
             responses: %{
@@ -1541,7 +1543,7 @@ Use the private url in the successful hosted session response to direct your use
             description: "Retrieve a paginated collection of Shipment Exceptions belonging to your Organization",
             tags: ["shipment_exceptions"],
             operationId: "shipmentExceptions/list",
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -1630,7 +1632,8 @@ Use the private url in the successful hosted session response to direct your use
             parameters: [
               Authorization.parameter(),
               Page.parameter(),
-              PageSize.parameter()
+              PageSize.parameter(),
+              Sort.parameter()
             ],
             responses: %{
               200 =>
@@ -1751,6 +1754,7 @@ Use the private url in the successful hosted session response to direct your use
               Authorization.parameter(),
               Page.parameter(),
               PageSize.parameter(),
+              Sort.parameter(searchable: true),
               Search.parameter()
             ],
             responses: %{
@@ -1837,7 +1841,8 @@ Use the private url in the successful hosted session response to direct your use
             parameters: [
               Authorization.parameter(),
               Page.parameter(),
-              PageSize.parameter()
+              PageSize.parameter(),
+              Sort.parameter()
             ],
             responses: %{
               200 =>
@@ -1938,6 +1943,7 @@ Use the private url in the successful hosted session response to direct your use
               Authorization.parameter(),
               Page.parameter(),
               PageSize.parameter(),
+              Sort.parameter(searchable: true),
               Search.parameter()
             ],
             responses: %{
@@ -2057,7 +2063,7 @@ Use the private url in the successful hosted session response to direct your use
             description: "Retrieve a paginated collection of Uploads belonging to your Organization",
             tags: ["uploads"],
             operationId: "uploads/list",
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
@@ -2172,7 +2178,7 @@ Use the private url in the successful hosted session response to direct your use
             description: "Retrieve a paginated collection of Webhooks belonging to your Organization",
             tags: ["webhooks"],
             operationId: "webhooks/list",
-            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter()],
+            parameters: [Authorization.parameter(), Page.parameter(), PageSize.parameter(), Sort.parameter()],
             responses: %{
               200 =>
                 Operation.response(
