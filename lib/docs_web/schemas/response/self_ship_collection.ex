@@ -92,7 +92,8 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
           },
           package_location: %Schema{
             type: :string,
-            description: "Where packages are located at the pickup location. Always `none` for DHL collections.",
+            description:
+              "Where packages are located at the pickup location: the `front`, `rear`, or `side` of the building, or `none` when not specified. Always `none` for DHL collections.",
             enum: ["front", "none", "rear", "side"]
           },
           contact: %Schema{
@@ -137,7 +138,7 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
           declared_value: %Schema{
             type: :string,
             description:
-              "Declared value of the collected packages, as a decimal string in major currency units. `null` when no declared value was provided.",
+              "Declared value of the collected packages, as a decimal string. `null` when no declared value was provided.",
             nullable: true,
             example: "500.00"
           },

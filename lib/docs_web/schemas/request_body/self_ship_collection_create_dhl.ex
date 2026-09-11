@@ -53,7 +53,7 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreateDhl do
               region: %Schema{
                 type: :string,
                 description:
-                  "State or territory code. Required and validated for `US` (must be a valid US state/territory code). May be an empty string for `GB`.",
+                  "State or territory code. Required for `US` addresses and must be a valid US state or territory code; may be an empty string for `GB` addresses.",
                 example: "NY"
               },
               postal_code: %Schema{
@@ -117,13 +117,13 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreateDhl do
               declared_value: %Schema{
                 MonetaryAmount.schema()
                 | description:
-                    "Declared value of the collected packages, as a decimal string in major currency units. Required when `route` is `international`; optional for `domestic` collections. Must be provided together with `declared_value_currency`.",
+                    "Declared value of the collected packages, as a decimal string. Required when `route` is `international`; optional for `domestic` collections. Must be provided together with `declared_value_currency`.",
                   example: "500.00"
               },
               declared_value_currency: %Schema{
                 Currency.schema()
                 | description:
-                    "ISO 4217 three-letter currency code for `declared_value`. Options are defined in the Currencies metadata endpoint. Required whenever `declared_value` is provided.",
+                    "ISO 4217 three-letter currency code for `declared_value`. Options are defined in the [Currencies metadata endpoint](https://api-reference.arta.io/operation/operation-metadata-currencies). Required whenever `declared_value` is provided.",
                   default: nil
               },
               package_details: %Schema{

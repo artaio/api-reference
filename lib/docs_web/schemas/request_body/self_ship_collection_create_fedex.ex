@@ -52,7 +52,7 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreateFedex do
               region: %Schema{
                 type: :string,
                 description:
-                  "State or territory code. Required and validated for `US` (must be a valid US state/territory code). May be an empty string for `GB`.",
+                  "State or territory code. Required for `US` addresses and must be a valid US state or territory code; may be an empty string for `GB` addresses.",
                 example: "NY"
               },
               postal_code: %Schema{
@@ -109,7 +109,8 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreateFedex do
               },
               code: %Schema{
                 type: :string,
-                description: "Service level code. Selects the FedEx service for the collection.",
+                description:
+                  "Service level code. `ground` schedules a FedEx Ground collection; `express` schedules a FedEx Express collection.",
                 enum: ["express", "ground"]
               },
               route: %Schema{
@@ -121,7 +122,7 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreateFedex do
                 title: "FedexPackageDetails",
                 type: :object,
                 description:
-                  "An optional summary of the packages to be collected. The summary applies to `express` collections only and is ignored for `ground` collections. A summary missing any of the three fields, or with values that cannot be parsed, is ignored.",
+                  "An optional summary of the packages to be collected, used for `express` collections. Provide `package_count`, `total_weight`, and `total_weight_unit` together; a partial summary, or one whose values cannot be parsed, is ignored rather than rejected.",
                 properties: %{
                   package_count: %Schema{
                     type: :integer,
