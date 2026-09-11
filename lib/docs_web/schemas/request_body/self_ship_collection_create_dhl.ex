@@ -105,8 +105,8 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionCreateDhl do
               },
               code: %Schema{
                 type: :string,
-                description: "Service level code. Has no effect on DHL collections.",
-                enum: ["express", "ground"]
+                description: "Service level code. Must be `express`.",
+                enum: ["express"]
               },
               route: %Schema{
                 type: :string,
