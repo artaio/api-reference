@@ -147,6 +147,40 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
             description:
               "ISO 4217 three-letter code for `declared_value`. An empty string when no declared value was provided.",
             example: "USD"
+          },
+          package_details: %Schema{
+            type: :object,
+            description:
+              "The packages the collection was booked with, echoed back in the shape they were submitted. `null` for FedEx collections.",
+            nullable: true,
+            properties: %{
+              packages: %Schema{
+                type: :array,
+                description:
+                  "The packages included in the collection, one entry per package. Dimensions and weight are decimal strings, and every package shares the same `unit_of_measurement` and `weight_unit`.",
+                items: %Schema{
+                  type: :object,
+                  properties: %{
+                    depth: %Schema{type: :string, description: "Package depth", example: "12"},
+                    height: %Schema{type: :string, description: "Package height", example: "8"},
+                    width: %Schema{type: :string, description: "Package width", example: "10"},
+                    unit_of_measurement: %Schema{
+                      type: :string,
+                      description: "Unit for `depth`, `height`, and `width`",
+                      enum: ["in", "cm"],
+                      example: "in"
+                    },
+                    weight: %Schema{type: :string, description: "Package weight", example: "5.5"},
+                    weight_unit: %Schema{
+                      type: :string,
+                      description: "Unit for `weight`",
+                      enum: ["lb", "kg"],
+                      example: "lb"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -180,7 +214,19 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
         "code" => "express",
         "route" => "international",
         "declared_value" => "500.00",
-        "declared_value_currency" => "USD"
+        "declared_value_currency" => "USD",
+        "package_details" => %{
+          "packages" => [
+            %{
+              "depth" => "12",
+              "height" => "8",
+              "width" => "10",
+              "unit_of_measurement" => "in",
+              "weight" => "5.5",
+              "weight_unit" => "lb"
+            }
+          ]
+        }
       }
     }
   })
