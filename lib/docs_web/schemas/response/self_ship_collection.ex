@@ -133,6 +133,40 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
             type: :string,
             description: "Route type",
             enum: ["domestic", "international"]
+          },
+          package_details: %Schema{
+            type: :object,
+            description:
+              "The packages the collection was booked with, echoed back in the shape they were submitted. `null` for FedEx collections.",
+            nullable: true,
+            properties: %{
+              packages: %Schema{
+                type: :array,
+                description:
+                  "The packages included in the collection, one entry per package. Dimensions and weight are decimal strings, and every package shares the same `unit_of_measurement` and `weight_unit`.",
+                items: %Schema{
+                  type: :object,
+                  properties: %{
+                    depth: %Schema{type: :string, description: "Package depth", example: "12"},
+                    height: %Schema{type: :string, description: "Package height", example: "8"},
+                    width: %Schema{type: :string, description: "Package width", example: "10"},
+                    unit_of_measurement: %Schema{
+                      type: :string,
+                      description: "Unit for `depth`, `height`, and `width`",
+                      enum: ["in", "cm"],
+                      example: "in"
+                    },
+                    weight: %Schema{type: :string, description: "Package weight", example: "5.5"},
+                    weight_unit: %Schema{
+                      type: :string,
+                      description: "Unit for `weight`",
+                      enum: ["lb", "kg"],
+                      example: "lb"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -164,7 +198,8 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
       "service" => %{
         "carrier" => "fedex",
         "code" => "express",
-        "route" => "domestic"
+        "route" => "domestic",
+        "package_details" => nil
       }
     }
   })
