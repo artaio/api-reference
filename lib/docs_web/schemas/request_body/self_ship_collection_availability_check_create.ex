@@ -42,8 +42,8 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionAvailabilityCheckCreate 
               },
               region: %Schema{
                 type: :string,
-                description: "State or province code",
-                nullable: true,
+                description:
+                  "State or territory code. Required for `US` addresses and must be a valid US state or territory code; may be omitted for `GB` addresses.",
                 example: "NY"
               },
               postal_code: %Schema{
@@ -66,8 +66,8 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionAvailabilityCheckCreate 
             properties: %{
               carrier: %Schema{
                 type: :string,
-                description: "Carrier identifier",
-                enum: ["fedex"]
+                description: "Carrier identifier. `fedex` and `dhl` are supported.",
+                enum: ["fedex", "dhl"]
               },
               code: %Schema{
                 type: :string,
@@ -76,7 +76,7 @@ defmodule DocsWeb.Schemas.RequestBody.SelfShipCollectionAvailabilityCheckCreate 
               },
               route: %Schema{
                 type: :string,
-                description: "Route type",
+                description: "Route type.",
                 enum: ["domestic", "international"]
               }
             }

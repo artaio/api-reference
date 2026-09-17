@@ -92,7 +92,8 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
           },
           package_location: %Schema{
             type: :string,
-            description: "Where packages are located at the pickup location",
+            description:
+              "Where packages are located at the pickup location: the `front`, `rear`, or `side` of the building, or `none` when not specified. Always `none` for DHL collections.",
             enum: ["front", "none", "rear", "side"]
           },
           contact: %Schema{
@@ -122,7 +123,7 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
           carrier: %Schema{
             type: :string,
             description: "Carrier identifier",
-            enum: ["fedex"]
+            enum: ["fedex", "dhl"]
           },
           code: %Schema{
             type: :string,
@@ -133,6 +134,53 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
             type: :string,
             description: "Route type",
             enum: ["domestic", "international"]
+          },
+          declared_value: %Schema{
+            type: :string,
+            description:
+              "Declared value of the collected packages, as a decimal string. `null` when no declared value was provided.",
+            nullable: true,
+            example: "500.00"
+          },
+          declared_value_currency: %Schema{
+            type: :string,
+            description:
+              "ISO 4217 three-letter code for `declared_value`. An empty string when no declared value was provided.",
+            example: "USD"
+          },
+          package_details: %Schema{
+            type: :object,
+            description:
+              "The packages the collection was booked with, echoed back in the shape they were submitted. `null` for FedEx collections.",
+            nullable: true,
+            properties: %{
+              packages: %Schema{
+                type: :array,
+                description:
+                  "The packages included in the collection, one entry per package. Dimensions and weight are decimal strings, and every package shares the same `unit_of_measurement` and `weight_unit`.",
+                items: %Schema{
+                  type: :object,
+                  properties: %{
+                    depth: %Schema{type: :string, description: "Package depth", example: "12"},
+                    height: %Schema{type: :string, description: "Package height", example: "8"},
+                    width: %Schema{type: :string, description: "Package width", example: "10"},
+                    unit_of_measurement: %Schema{
+                      type: :string,
+                      description: "Unit for `depth`, `height`, and `width`",
+                      enum: ["in", "cm"],
+                      example: "in"
+                    },
+                    weight: %Schema{type: :string, description: "Package weight", example: "5.5"},
+                    weight_unit: %Schema{
+                      type: :string,
+                      description: "Unit for `weight`",
+                      enum: ["lb", "kg"],
+                      example: "lb"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -154,7 +202,7 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
         "region" => "NY",
         "postal_code" => "10001",
         "close_time" => "17:00:00",
-        "package_location" => "front",
+        "package_location" => "none",
         "contact" => %{
           "email_address" => "john@example.com",
           "name" => "John Doe",
@@ -162,9 +210,23 @@ defmodule DocsWeb.Schemas.Response.SelfShipCollection do
         }
       },
       "service" => %{
-        "carrier" => "fedex",
+        "carrier" => "dhl",
         "code" => "express",
-        "route" => "domestic"
+        "route" => "international",
+        "declared_value" => "500.00",
+        "declared_value_currency" => "USD",
+        "package_details" => %{
+          "packages" => [
+            %{
+              "depth" => "12",
+              "height" => "8",
+              "width" => "10",
+              "unit_of_measurement" => "in",
+              "weight" => "5.5",
+              "weight_unit" => "lb"
+            }
+          ]
+        }
       }
     }
   })
