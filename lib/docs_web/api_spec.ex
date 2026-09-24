@@ -11,6 +11,7 @@ defmodule DocsWeb.ApiSpec do
   alias DocsWeb.Schemas.RequestBody.SelfShipCollectionCreate
   alias DocsWeb.Schemas.RequestBody.AddressVerificationCreate
   alias DocsWeb.Parameters.ArtaQuoteTimeout
+  alias DocsWeb.Parameters.Filter
   alias DocsWeb.Parameters.Search
   alias DocsWeb.Parameters.Sort
 
@@ -2083,6 +2084,80 @@ Use the private url in the successful hosted session response to direct your use
             }
           }
         },
+        "/transactional_mailings" => %PathItem{
+          get: %Operation{
+            summary: "List Transactional Mailings",
+            description:
+              "Retrieve a paginated collection of the notification emails Arta sent on your Organization's " <>
+                "behalf, newest first. Each record reports who the email was addressed to and how far it " <>
+                "got.\n\nThe collection covers mailings created in the last 90 days, of the notification " <>
+                "types `GET /metadata/email_notifications` publishes for your Organization.\n\nUnrecognized " <>
+                "query parameters, and any parameter sent more than once, are rejected with a `400`, as is " <>
+                "a `sort` value other than the two listed.\n\n`page` and `page_number` name one thing, as " <>
+                "do `size` and `page_size`; sending both names of either is rejected with a `400`. `page` " <>
+                "takes 1 to 100 and `page_size` takes 1 to 50, and a value outside its range is rejected " <>
+                "too. To read past what those reach, narrow the collection with `created_at` rather than " <>
+                "paging into it.\n\nRequires the API access feature on your Organization, and answers " <>
+                "`403` without it.",
+            tags: ["transactional_mailings"],
+            operationId: "transactionalMailings/list",
+            parameters: [
+              Authorization.parameter(),
+              Filter.parameter(
+                fields: transactional_mailing_filter_fields(),
+                example: "status:failed type:self_ship_label"
+              ),
+              Page.parameter(),
+              PageSize.parameter(),
+              Parameters.TransactionalMailingSort.parameter()
+            ],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "A collection of Transactional Mailings",
+                  "application/json",
+                  list(Response.TransactionalMailing),
+                  headers: default_headers()
+                ),
+              400 =>
+                Response.ErrorMessage.build(
+                  example:
+                    "status is not a supported parameter. Supported parameters: " <>
+                      "filter, page, page_number, page_size, size, sort"
+                ),
+              403 => Operation.response("Forbidden", "application/json", nil)
+            }
+          }
+        },
+        "/transactional_mailings/{transactional_mailing_id}" => %PathItem{
+          get: %Operation{
+            summary: "Get a Transactional Mailing",
+            description:
+              "Retrieve one of the notification emails Arta sent on your Organization's behalf.\n\nA " <>
+                "`404` answers an identifier that names no mailing this endpoint serves, which covers " <>
+                "more than an unknown identifier: one that is not well formed, one naming a mailing of " <>
+                "another Organization, one naming a mailing of the other of Live and Test modes, one " <>
+                "naming a notification type this endpoint does not serve, and one naming a mailing " <>
+                "created more than 90 days ago.\n\nThis endpoint takes " <>
+                "no query parameters and rejects any it is sent with a `400`. Requires the API access " <>
+                "feature on your Organization, and answers `403` without it.",
+            tags: ["transactional_mailings"],
+            operationId: "transactionalMailings/get",
+            parameters: [Authorization.parameter(), Parameters.TransactionalMailingID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "Successful Transactional Mailing get response",
+                  "application/json",
+                  Response.TransactionalMailing,
+                  headers: default_headers()
+                ),
+              400 => Response.ErrorMessage.build(example: "filter is not a supported parameter"),
+              403 => Operation.response("Forbidden", "application/json", nil),
+              404 => Response.NotFound.build()
+            }
+          }
+        },
         "/trackings/{tracking_number}" => %PathItem{
           get: %Operation{
             summary: "Get Tracking Details",
@@ -2384,6 +2459,25 @@ Use the private url in the successful hosted session response to direct your use
     }
     # Discover request/response schemas from path specs
     |> OpenApiSpex.resolve_schema_modules()
+  end
+
+  defp transactional_mailing_filter_fields do
+    """
+    **Transactional Mailing filter fields**
+
+    Each field is named after the response field it reads. Text values are matched without regard
+    to case.
+
+    | Field | Type | Notes |
+    |---|---|---|
+    | `id` | string | The mailing's own identifier. A value that is not a well-formed identifier is refused; a well-formed one naming no mailing of your Organization returns an empty page |
+    | `status` | string | `accepted`, `delivered`, `failed`, `sending`. Another value returns an empty page rather than a refusal |
+    | `type` | string | An `id` from `GET /metadata/email_notifications`. A value this endpoint does not serve returns an empty page rather than a refusal |
+    | `request_id` | string | A Request identifier. One naming no Request of your Organization in this mode is refused |
+    | `shipment_id` | string | A Shipment identifier. One naming no Shipment of your Organization in this mode is refused |
+    | `created_at` | date | |
+    | `sent_at` | date | |
+    """
   end
 
   defp list(type) do
