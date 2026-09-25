@@ -2091,7 +2091,9 @@ Use the private url in the successful hosted session response to direct your use
               "Retrieve a paginated collection of the notification emails Arta sent on your Organization's " <>
                 "behalf, newest first. Each record reports who the email was addressed to and how far it " <>
                 "got.\n\nThe collection covers mailings created in the last 90 days, of the notification " <>
-                "types `GET /metadata/email_notifications` publishes for your Organization.\n\nUnrecognized " <>
+                "types `GET /metadata/email_notifications` publishes for your Organization.\n\nThis collection " <>
+                "is filtered rather than searched: it takes `filter` and not `search`, over the fields " <>
+                "listed there, and a clause it cannot apply is refused rather than ignored.\n\nUnrecognized " <>
                 "query parameters, and any parameter sent more than once, are rejected with a `400`, as is " <>
                 "a `sort` value other than the two listed.\n\n`page` and `page_number` name one thing, as " <>
                 "do `size` and `page_size`; sending both names of either is rejected with a `400`. `page` " <>

@@ -2,7 +2,9 @@ defmodule DocsWeb.Parameters.Filter do
   alias OpenApiSpex.{Parameter, Schema}
 
   @syntax """
-  Narrow the returned collection with one or more clauses.
+  Narrow the returned collection with one or more clauses. Every clause is applied: a request \
+  returns exactly the records all of them hold for, or is refused with a `400` naming what was \
+  at fault. A clause this parameter cannot express is never dropped silently.
 
   Each clause names a field, an operator and a value. Clauses on different fields all have to \
   hold, and repeating a text field matches any of its values:
