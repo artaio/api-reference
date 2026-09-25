@@ -2,8 +2,9 @@ defmodule DocsWeb.Schemas.Response.ErrorMessage do
   @moduledoc """
   A refusal carrying one message under `error` that names what was at fault.
 
-  `example:` is the message the operation being documented would return, since an endpoint names
-  the parameters it takes in its own refusals, and is required for that reason.
+  `example:` is the message the operation being documented would return, and is required because
+  what counts as a refusal differs between operations: a parameter one route reads is one the
+  next route refuses.
   """
 
   alias OpenApiSpex.{Operation, Schema}

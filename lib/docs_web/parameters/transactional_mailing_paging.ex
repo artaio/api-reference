@@ -1,7 +1,7 @@
 defmodule DocsWeb.Parameters.TransactionalMailingPaging do
   @moduledoc """
-  The `page` and `page_size` parameters for the Transactional Mailing collection, which refuses a
-  value outside its range rather than serving the nearest page it can.
+  The `page` and `page_size` parameters for the Transactional Mailing collection, each carrying
+  the range that collection serves, which it holds a request to.
   """
 
   alias OpenApiSpex.{Parameter, Schema}

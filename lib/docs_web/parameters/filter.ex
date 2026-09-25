@@ -27,13 +27,14 @@ defmodule DocsWeb.Parameters.Filter do
   `created_at:2026-09-01` covers that day end to end, while `created_at:>2026-09-01` starts after \
   it, at midnight on 2 September. Use `>=` and `<=` to include the day named.
 
-  For a narrower bound give an ISO 8601 timestamp in quotation marks, which the clause needs \
-  because the value itself carries a `:`. An offset in the timestamp is resolved to the UTC \
-  instant it names:
+  For a narrower bound give an ISO 8601 timestamp, quoted, since any value containing a `:` has \
+  to be. An offset in it is resolved to the UTC instant it names:
 
   ```
   created_at:>="2026-09-01T09:30:00Z"
   ```
+
+  A quoted timestamp given to `:` spans the second it names, as a bare date spans its day.
 
   A date field carries at most one lower bound and one upper bound across the whole filter, and a \
   bare date sets both, so a bare date cannot be combined with another clause on the same field. \
@@ -53,7 +54,7 @@ defmodule DocsWeb.Parameters.Filter do
   The `filter` query parameter for a list endpoint.
 
   `fields:` is the table of filterable fields for the endpoint, appended to the shared syntax so
-  each endpoint documents what it opens rather than inheriting another's.
+  each endpoint documents the fields it opens.
   """
   @spec parameter(keyword()) :: Parameter.t()
   def parameter(opts \\ []),

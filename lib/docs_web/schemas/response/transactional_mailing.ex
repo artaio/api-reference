@@ -32,7 +32,8 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
         type: :integer,
         description:
           "The Email Rule that produced this mailing, if one did. Retrieve it with " <>
-            "`GET /email_rules/{email_rule_id}`.",
+            "`GET /email_rules/{email_rule_id}`, which answers `404` for a rule deleted since " <>
+            "the mailing was sent.",
         example: 1942,
         nullable: true,
         readOnly: true
@@ -41,7 +42,8 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
         type: :integer,
         description:
           "The Email Subscription that produced this mailing, if one did. Retrieve it with " <>
-            "`GET /email_subscriptions/{email_subscription_id}`.",
+            "`GET /email_subscriptions/{email_subscription_id}`, which answers `404` for a " <>
+            "subscription deleted since the mailing was sent.",
         example: 317,
         nullable: true,
         readOnly: true
@@ -85,7 +87,10 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
       },
       sent_at: %Schema{
         type: :string,
-        description: "When the mailing was handed to the email provider, in UTC and without an offset.",
+        description:
+          "When the mailing was handed to the email provider, in UTC and without an offset. " <>
+            "`null` until that happens, so a clause on this field returns only mailings already " <>
+            "handed over.",
         example: "2026-09-20T15:23:11.000000",
         nullable: true,
         readOnly: true

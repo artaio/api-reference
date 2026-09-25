@@ -2089,13 +2089,13 @@ Use the private url in the successful hosted session response to direct your use
             summary: "List Transactional Mailings",
             description:
               "Retrieve a paginated collection of the notification emails Arta sent on your Organization's " <>
-                "behalf, newest first. Each record reports who the email was addressed to and how far it " <>
-                "got.\n\nThe collection covers mailings created in the last 90 days, of the notification " <>
+                "behalf, newest first unless `sort` says otherwise. Each record reports who the email was " <>
+                "addressed to and how far it got.\n\nThe collection covers mailings created in the last 90 days, of the notification " <>
                 "types `GET /metadata/email_notifications` publishes for your Organization.\n\nThis collection " <>
-                "is filtered rather than searched: it takes `filter` and not `search`, over the fields " <>
-                "listed there, and a clause it cannot apply is refused rather than ignored.\n\nUnrecognized " <>
+                "is narrowed with `filter`, over the fields it declares; `search` is not accepted here, and " <>
+                "a clause `filter` cannot apply is refused rather than ignored.\n\nUnrecognized " <>
                 "query parameters, and any parameter sent more than once, are rejected with a `400`, as is " <>
-                "a `sort` value other than the two listed.\n\nTo read past what paging reaches, narrow the " <>
+                "a `sort` value the parameter does not declare.\n\nTo read past what paging reaches, narrow the " <>
                 "collection with `created_at` rather than paging into it.\n\nRequires the API access feature on your Organization, and answers " <>
                 "`403` without it.",
             tags: ["transactional_mailings"],
@@ -2128,11 +2128,10 @@ Use the private url in the successful hosted session response to direct your use
             summary: "Get a Transactional Mailing",
             description:
               "Retrieve one of the notification emails Arta sent on your Organization's behalf.\n\nA " <>
-                "`404` answers an identifier that names no mailing this endpoint serves, which covers " <>
-                "more than an unknown identifier: one that is not well formed, one naming a mailing of " <>
-                "another Organization, one naming a mailing of the other of Live and Test modes, one " <>
-                "naming a notification type this endpoint does not serve, and one naming a mailing " <>
-                "created more than 90 days ago.\n\nThis endpoint takes " <>
+                "`404` answers an identifier that names no mailing this endpoint serves: one that is not " <>
+                "well formed, one naming a mailing of another Organization, one naming a Live mailing " <>
+                "read with a Test key or the reverse, one naming a notification type this endpoint " <>
+                "does not serve, and one naming a mailing created more than 90 days ago.\n\nThis endpoint takes " <>
                 "no query parameters and rejects any it is sent with a `400`. Requires the API access " <>
                 "feature on your Organization, and answers `403` without it.",
             tags: ["transactional_mailings"],
@@ -2459,16 +2458,16 @@ Use the private url in the successful hosted session response to direct your use
     """
     **Transactional Mailing filter fields**
 
-    Each field is named after the response field it reads. Text values are matched without regard
-    to case.
+    Each field is named after the response field it reads. Text values are matched without \
+    regard to case.
 
     | Field | Type | Notes |
     |---|---|---|
     | `id` | string | The mailing's own identifier. A value that is not a well-formed identifier is refused; a well-formed one naming no mailing of your Organization returns an empty page |
     | `status` | string | `accepted`, `delivered`, `failed`, `sending`. Another value returns an empty page rather than a refusal |
     | `type` | string | An `id` from `GET /metadata/email_notifications`. A value this endpoint does not serve returns an empty page rather than a refusal |
-    | `request_id` | string | A Request identifier. One naming no Request of your Organization in this mode is refused |
-    | `shipment_id` | string | A Shipment identifier. One naming no Shipment of your Organization in this mode is refused |
+    | `request_id` | string | A Request identifier. One naming no Request of your Organization in the same mode as your API key is refused |
+    | `shipment_id` | string | A Shipment identifier. One naming no Shipment of your Organization in the same mode as your API key is refused |
     | `created_at` | date | |
     | `sent_at` | date | |
     """

@@ -1,7 +1,7 @@
 defmodule DocsWeb.Parameters.TransactionalMailingSort do
   @moduledoc """
   The `sort` query parameter for the Transactional Mailing collection, which orders by the one
-  column it opens rather than by the four the shared parameter documents.
+  column that collection opens.
   """
 
   alias OpenApiSpex.{Parameter, Schema}
