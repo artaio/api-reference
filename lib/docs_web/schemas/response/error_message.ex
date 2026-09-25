@@ -17,6 +17,7 @@ defmodule DocsWeb.Schemas.Response.ErrorMessage do
         %Schema{
           title: "ErrorMessage",
           type: :object,
+          required: [:error],
           properties: %{
             error: %Schema{
               type: :string,

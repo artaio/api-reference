@@ -24,7 +24,6 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
     properties: %{
       created_at: %Schema{
         type: :string,
-        format: "date-time",
         description: "When Arta created the mailing, in UTC and without an offset.",
         example: "2026-09-20T15:23:11.000000",
         readOnly: true
@@ -86,7 +85,6 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
       },
       sent_at: %Schema{
         type: :string,
-        format: "date-time",
         description: "When the mailing was handed to the email provider, in UTC and without an offset.",
         example: "2026-09-20T15:23:11.000000",
         nullable: true,

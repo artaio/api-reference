@@ -2096,10 +2096,9 @@ Use the private url in the successful hosted session response to direct your use
                 "listed there, and a clause it cannot apply is refused rather than ignored.\n\nUnrecognized " <>
                 "query parameters, and any parameter sent more than once, are rejected with a `400`, as is " <>
                 "a `sort` value other than the two listed.\n\n`page` and `page_number` name one thing, as " <>
-                "do `size` and `page_size`; sending both names of either is rejected with a `400`. `page` " <>
-                "takes 1 to 100 and `page_size` takes 1 to 50, and a value outside its range is rejected " <>
-                "too. To read past what those reach, narrow the collection with `created_at` rather than " <>
-                "paging into it.\n\nRequires the API access feature on your Organization, and answers " <>
+                "do `size` and `page_size`; sending both names of either is rejected with a `400`. To read " <>
+                "past what paging reaches, narrow the collection with `created_at` rather than paging " <>
+                "into it.\n\nRequires the API access feature on your Organization, and answers " <>
                 "`403` without it.",
             tags: ["transactional_mailings"],
             operationId: "transactionalMailings/list",
@@ -2109,8 +2108,8 @@ Use the private url in the successful hosted session response to direct your use
                 fields: transactional_mailing_filter_fields(),
                 example: "status:failed type:self_ship_label"
               ),
-              Page.parameter(),
-              PageSize.parameter(),
+              Parameters.TransactionalMailingPaging.page(),
+              Parameters.TransactionalMailingPaging.page_size(),
               Parameters.TransactionalMailingSort.parameter()
             ],
             responses: %{
