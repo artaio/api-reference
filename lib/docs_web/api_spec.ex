@@ -2095,10 +2095,8 @@ Use the private url in the successful hosted session response to direct your use
                 "is filtered rather than searched: it takes `filter` and not `search`, over the fields " <>
                 "listed there, and a clause it cannot apply is refused rather than ignored.\n\nUnrecognized " <>
                 "query parameters, and any parameter sent more than once, are rejected with a `400`, as is " <>
-                "a `sort` value other than the two listed.\n\n`page` and `page_number` name one thing, as " <>
-                "do `size` and `page_size`; sending both names of either is rejected with a `400`. To read " <>
-                "past what paging reaches, narrow the collection with `created_at` rather than paging " <>
-                "into it.\n\nRequires the API access feature on your Organization, and answers " <>
+                "a `sort` value other than the two listed.\n\nTo read past what paging reaches, narrow the " <>
+                "collection with `created_at` rather than paging into it.\n\nRequires the API access feature on your Organization, and answers " <>
                 "`403` without it.",
             tags: ["transactional_mailings"],
             operationId: "transactionalMailings/list",
@@ -2120,12 +2118,7 @@ Use the private url in the successful hosted session response to direct your use
                   list(Response.TransactionalMailing),
                   headers: default_headers()
                 ),
-              400 =>
-                Response.ErrorMessage.build(
-                  example:
-                    "status is not a supported parameter. Supported parameters: " <>
-                      "filter, page, page_number, page_size, size, sort"
-                ),
+              400 => Response.ErrorMessage.build(example: "status is not a supported parameter"),
               403 => Operation.response("Forbidden", "application/json", nil)
             }
           }
