@@ -2463,13 +2463,13 @@ Use the private url in the successful hosted session response to direct your use
 
     | Field | Type | Notes |
     |---|---|---|
-    | `id` | string | The mailing's own identifier. A value that is not a well-formed identifier is refused; a well-formed one naming no mailing of your Organization returns an empty page |
-    | `status` | string | `accepted`, `delivered`, `failed`, `sending`. Another value returns an empty page rather than a refusal |
+    | `id` | string | The mailing's own identifier. A value that is not a well-formed identifier is refused; a well-formed one naming no mailing of your Organization returns an empty page. `null` is refused, since every mailing carries one |
+    | `status` | string | `accepted`, `delivered`, `failed`, `sending`, or `null` for a mailing whose send did not complete. Another value returns an empty page rather than a refusal |
     | `type` | string | An `id` from `GET /metadata/email_notifications`. A value this endpoint does not serve returns an empty page rather than a refusal |
-    | `request_id` | string | A Request identifier. One naming no Request of your Organization in the same mode as your API key is refused |
-    | `shipment_id` | string | A Shipment identifier. One naming no Shipment of your Organization in the same mode as your API key is refused |
+    | `request_id` | string | A Request identifier. One naming no Request of your Organization in the same mode as your API key is refused. `null` matches mailings sent about no Request |
+    | `shipment_id` | string | A Shipment identifier. One naming no Shipment of your Organization in the same mode as your API key is refused. `null` matches mailings sent about no Shipment |
     | `created_at` | date | |
-    | `sent_at` | date | |
+    | `sent_at` | date | `null` matches mailings never handed to the email provider |
     """
   end
 

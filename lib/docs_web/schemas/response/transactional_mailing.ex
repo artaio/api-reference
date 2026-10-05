@@ -89,8 +89,8 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
         type: :string,
         description:
           "When the mailing was handed to the email provider, in UTC and without an offset. " <>
-            "`null` until that happens, so a clause on this field returns only mailings already " <>
-            "handed over.",
+            "`null` until that happens, so a date clause on this field returns only mailings " <>
+            "already handed over, and `sent_at:null` returns the rest.",
         example: "2026-09-20T15:23:11.000000",
         nullable: true,
         readOnly: true
@@ -109,8 +109,9 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
           "How far the mailing got. `sending`: a send is in flight to the email provider. " <>
             "`accepted`: the provider took the message and queued it. `delivered`: the recipient's " <>
             "mail server accepted it — only this value means the mailing reached them. `failed`: " <>
-            "the provider could not deliver it. Outcomes are reported asynchronously, so `null` " <>
-            "means none has been reported yet rather than that the mailing failed.",
+            "the provider could not deliver it. An outcome is recorded as soon as the send " <>
+            "completes and updated as the provider reports on it, so `null` means the send did " <>
+            "not complete and no outcome was recorded. `status:null` returns these mailings.",
         enum: ["accepted", "delivered", "failed", "sending"],
         example: "failed",
         nullable: true,

@@ -19,7 +19,8 @@ defmodule DocsWeb.Parameters.Filter do
   | Operator | Usage | Description | Example |
   |---|---|---|---|
   | `:` | `field:value` | Matches the value | `status:failed` returns records whose status is `failed` |
-  | `-` | `-field:value` | Returns records holding a different value. Records holding no value are returned by neither the clause nor its negation. Text fields only | `-status:delivered` returns records with another status, and not those whose status has not been reported |
+  | `-` | `-field:value` | Returns records holding a different value. Records holding no value are returned by neither the clause nor its negation; match them with `null`. Text fields only, except `-field:null`, which any field takes | `-status:delivered` returns records with another status, and not those holding no status |
+  | `null` | `field:null`, `-field:null` | Matches records holding no value for the field, or with `-`, those holding one. Text and date fields, in any case | `status:null` returns records holding no status |
   | `>=`, `>`, `<=`, `<` | `field:>=value` | Compares a date field | `created_at:>=2026-09-01` returns records created on or after 1 September 2026 |
   | `..` | `field:from..to`, `field:from..`, `field:..to` | A range over a date field, both ends included, either end optional | `created_at:2026-09-01..2026-09-07` returns records created in that week |
 
@@ -37,14 +38,31 @@ defmodule DocsWeb.Parameters.Filter do
   A quoted timestamp given to `:` spans the second it names, as a bare date spans its day.
 
   A date field carries at most one lower bound and one upper bound across the whole filter, and a \
-  bare date sets both, so a bare date cannot be combined with another clause on the same field. \
+  bare date sets both, so a bare date cannot be combined with another bound on the same field. \
   Two comparisons that bound opposite sides are read as the span between them, as in \
   `created_at:>=2026-09-01 created_at:<=2026-09-10`, while bounds that cross are refused.
+
+  **No value**
+
+  `null` names a record holding no value for a field. Repeating a text field with `null` matches \
+  its values or no value:
+
+  ```
+  status:null
+  status:failed status:null
+  -sent_at:null
+  ```
+
+  `null` takes no comparison or range. A clause matching `null` cannot be combined with another \
+  clause on the same field, which a record holding no value could never also hold, so \
+  `status:null -status:failed` is refused. Quotes do not change it: `status:"null"` reads as \
+  `status:null`.
 
   **Refusals**
 
   A clause this endpoint cannot apply is refused with a `400` naming what was at fault — an \
-  unknown field, an operator the field does not support, a value it cannot read. Wildcards and \
+  unknown field, an operator the field does not support, a value it cannot read, `null` given as \
+  a bound, or a clause matching `null` beside another clause on its field. Wildcards and \
   bare terms without a field are refused too. Clauses are combined with AND implicitly: the words \
   `AND`, `OR` and `NOT`, and parentheses, are not part of the syntax and are refused. So is a \
   filter longer than 2,000 bytes.\
