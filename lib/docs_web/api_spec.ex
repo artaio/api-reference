@@ -2096,8 +2096,8 @@ Use the private url in the successful hosted session response to direct your use
                 "a clause `filter` cannot apply is refused rather than ignored.\n\nUnrecognized " <>
                 "query parameters, and any parameter sent more than once, are rejected with a `400`, as is " <>
                 "a `sort` value the parameter does not declare.\n\nTo read past what paging reaches, narrow the " <>
-                "collection with `created_at` rather than paging into it.\n\nRequires the API access feature on your Organization, and answers " <>
-                "`403` without it.",
+                "collection with `created_at` rather than paging into it.\n\nRequires API access to be enabled for your Organization, and " <>
+                "answers `403` otherwise.",
             tags: ["transactional_mailings"],
             operationId: "transactionalMailings/list",
             parameters: [
@@ -2132,8 +2132,8 @@ Use the private url in the successful hosted session response to direct your use
                 "well formed, one naming a mailing of another Organization, one naming a Live mailing " <>
                 "read with a Test key or the reverse, one naming a notification type this endpoint " <>
                 "does not serve, and one naming a mailing created more than 90 days ago.\n\nThis endpoint takes " <>
-                "no query parameters and rejects any it is sent with a `400`. Requires the API access " <>
-                "feature on your Organization, and answers `403` without it.",
+                "no query parameters and rejects any it is sent with a `400`. Requires API access to be " <>
+                "enabled for your Organization, and answers `403` otherwise.",
             tags: ["transactional_mailings"],
             operationId: "transactionalMailings/get",
             parameters: [Authorization.parameter(), Parameters.TransactionalMailingID.parameter()],
@@ -2464,12 +2464,12 @@ Use the private url in the successful hosted session response to direct your use
     | Field | Type | Notes |
     |---|---|---|
     | `id` | string | The mailing's own identifier. A value that is not a well-formed identifier is refused; a well-formed one naming no mailing of your Organization returns an empty page. `null` is refused, since every mailing carries one |
-    | `status` | string | `accepted`, `delivered`, `failed`, `sending`, or `null` for a mailing whose send did not complete. Another value returns an empty page rather than a refusal |
+    | `status` | string | `accepted`, `delivered`, `failed`, `sending`, or `null` for a mailing whose send is still under way or did not complete. Another value returns an empty page rather than a refusal |
     | `type` | string | An `id` from `GET /metadata/email_notifications`. A value this endpoint does not serve returns an empty page rather than a refusal |
     | `request_id` | string | A Request identifier. One naming no Request of your Organization in the same mode as your API key is refused. `null` matches mailings sent about no Request |
     | `shipment_id` | string | A Shipment identifier. One naming no Shipment of your Organization in the same mode as your API key is refused. `null` matches mailings sent about no Shipment |
     | `created_at` | date | |
-    | `sent_at` | date | `null` matches mailings that were never sent |
+    | `sent_at` | date | `null` matches mailings not yet sent |
     """
   end
 

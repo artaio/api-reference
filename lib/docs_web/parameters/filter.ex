@@ -4,7 +4,9 @@ defmodule DocsWeb.Parameters.Filter do
   @syntax """
   Narrow the returned collection with one or more clauses. Every clause is applied: a request \
   returns exactly the records the filter describes, or is refused with a `400` naming what was \
-  at fault. A clause this parameter cannot express is never dropped silently.
+  at fault. A clause this parameter cannot express is never dropped silently. This syntax \
+  differs from the `search` parameter described under Search, so the rules below apply rather \
+  than those.
 
   Each clause names a field, an operator and a value. Clauses on different fields all have to \
   hold. Repeating a text field matches any of its values, and repeating its negation excludes \
@@ -21,17 +23,17 @@ defmodule DocsWeb.Parameters.Filter do
   |---|---|---|---|
   | `:` | `field:value` | Matches the value | `status:failed` returns records whose status is `failed` |
   | `-` | `-field:value` | Returns records holding a different value. Records holding no value are returned by neither the clause nor its negation; match them with `null`. Text fields only, except `-field:null`, which date fields take too | `-status:delivered` returns records with another status, and not those holding no status |
-  | `null` | `field:null`, `-field:null` | Matches records holding no value for the field, or with `-`, those holding one. Text and date fields, in any case, unless the endpoint's field table says otherwise | `status:null` returns records holding no status |
+  | `null` | `field:null`, `-field:null` | Matches records holding no value for the field, or with `-`, those holding one. Text and date fields, written in upper or lower case, unless the endpoint's field table says otherwise | `status:null` returns records holding no status |
   | `>=`, `>`, `<=`, `<` | `field:>=value` | Compares a date field | `created_at:>=2026-09-01` returns records created on or after 1 September 2026 |
-  | `..` | `field:from..to`, `field:from..`, `field:..to` | A range over a date field, both ends included, either end optional | `created_at:2026-09-01..2026-09-07` returns records created in that week |
+  | `..` | `field:from..to`, `field:from..`, `field:..to` | A range over a date field, both ends included. Either end may be left out, but not both | `created_at:2026-09-01..2026-09-07` returns records created in that week |
 
   Date fields are in UTC, and a bare date names the whole UTC day it falls in, so \
   `created_at:2026-09-01` covers that day end to end, while `created_at:>2026-09-01` starts after \
   it, at midnight on 2 September. Use `>=` and `<=` to include the day named.
 
-  For a narrower bound give an ISO 8601 timestamp, quoted, since any value containing a `:` has \
-  to be. A timestamp takes `:`, `>`, `>=`, `<` and `<=`, while a range takes dates only. An offset \
-  in it is resolved to the UTC instant it names:
+  For a narrower bound give a timestamp in the form `"2026-09-01T09:30:00Z"`, quoted, since any \
+  value containing a `:` has to be. A timestamp takes `:`, `>`, `>=`, `<` and `<=`, while a range \
+  takes dates only. An offset in place of `Z` is resolved to the UTC instant it names:
 
   ```
   created_at:>="2026-09-01T09:30:00Z"

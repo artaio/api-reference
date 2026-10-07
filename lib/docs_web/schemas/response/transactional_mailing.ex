@@ -113,7 +113,7 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
             "for the mailing, so a `failed` mailing can still become `delivered`. `null` means " <>
             "no outcome has been recorded: the send is still under way or did not complete. " <>
             "`status:null` returns these mailings.",
-        enum: ["accepted", "delivered", "failed", "sending"],
+        enum: ["accepted", "delivered", "failed", "sending", nil],
         example: "failed",
         nullable: true,
         readOnly: true
