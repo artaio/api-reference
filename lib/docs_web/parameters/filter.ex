@@ -70,8 +70,9 @@ defmodule DocsWeb.Parameters.Filter do
   A clause this endpoint cannot apply is refused with a `400` naming what was at fault — an \
   unknown field, an operator the field does not support, a value it cannot read, `null` given as \
   a bound, or a clause matching `null` beside another clause on its field. Wildcards and \
-  bare terms without a field are refused too. Clauses are combined with AND implicitly: the words \
-  `AND`, `OR` and `NOT`, and grouping with parentheses, are not part of the syntax. Those words and \
+  bare terms without a field are refused too. Clauses on different fields are combined with AND, \
+  and repeated values of one text field with OR, implicitly: the words `AND`, `OR` and `NOT`, and \
+  grouping with parentheses, are not part of the syntax. Those words and \
   a clause opening with a parenthesis are refused, while a parenthesis inside a value is read as \
   part of that value. A filter longer than 2,000 bytes is refused too.\
   """
