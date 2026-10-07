@@ -2469,7 +2469,7 @@ Use the private url in the successful hosted session response to direct your use
     | `request_id` | string | A Request identifier. One naming no Request of your Organization in the same mode as your API key is refused. `null` matches mailings sent about no Request |
     | `shipment_id` | string | A Shipment identifier. One naming no Shipment of your Organization in the same mode as your API key is refused. `null` matches mailings sent about no Shipment |
     | `created_at` | date | |
-    | `sent_at` | date | `null` matches mailings never handed to the email provider |
+    | `sent_at` | date | `null` matches mailings that were never sent |
     """
   end
 

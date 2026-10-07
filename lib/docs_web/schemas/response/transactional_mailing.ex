@@ -25,15 +25,15 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
       created_at: %Schema{
         type: :string,
         description: "When Arta created the mailing, in UTC and without an offset.",
-        example: "2026-09-20T15:23:11.000000",
+        example: "2026-09-20T15:23:10.482113",
         readOnly: true
       },
       email_rule_id: %Schema{
         type: :integer,
         description:
-          "The Email Rule that produced this mailing, if one did. Retrieve it with " <>
-            "`GET /email_rules/{email_rule_id}`, which answers `404` for a rule deleted since " <>
-            "the mailing was sent.",
+          "The Email Rule that produced this mailing. Retrieve it with " <>
+            "`GET /email_rules/{email_rule_id}`. `null` when no rule produced it, or when that " <>
+            "rule has since been deleted.",
         example: 1942,
         nullable: true,
         readOnly: true
@@ -41,9 +41,9 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
       email_subscription_id: %Schema{
         type: :integer,
         description:
-          "The Email Subscription that produced this mailing, if one did. Retrieve it with " <>
-            "`GET /email_subscriptions/{email_subscription_id}`, which answers `404` for a " <>
-            "subscription deleted since the mailing was sent.",
+          "The Email Subscription that produced this mailing. Retrieve it with " <>
+            "`GET /email_subscriptions/{email_subscription_id}`. `null` when no subscription " <>
+            "produced it, or when that subscription has since been deleted.",
         example: 317,
         nullable: true,
         readOnly: true
@@ -88,9 +88,9 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
       sent_at: %Schema{
         type: :string,
         description:
-          "When the mailing was handed to the email provider, in UTC and without an offset. " <>
-            "`null` until that happens, so a date clause on this field returns only mailings " <>
-            "already handed over, and `sent_at:null` returns the rest.",
+          "When Arta sent the mailing, in UTC and without an offset. `null` until it is sent, " <>
+            "so a date clause on this field returns only mailings already sent, and " <>
+            "`sent_at:null` returns the rest.",
         example: "2026-09-20T15:23:11.000000",
         nullable: true,
         readOnly: true
@@ -106,12 +106,13 @@ defmodule DocsWeb.Schemas.Response.TransactionalMailing do
       status: %Schema{
         type: :string,
         description:
-          "How far the mailing got. `sending`: a send is in flight to the email provider. " <>
-            "`accepted`: the provider took the message and queued it. `delivered`: the recipient's " <>
+          "How far the mailing got. `sending`: the mailing is being sent. `accepted`: the " <>
+            "mailing was sent and its delivery has not been confirmed yet. `delivered`: the recipient's " <>
             "mail server accepted it — only this value means the mailing reached them. `failed`: " <>
-            "the provider could not deliver it. An outcome is recorded as soon as the send " <>
-            "completes and updated as the provider reports on it, so `null` means the send did " <>
-            "not complete and no outcome was recorded. `status:null` returns these mailings.",
+            "the mailing could not be delivered. The status reflects the latest outcome reported " <>
+            "for the mailing, so a `failed` mailing can still become `delivered`. `null` means " <>
+            "no outcome has been recorded: the send is still under way or did not complete. " <>
+            "`status:null` returns these mailings.",
         enum: ["accepted", "delivered", "failed", "sending"],
         example: "failed",
         nullable: true,
