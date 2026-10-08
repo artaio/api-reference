@@ -238,7 +238,7 @@ defmodule DocsWeb.Schemas.Fields do
         },
         eu_exempt_category: %Schema{
           description:
-            "Set to `true` when the item is classified under HS 9701 to 9706 (original artwork, antiques, and collectors' pieces such as stamps and coins), which EU customs exempts from the manufacturer identifier. Other goods, including trading cards (HS 4911), are not exempt.\n\nWhen `null`, Arta derives the value from the item's HS code on the EEI form. An explicit `false` is kept.",
+            "Set to `true` when the item is classified under HS 9701 to 9706 (original artwork, antiques, and collectors' pieces such as stamps and coins), which EU customs exempts from the manufacturer identifier requirement. Other goods, including trading cards (HS 4911), are not exempt.\n\nWhen `null`, Arta derives the value from the item's HS code on the EEI form. An explicit `false` is kept.",
           type: "boolean",
           nullable: true,
           example: true
