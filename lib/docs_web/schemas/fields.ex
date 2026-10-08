@@ -254,6 +254,7 @@ defmodule DocsWeb.Schemas.Fields do
             "The identifier assigned by the maker or supplier, such as a model or reference number, an ISBN, or the set and card number of a trading card.\n\nNeeded alongside `merchant_product_id` for items shipped into the EU from outside the EU, unless `eu_exempt_category` is `true`.",
           type: "string",
           maxLength: 100,
+          nullable: true,
           example: "REF-2041-B"
         },
         manufacturer_product_id_standardized: %Schema{
@@ -273,6 +274,7 @@ defmodule DocsWeb.Schemas.Fields do
             "Your own identifier for the item, such as a SKU, lot number or listing ID.\n\nFrom November 1, 2026, EU customs requires a merchant and a manufacturer product identifier for each item shipped to a consumer in the EU from outside the EU. Arta collects both on the EEI form of every shipment into the EU from outside the EU, prefilled from these fields. When this field is blank, the `internal_reference` is used instead.",
           type: "string",
           maxLength: 100,
+          nullable: true,
           example: "SKU-48213"
         },
         temporary_admission: %Schema{
