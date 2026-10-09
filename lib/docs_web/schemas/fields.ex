@@ -23,36 +23,7 @@ defmodule DocsWeb.Schemas.Fields do
           example: "no_packing"
         }
       },
-      customs: %Schema{
-        type: "object",
-        properties: %{
-          country_of_origin: %Schema{
-            description: "The ISO 3166-1 alpha-2 country code where the object was made or manufactured",
-            type: "string",
-            maxLength: 2,
-            minLength: 2,
-            example: "US"
-          },
-          hs_code: %Schema{
-            description:
-              "The Harmonized System code for the object. This is a 6-10 digit code used to classify traded products",
-            type: "string",
-            example: "123456"
-          },
-          medium: %Schema{
-            description:
-              "The medium of the object. This is a description of the material or materials used to create the object",
-            type: "string",
-            example: "oil on canvas"
-          },
-          temporary_admission: %Schema{
-            description:
-              "Select true if the goods are currently in the country under a temporary admission declaration",
-            type: "boolean",
-            example: true
-          }
-        }
-      },
+      customs: customs(),
       depth: %Schema{
         description: "The depth of the object",
         type: "string",
@@ -193,36 +164,7 @@ defmodule DocsWeb.Schemas.Fields do
 
   def object_component_fields() do
     %{
-      customs: %Schema{
-        type: "object",
-        properties: %{
-          country_of_origin: %Schema{
-            description: "The ISO 3166-1 alpha-2 country code where the object was made or manufactured",
-            type: "string",
-            maxLength: 2,
-            minLength: 2,
-            example: "US"
-          },
-          hs_code: %Schema{
-            description:
-              "The Harmonized System code for the object. This is a 6-10 digit code used to classify traded products",
-            type: "string",
-            example: "123456"
-          },
-          medium: %Schema{
-            description:
-              "The medium of the object. This is a description of the material or materials used to create the object",
-            type: "string",
-            example: "oil on canvas"
-          },
-          temporary_admission: %Schema{
-            description:
-              "Select true if the goods are currently in the country under a temporary admission declaration",
-            type: "boolean",
-            example: true
-          }
-        }
-      },
+      customs: customs(),
       details: %Schema{
         type: "object",
         properties: %{
@@ -281,6 +223,67 @@ defmodule DocsWeb.Schemas.Fields do
       description: "The id of the component in UUID format",
       format: :uuid
     })
+  end
+
+  defp customs() do
+    %Schema{
+      type: "object",
+      properties: %{
+        country_of_origin: %Schema{
+          description: "The ISO 3166-1 alpha-2 country code where the object was made or manufactured",
+          type: "string",
+          maxLength: 2,
+          minLength: 2,
+          example: "US"
+        },
+        eu_exempt_category: %Schema{
+          description:
+            "Set to `true` when the item is classified under HS 9701 to 9706 (original artwork, antiques, and collectors' pieces such as stamps and coins), which EU customs exempts from the manufacturer identifier requirement. Other goods, including trading cards (HS 4911), are not exempt.\n\nWhen `null`, Arta derives the value from the item's HS code on the EEI form. An explicit `false` is kept.",
+          type: "boolean",
+          nullable: true,
+          example: true
+        },
+        hs_code: %Schema{
+          description:
+            "The Harmonized System code for the object. This is a 6-10 digit code used to classify traded products",
+          type: "string",
+          example: "123456"
+        },
+        manufacturer_product_id: %Schema{
+          description:
+            "The identifier assigned by the maker or supplier, such as a model or reference number, an ISBN, or the set and card number of a trading card.\n\nNeeded alongside `merchant_product_id` for items shipped into the EU from outside the EU, unless `eu_exempt_category` is `true`.",
+          type: "string",
+          maxLength: 100,
+          nullable: true,
+          example: "REF-2041-B"
+        },
+        manufacturer_product_id_standardized: %Schema{
+          description: "Set to `true` when `manufacturer_product_id` is a GTIN, EAN, UPC or ISBN",
+          type: "boolean",
+          default: false,
+          example: false
+        },
+        medium: %Schema{
+          description:
+            "The medium of the object. This is a description of the material or materials used to create the object",
+          type: "string",
+          example: "oil on canvas"
+        },
+        merchant_product_id: %Schema{
+          description:
+            "Your own identifier for the item, such as a SKU, lot number or listing ID.\n\nFrom November 1, 2026, EU customs requires a merchant and a manufacturer product identifier for each item shipped to a consumer in the EU from outside the EU. Arta collects both on the EEI form of every shipment into the EU from outside the EU, prefilled from these fields. When this field is blank, the `internal_reference` is used instead.",
+          type: "string",
+          maxLength: 100,
+          nullable: true,
+          example: "SKU-48213"
+        },
+        temporary_admission: %Schema{
+          description: "Select true if the goods are currently in the country under a temporary admission declaration",
+          type: "boolean",
+          example: true
+        }
+      }
+    }
   end
 
   def package_fields() do

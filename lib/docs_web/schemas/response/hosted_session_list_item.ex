@@ -157,8 +157,12 @@ defmodule DocsWeb.Schemas.Response.HostedSessionListItem do
             %{
               "customs" => %{
                 "country_of_origin" => "US",
+                "eu_exempt_category" => nil,
                 "hs_code" => "123456",
+                "manufacturer_product_id" => nil,
+                "manufacturer_product_id_standardized" => false,
                 "medium" => "oil on canvas",
+                "merchant_product_id" => "SKU-48213",
                 "temporary_admission" => true
               },
               "details" => %{
@@ -205,8 +209,12 @@ defmodule DocsWeb.Schemas.Response.HostedSessionListItem do
           "current_packing" => [],
           "customs" => %{
             "country_of_origin" => "US",
+            "eu_exempt_category" => nil,
             "hs_code" => "123456",
+            "manufacturer_product_id" => nil,
+            "manufacturer_product_id_standardized" => false,
             "medium" => "oil on canvas",
+            "merchant_product_id" => "SKU-48213",
             "temporary_admission" => true
           },
           "depth" => "2",
