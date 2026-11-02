@@ -1875,6 +1875,56 @@ Use the private url in the successful hosted session response to direct your use
             }
           }
         },
+        "/shipments/{shipment_id}/cancel" => %PathItem{
+          patch: %Operation{
+            summary: "Cancel a Self Ship Shipment",
+            description:
+              "**Availability: Public Preview**\n\n_This endpoint is currently in public preview and available only to approved accounts._ _Please contact Arta to request access for your organization._\n\nCancel a Self Ship shipment. The shipment's `status` becomes `cancelled` immediately and the updated Shipment is returned. Cancelling cannot be undone; to ship the items later, book a new shipment.\n\nOnly shipments with a `quote_type` of `self_ship` and a `status` of `pending` or `confirmed` can be cancelled. Any other shipment returns a `422`.\n\n**What cancelling means for the shipment:**\n\n* **Labels:** the shipment's shipping labels are no longer valid. Do not use them. A package shipped on a cancelled label is billed to your account.\n* **Shipping Protection:** coverage for the shipment ends when it is cancelled.\n* **Refunds:** if the shipment was paid for, the payment is refunded to the original payment method, minus the payment processing fee. If a buyer paid through a hosted session, the refund goes to the buyer's payment method.\n\nWhile a payment for the shipment is still processing, the shipment cannot be cancelled and the request returns a `422`. Retry once the payment clears.\n\nA successful cancel sends a `shipment.status.updated` webhook to your configured endpoints, like any other status change.",
+            tags: ["shipments"],
+            operationId: "shipments/cancel",
+            parameters: [Authorization.parameter(), Parameters.ShipmentID.parameter()],
+            responses: %{
+              200 =>
+                Operation.response(
+                  "The cancelled Shipment",
+                  "application/json",
+                  Response.Shipment,
+                  headers: default_headers()
+                ),
+              403 =>
+                Operation.response(
+                  "Forbidden",
+                  "application/json",
+                  nil
+                ),
+              404 => Response.NotFound.build(),
+              422 =>
+                Operation.response(
+                  "The shipment cannot be cancelled. The reason is returned under `#`.",
+                  "application/json",
+                  %Schema{
+                    title: "ShipmentCancelError",
+                    type: :object,
+                    required: [:errors],
+                    properties: %{
+                      errors: %Schema{
+                        type: :object,
+                        description:
+                          "Human-readable messages keyed by `#`, the root of the request. One of: `Only self-ship shipments in pending or confirmed status can be cancelled.` or `A payment for this shipment is still processing. The shipment can be cancelled once it clears.`",
+                        additionalProperties: %Schema{type: :array, items: %Schema{type: :string}}
+                      }
+                    },
+                    example: %{
+                      "errors" => %{
+                        "#" => ["Only self-ship shipments in pending or confirmed status can be cancelled."]
+                      }
+                    }
+                  },
+                  headers: default_headers()
+                )
+            }
+          }
+        },
         "/collection_tag_rules" => %PathItem{
           get: %Operation{
             summary: "List Collection Tag Rules",
